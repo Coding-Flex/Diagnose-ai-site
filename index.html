@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DiagnoseAI — Premium Vehicle Diagnostics & Support</title>
+    
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Color Palette & Custom Tokens */
+        :root {
+            --bg-color: #05070A;
+            --surface: #10141C;
+            --surface-elevated: #171C26;
+            --primary: #2F80FF;
+            --primary-glow: rgba(47, 128, 255, 0.15);
+            --secondary: #00E5A8;
+            --secondary-glow: rgba(0, 229, 168, 0.15);
+            --text-primary: #F5F7FA;
+            --text-secondary: #A7B0C0;
+            --border: #283040;
+            --glass-bg: rgba(16, 20, 28, 0.6);
+            --glass-border: rgba(40, 48, 64, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 10% 20%, var(--primary-glow) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, var(--secondary-glow) 0%, transparent 40%);
+            color: var(--text-primary);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Header Vibe */
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .logo-area {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        /* Animated Glowing Engine/Scanner Logo Icon */
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(47, 128, 255, 0.4);
+            animation: pulse-glow 3s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 15px rgba(47, 128, 255, 0.4); }
+            100% { box-shadow: 0 0 25px rgba(0, 229, 168, 0.6); }
+        }
+
+        .logo-icon svg {
+            fill: #ffffff;
+            width: 24px;
+            height: 24px;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #ffffff 30%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tagline {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-top: 8px;
+            font-weight: 300;
+        }
+
+        .tagline span {
+            color: var(--secondary);
+            font-weight: 500;
+        }
+
+        /* Glassmorphism Navigation / Tabs */
+        .navigation {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .nav-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            padding: 10px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .nav-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary-glow);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.active {
+            color: #ffffff;
+            background: linear-gradient(135deg, var(--primary), #1a52ab);
+            border-color: var(--primary);
+            box-shadow: 0 4px 15px rgba(47, 128, 255, 0.3);
+        }
+
+        /* Glassmorphic Panel Container */
+        .main-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Typography & Headings inside sections */
+        h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 24px;
+            background: var(--secondary);
+            border-radius: 2px;
+        }
+
+        h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            color: var(--primary);
+            margin: 25px 0 12px 0;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            font-size: 1rem;
+            font-weight: 300;
+        }
+
+        /* Lists */
+        ul {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+
+        li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        /* Support Button Option A (Email) Custom Glow */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--secondary), #00b383);
+            color: #05070A;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            padding: 14px 28px;
+            border-radius: 12px;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 20px var(--secondary-glow);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(0, 229, 168, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: rgba(167, 176, 192, 0.4);
+            font-size: 0.85rem;
+            font-weight: 300;
+        }
+
+        /* Responsive Settings */
+        @media (max-width: 600px) {
+            h1 { font-size: 2.2rem; }
+            .main-card { padding: 25px 20px; }
+            .navigation { flex-direction: column; width: 100%; }
+            .nav-btn { width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24">
+                        <!-- Custom Engine/Diagnostic Outline -->
+                        <path d="M19,8H17.5V6H16V8H13V5H11V8H8V6.5H6.5V8H5A2,2 0 0,0 3,10V18A2,2 0 0,0 5,20H19A2,2 0 0,0 21,18V10A2,2 0 0,0 19,8M19,18H5V10H19V18M12,11A2.5,2.5 0 0,0 9.5,13.5A2.5,2.5 0 0,0 12,16A2.5,2.5 0 0,0 14.5,13.5A2.5,2.5 0 0,0 12,11Z"/>
+                    </svg>
+                </div>
+            </div>
+            <h1>DiagnoseAI</h1>
+            <p class="tagline">Premium <span>OBD-II Smart Diagnostics</span> for iOS</p>
+        </header>
+
+        <!-- Dynamic Navigation Tabs -->
+        <div class="navigation">
+            <button class="nav-btn active" onclick="switchTab('support')">Customer Support</button>
+            <button class="nav-btn" onclick="switchTab('privacy')">Privacy Policy</button>
+        </div>
+
+        <main class="main-card">
+            <!-- Support Panel -->
+            <section id="support" class="content-section active">
+                <h2>Customer Support</h2>
+                <p>Welcome to the DiagnoseAI service desk. Our application connects directly to your vehicle's OBD-II BLE/Wi-Fi adapters to translate diagnostic trouble codes into human-readable repair plans.</p>
+                <p>If you are experiencing adapter connectivity issues, mock scanner discrepancies, or have account-related questions, our support engineering team is here to assist.</p>
+                
+                <h3>How to reach us</h3>
+                <p>We provide email-based technical support with a standard response time of 24–48 hours.</p>
+                
+                <a href="mailto:support@diagnoseai.app" class="cta-button">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                    Contact Support Engineering
+                </a>
+            </section>
+
+            <!-- Privacy Policy Panel -->
+            <section id="privacy" class="content-section">
+                <h2>Privacy Policy</h2>
+                <p><em>Effective Date: May 24, 2026</em></p>
+                <p>At DiagnoseAI, we design systems that respect your privacy and secure your automotive diagnostic data. This policy details how your information is captured, processed, and safeguarded.</p>
+                
+                <h3>1. Information We Collect</h3>
+                <ul>
+                    <li><strong>Account Authentication:</strong> Registration email addresses and login credentials are encrypted and stored safely via **Supabase Auth**.</li>
+                    <li><strong>Vehicle Profiles:</strong> Custom details (Year, Make, Model, Engine Type) are kept to properly analyze fuel trim and diagnostic contexts.</li>
+                    <li><strong>Diagnostic Logs (DTCs):</strong> Raw fault codes parsed from your OBD-II adapter are stored securely in your private cloud profile to display your vehicle history.</li>
+                </ul>
+
+                <h3>2. Processing and AI Analysis</h3>
+                <p>To turn raw error codes (e.g., P0171) into actionable DIY checks and urgency logs, we securely pass the code and vehicle context to our backend, which interfaces with generative AI APIs (Gemini/OpenAI).</p>
+                <ul>
+                    <li>No personal data, email addresses, or user identifiers are ever sent to the AI processing model.</li>
+                    <li>Your diagnostic data is never sold or used for marketing profiling.</li>
+                </ul>
+
+                <h3>3. Security Architecture</h3>
+                <p>All client-server exchanges are encrypted using TLS. Database tables are protected by rigid **Row Level Security (RLS)** in Supabase, ensuring that only you can access your vehicle's scan history.</p>
+            </section>
+        </main>
+
+        <footer>
+            &copy; 2026 DiagnoseAI. All rights reserved.
+        </footer>
+    </div>
+
+    <!-- Smooth Tab Switcher Script -->
+    <script>
+        function switchTab(tabId) {
+            // Remove active states from all tabs
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+            
+            // Activate selected tab button
+            const activeBtn = Array.from(document.querySelectorAll('.nav-btn')).find(btn => btn.getAttribute('onclick').includes(tabId));
+            if (activeBtn) activeBtn.classList.add('active');
+            
+            // Show corresponding section
+            document.getElementById(tabId).classList.add('active');
+        }
+    </script>
+</body>
+</html>
