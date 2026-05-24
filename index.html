@@ -1,3 +1,16 @@
+Here is the **complete, fully corrected, and beautifully optimized version**. 
+
+### What was fixed:
+1. **Removed the Stray Characters:** The issue was a nested HTML comment (`<!-- <!-- --> -->`) which is invalid and caused those weird lines to render. It is now completely clean.
+2. **Lightened the Vibe:** 
+   * Lifted the background from pitching black to a rich, high-end automotive midnight grey (`#0d111a`).
+   * Lightened the surfaces (`#181f2d`) and elevated states to feel much more polished, accessible, and balanced.
+   * Increased the neon background glows (`--primary-glow` and `--secondary-glow`) so they are warmer, more visible, and feel incredibly dynamic!
+3. **Mascot Presentation:** The mascot now sits in a perfectly clean, rounded glass frame with no overlapping borders.
+
+Copy and paste this entire code block directly into your file:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,20 +24,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
 
     <style>
-        /* Color Palette & Custom Tokens */
+        /* Color Palette & Custom Tokens (Lightened & Enhanced) */
         :root {
-            --bg-color: #05070A;
-            --surface: #10141C;
-            --surface-elevated: #171C26;
+            --bg-color: #0d111a;
+            --surface: #181f2d;
+            --surface-elevated: #212a3d;
             --primary: #2F80FF;
-            --primary-glow: rgba(47, 128, 255, 0.15);
+            --primary-glow: rgba(47, 128, 255, 0.25); /* Increased opacity */
             --secondary: #00E5A8;
-            --secondary-glow: rgba(0, 229, 168, 0.15);
+            --secondary-glow: rgba(0, 229, 168, 0.25); /* Increased opacity */
             --text-primary: #F5F7FA;
-            --text-secondary: #A7B0C0;
-            --border: #283040;
-            --glass-bg: rgba(16, 20, 28, 0.6);
-            --glass-border: rgba(40, 48, 64, 0.5);
+            --text-secondary: #aab5c6;
+            --border: #35445e;
+            --glass-bg: rgba(24, 31, 45, 0.7);
+            --glass-border: rgba(53, 68, 94, 0.6);
         }
 
         * {
@@ -36,79 +49,89 @@
         body {
             background-color: var(--bg-color);
             background-image: 
-                radial-gradient(circle at 10% 20%, var(--primary-glow) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, var(--secondary-glow) 0%, transparent 40%);
+                radial-gradient(circle at 15% 15%, var(--primary-glow) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, var(--secondary-glow) 0%, transparent 45%);
             color: var(--text-primary);
             font-family: 'Plus Jakarta Sans', sans-serif;
             line-height: 1.6;
             min-height: 100vh;
             overflow-x: hidden;
-            padding: 40px 20px;
+            padding: 60px 20px;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 850px;
             margin: 0 auto;
         }
 
         /* Header Vibe */
         header {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 45px;
             position: relative;
         }
 
         .logo-area {
             display: inline-flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
+            justify-content: center;
+            margin-bottom: 20px;
         }
 
-        /* Animated Glowing Engine/Scanner Logo Icon */
+        /* Animated Glowing Mascot Container */
         .logo-icon {
-            width: 64px;
-            height: 64px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 12px;
+            width: 84px;
+            height: 84px;
+            background: var(--surface-elevated);
+            border: 2px solid var(--border);
+            border-radius: 22px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 20px rgba(47, 128, 255, 0.4);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 20px rgba(47, 128, 255, 0.25);
             animation: pulse-glow 3s infinite alternate;
+            overflow: hidden;
+            padding: 4px;
         }
 
         @keyframes pulse-glow {
-            0% { box-shadow: 0 0 15px rgba(47, 128, 255, 0.4); }
-            100% { box-shadow: 0 0 25px rgba(0, 229, 168, 0.6); }
+            0% { 
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 15px rgba(47, 128, 255, 0.25); 
+                border-color: var(--primary);
+            }
+            100% { 
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 25px rgba(0, 229, 168, 0.4); 
+                border-color: var(--secondary);
+            }
         }
 
-        .logo-icon svg {
-            fill: #ffffff;
-            width: 24px;
-            height: 24px;
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 16px;
         }
 
         h1 {
             font-family: 'Outfit', sans-serif;
-            font-size: 2.8rem;
+            font-size: 3rem;
             font-weight: 800;
             letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #ffffff 30%, var(--text-secondary) 100%);
+            background: linear-gradient(135deg, #ffffff 40%, var(--text-secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .tagline {
             color: var(--text-secondary);
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             margin-top: 8px;
             font-weight: 300;
         }
 
         .tagline span {
             color: var(--secondary);
-            font-weight: 500;
+            font-weight: 600;
         }
 
         /* Glassmorphism Navigation / Tabs */
@@ -116,18 +139,19 @@
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
         }
 
         .nav-btn {
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
             color: var(--text-secondary);
-            padding: 10px 24px;
+            padding: 12px 28px;
             border-radius: 30px;
             cursor: pointer;
             font-family: 'Outfit', sans-serif;
             font-weight: 600;
+            font-size: 0.95rem;
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -144,7 +168,7 @@
             color: #ffffff;
             background: linear-gradient(135deg, var(--primary), #1a52ab);
             border-color: var(--primary);
-            box-shadow: 0 4px 15px rgba(47, 128, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(47, 128, 255, 0.4);
         }
 
         /* Glassmorphic Panel Container */
@@ -152,11 +176,10 @@
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
             border-radius: 24px;
-            padding: 40px;
+            padding: 45px;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            transition: opacity 0.4s ease, transform 0.4s ease;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .content-section {
@@ -176,11 +199,11 @@
         /* Typography & Headings inside sections */
         h2 {
             font-family: 'Outfit', sans-serif;
-            font-size: 1.8rem;
+            font-size: 1.9rem;
             margin-bottom: 24px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         h2::before {
@@ -194,15 +217,16 @@
 
         h3 {
             font-family: 'Outfit', sans-serif;
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             color: var(--primary);
-            margin: 25px 0 12px 0;
+            margin: 30px 0 12px 0;
+            font-weight: 600;
         }
 
         p {
             color: var(--text-secondary);
-            margin-bottom: 16px;
-            font-size: 1rem;
+            margin-bottom: 18px;
+            font-size: 1.05rem;
             font-weight: 300;
         }
 
@@ -218,6 +242,7 @@
             margin-bottom: 12px;
             color: var(--text-secondary);
             font-weight: 300;
+            font-size: 1.02rem;
         }
 
         li::before {
@@ -228,41 +253,42 @@
             font-weight: 700;
         }
 
-        /* Support Button Option A (Email) Custom Glow */
+        /* Support Button (Email) Custom Glow */
         .cta-button {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            background: linear-gradient(135deg, var(--secondary), #00b383);
-            color: #05070A;
+            background: linear-gradient(135deg, var(--secondary), #00c792);
+            color: #0d111a;
             font-family: 'Outfit', sans-serif;
             font-weight: 700;
-            padding: 14px 28px;
-            border-radius: 12px;
+            font-size: 1rem;
+            padding: 15px 32px;
+            border-radius: 14px;
             text-decoration: none;
-            margin-top: 20px;
+            margin-top: 15px;
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             box-shadow: 0 4px 20px var(--secondary-glow);
         }
 
         .cta-button:hover {
             transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 10px 25px rgba(0, 229, 168, 0.4);
+            box-shadow: 0 10px 25px rgba(0, 229, 168, 0.5);
         }
 
         /* Footer */
         footer {
             text-align: center;
             margin-top: 50px;
-            color: rgba(167, 176, 192, 0.4);
+            color: rgba(170, 181, 198, 0.4);
             font-size: 0.85rem;
             font-weight: 300;
         }
 
         /* Responsive Settings */
         @media (max-width: 600px) {
-            h1 { font-size: 2.2rem; }
-            .main-card { padding: 25px 20px; }
+            h1 { font-size: 2.4rem; }
+            .main-card { padding: 30px 20px; }
             .navigation { flex-direction: column; width: 100%; }
             .nav-btn { width: 100%; text-align: center; }
         }
@@ -274,11 +300,7 @@
         <header>
             <div class="logo-area">
                 <div class="logo-icon">
-                    <img src="mascot.png" alt="DiagnoseAI Mascot" style="width: 100%; height: 100%; object-fit: contain;">
-                    <!-- <svg viewBox="0 0 24 24">
-                        <!-- Custom Engine/Diagnostic Outline -->
-                        <path d="M19,8H17.5V6H16V8H13V5H11V8H8V6.5H6.5V8H5A2,2 0 0,0 3,10V18A2,2 0 0,0 5,20H19A2,2 0 0,0 21,18V10A2,2 0 0,0 19,8M19,18H5V10H19V18M12,11A2.5,2.5 0 0,0 9.5,13.5A2.5,2.5 0 0,0 12,16A2.5,2.5 0 0,0 14.5,13.5A2.5,2.5 0 0,0 12,11Z"/>
-                    </svg> -->
+                    <img src="mascot.png" alt="DiagnoseAI Mascot">
                 </div>
             </div>
             <h1>DiagnoseAI</h1>
@@ -336,50 +358,36 @@
             &copy; 2026 DiagnoseAI. All rights reserved.
         </footer>
     </div>
-        <!-- Smooth Tab Switcher Script -->
-    <script>
-    // Function to switch tabs
-    function switchTab(tabId) {
-        document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-        document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
-        
-        const activeBtn = Array.from(document.querySelectorAll('.nav-btn')).find(btn => btn.getAttribute('onclick').includes(tabId));
-        if (activeBtn) activeBtn.classList.add('active');
-        
-        document.getElementById(tabId).classList.add('active');
-    }
-    
-    // Automatically detect the URL hash when page loads
-    window.addEventListener('DOMContentLoaded', () => {
-        const hash = window.location.hash.replace('#', '');
-        if (hash === 'privacy' || hash === 'support') {
-            switchTab(hash);
-        }
-    });
-    
-    // Detect when hash changes dynamically (optional)
-    window.addEventListener('hashchange', () => {
-        const hash = window.location.hash.replace('#', '');
-        if (hash === 'privacy' || hash === 'support') {
-            switchTab(hash);
-        }
-    });
-    </script>
-        <!-- 
+
     <!-- Smooth Tab Switcher Script -->
     <script>
+        // Function to switch tabs
         function switchTab(tabId) {
-            // Remove active states from all tabs
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
             
-            // Activate selected tab button
             const activeBtn = Array.from(document.querySelectorAll('.nav-btn')).find(btn => btn.getAttribute('onclick').includes(tabId));
             if (activeBtn) activeBtn.classList.add('active');
             
-            // Show corresponding section
             document.getElementById(tabId).classList.add('active');
         }
-    </script> -->
+        
+        // Automatically detect the URL hash when page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash.replace('#', '');
+            if (hash === 'privacy' || hash === 'support') {
+                switchTab(hash);
+            }
+        });
+        
+        // Detect when hash changes dynamically
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.replace('#', '');
+            if (hash === 'privacy' || hash === 'support') {
+                switchTab(hash);
+            }
+        });
+    </script>
 </body>
 </html>
+```
