@@ -107,31 +107,24 @@
         }
 
         /* ── BIG Mascot Container ── */
-        .logo-icon {
+        .logo-icon { */
             width: 160px;
             height: 160px;
-            background: linear-gradient(145deg, var(--surface-elevated), var(--surface));
-            border: 2px solid transparent;
+            border: none;
             border-radius: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            padding: 6px;
-            position: relative;
+            padding: 0;
+            background: transparent;
             animation: mascotGlow 4s ease-in-out infinite alternate;
         }
 
         /* Animated gradient border ring */
         .logo-icon::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: 38px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--primary));
-            background-size: 200% 200%;
-            z-index: -1;
-            animation: borderShift 4s ease-in-out infinite alternate;
+            display: none;
+
         }
 
         @keyframes borderShift {
