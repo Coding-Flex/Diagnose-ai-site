@@ -142,6 +142,7 @@
     /* Logo */
     .logo-wrap {
       display: inline-block; position: relative;
+      width: 148px; height: 148px;
       margin-bottom: 28px; cursor: pointer;
     }
 
@@ -243,58 +244,69 @@
       background: rgba(255,255,255,0.03);
       border: 1px solid var(--border);
       border-radius: var(--radius-pill);
-      padding: 7px 16px;
+      padding: 8px 18px;
       font-size: 0.82rem; font-weight: 500;
       color: var(--text-muted);
       backdrop-filter: blur(10px);
-      transition: border-color 0.3s, background 0.3s;
+      transition: border-color 0.3s, background 0.3s, color 0.3s, box-shadow 0.3s;
     }
 
     .stat-chip:hover {
       border-color: var(--border-hover);
       background: var(--primary-dim);
       color: #93c5fd;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.15);
     }
 
-    .stat-chip .dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      animation: dotPulse 2s ease-in-out infinite;
-    }
-
-    .dot-green { background: var(--accent); box-shadow: 0 0 8px var(--accent-glow); }
-    .dot-blue  { background: var(--primary); box-shadow: 0 0 8px var(--primary-glow); }
-
-    @keyframes dotPulse {
-      0%, 100% { transform: scale(1); opacity: 0.8; }
-      50%       { transform: scale(1.4); opacity: 1; }
+    .stat-chip-svg {
+      width: 13px; height: 13px;
+      fill: none; stroke: currentColor; stroke-width: 2.2;
+      stroke-linecap: round; stroke-linejoin: round;
+      flex-shrink: 0;
+      filter: drop-shadow(0 0 3px currentColor);
     }
 
     /* ══════════════════════════════
        NAV TABS
     ══════════════════════════════ */
     nav {
-      display: flex; justify-content: center;
-      gap: 12px; flex-wrap: wrap; margin-bottom: 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: fit-content;
+      margin: 0 auto 36px;
+      background: rgba(13, 18, 32, 0.5);
+      border: 1px solid var(--border);
+      padding: 6px;
+      border-radius: var(--radius-pill);
+      gap: 6px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
     }
 
     .tab-btn {
-      font-family: 'Outfit', sans-serif; font-weight: 600;
-      font-size: 0.95rem; letter-spacing: 0.01em;
-      padding: 13px 28px; border-radius: var(--radius-pill);
-      border: 1px solid var(--border);
-      background: var(--glass-bg); color: var(--text-muted);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.01em;
+      padding: 11px 26px;
+      border-radius: var(--radius-pill);
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-muted);
       cursor: pointer;
-      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-      position: relative; overflow: hidden;
-      transition: color 0.3s, border-color 0.3s, box-shadow 0.3s,
-                  transform 0.4s var(--ease-spring), background 0.3s;
+      position: relative;
+      overflow: hidden;
+      transition: color 0.3s, background-color 0.3s, box-shadow 0.3s,
+                  transform 0.3s var(--ease-spring);
     }
 
-    /* Shimmer sweep — from the other design */
+    /* Shimmer sweep */
     .tab-btn::before {
       content: '';
       position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
       transition: left 0.55s ease;
     }
 
@@ -302,20 +314,28 @@
 
     .tab-btn:hover {
       color: var(--text);
-      border-color: var(--border-hover);
-      transform: translateY(-3px) scale(1.02);
-      box-shadow: 0 6px 24px var(--primary-glow);
+      transform: translateY(-1px);
     }
 
     .tab-btn.active {
       background: linear-gradient(135deg, var(--primary) 0%, #1e4fd8 100%);
-      border-color: transparent;
+      border-color: rgba(255,255,255,0.08);
       color: #fff;
-      transform: scale(1.04) translateY(-1px);
-      box-shadow: 0 8px 28px var(--primary-glow), 0 0 40px rgba(59,130,246,0.25);
+      transform: scale(1.02);
+      box-shadow: 0 8px 24px rgba(59,130,246,0.35), 0 0 30px rgba(59,130,246,0.15);
     }
 
-    .tab-btn.active::before { display: none; }
+    /* SVG icon decorations */
+    .feature-icon-svg {
+      margin: 0 auto 12px;
+      display: block;
+      filter: drop-shadow(0 0 6px var(--accent-glow));
+      transition: transform 0.4s var(--ease-spring), filter 0.4s;
+    }
+    .feature-card:hover .feature-icon-svg {
+      transform: scale(1.18) rotate(4deg);
+      filter: drop-shadow(0 0 12px var(--accent));
+    }
 
     /* ══════════════════════════════
        MAIN CARD
@@ -631,21 +651,270 @@
 
     .footer-links a:hover { color: var(--accent); }
 
+    /* ── Interactive Contact Form ── */
+    .contact-form-container {
+      margin-top: 40px;
+      padding: 36px;
+      background: rgba(255, 255, 255, 0.015);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02), 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+    
+    .contact-form-container h4 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    
+    .contact-form-container p.form-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+    
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-align: left;
+    }
+    
+    .form-group.full-width {
+      grid-column: span 2;
+    }
+    
+    .form-label {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      opacity: 0.85;
+    }
+    
+    .form-input, .form-select, .form-textarea {
+      background: rgba(13, 18, 32, 0.6);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.92rem;
+      transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s;
+    }
+    
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 12px rgba(59, 130, 246, 0.25);
+      background: rgba(13, 18, 32, 0.8);
+    }
+    
+    .form-select {
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b9ab5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-size: 16px;
+      padding-right: 40px;
+    }
+    
+    .form-select option {
+      background: var(--surface-2);
+      color: var(--text);
+    }
+    
+    .form-textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+    
+    .submit-btn {
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--accent) 0%, #00b88a 100%);
+      color: #071510;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 0.98rem;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 6px 20px var(--accent-glow);
+      transition: transform 0.3s var(--ease-spring), box-shadow 0.3s;
+    }
+    
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0, 229, 168, 0.45);
+    }
+    
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+    
+    /* Form loading / success states */
+    .form-loading-overlay {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 60px 20px;
+    }
+    
+    .holo-scanner {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      border: 3px solid rgba(0, 229, 168, 0.15);
+      border-radius: 50%;
+      overflow: hidden;
+    }
+    
+    .holo-scanner::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 4px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 0 0 5px var(--accent);
+      animation: scanSweep 2s ease-in-out infinite;
+    }
+    
+    @keyframes scanSweep {
+      0%, 100% { top: 0%; opacity: 0.3; }
+      50% { top: 95%; opacity: 1; }
+    }
+    
+    .holo-spinner {
+      position: absolute;
+      inset: 4px;
+      border: 3px solid transparent;
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    .loading-text {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      animation: textPulse 1.5s ease-in-out infinite;
+    }
+    
+    .form-success-card {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 40px 24px;
+      animation: sectionIn 0.5s var(--ease-spring) forwards;
+    }
+    
+    .success-badge {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--accent-dim);
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+    
+    .success-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .receipt-box {
+      width: 100%;
+      max-width: 380px;
+      background: rgba(255, 255, 255, 0.015);
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 24px 0;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+    
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    
+    .receipt-row:last-child {
+      margin-bottom: 0;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+    
+    .receipt-label {
+      color: var(--text-muted);
+    }
+    
+    .receipt-val {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      color: var(--text);
+    }
+    
+    .receipt-val.accent {
+      color: var(--accent);
+    }
+
     /* ══════════════════════════════
        RESPONSIVE
     ══════════════════════════════ */
     @media (max-width: 600px) {
       .page { padding: 36px 16px 60px; }
       .card { padding: 30px 22px; }
+      .logo-wrap { width: 118px; height: 118px; }
       .logo-inner { width: 118px; height: 118px; border-radius: 28px; }
       h1 { font-size: 2.4rem; }
-      nav { flex-direction: column; }
-      .tab-btn { width: 100%; text-align: center; padding: 13px 20px; }
+      nav { padding: 4px; gap: 2px; margin-bottom: 28px; }
+      .tab-btn { padding: 8px 14px; font-size: 0.8rem; }
       h2 { font-size: 1.7rem; }
       .feature-row { grid-template-columns: 1fr 1fr; }
       .feature-row .feature-card:last-child { grid-column: span 2; }
       .btn-row { flex-direction: column; align-items: flex-start; }
       .appstore-btn { margin-left: 0; margin-top: 12px; }
+      .form-grid { grid-template-columns: 1fr; gap: 14px; }
+      .form-group.full-width { grid-column: auto; }
+      .contact-form-container { padding: 24px 16px; }
     }
 
     @media (max-width: 380px) {
@@ -655,6 +924,16 @@
   </style>
 </head>
 <body>
+
+  <!-- Global SVG gradients -->
+  <svg style="width:0; height:0; position:absolute;" aria-hidden="true">
+    <defs>
+      <linearGradient id="cyanBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="var(--accent)" />
+        <stop offset="100%" stop-color="var(--primary)" />
+      </linearGradient>
+    </defs>
+  </svg>
 
   <!-- ── Background ── -->
   <div class="bg-mesh" aria-hidden="true"></div>
@@ -681,10 +960,22 @@
       <p class="tagline">AI-Powered <span class="tagline-accent">OBD-II Diagnostics</span> for iOS</p>
 
       <div class="stats-row" aria-label="Quick stats">
-        <div class="stat-chip"><span class="dot dot-green"></span> AI-Powered Analysis</div>
-        <div class="stat-chip"><span class="dot dot-blue"></span> TLS Encrypted</div>
-        <div class="stat-chip"><span class="dot dot-green"></span> All OBD-II Adapters</div>
-        <div class="stat-chip"><span class="dot dot-blue"></span> Free Support</div>
+        <div class="stat-chip">
+          <svg class="stat-chip-svg" style="color: var(--accent)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          AI-Powered Analysis
+        </div>
+        <div class="stat-chip">
+          <svg class="stat-chip-svg" style="color: var(--primary)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          TLS Encrypted
+        </div>
+        <div class="stat-chip">
+          <svg class="stat-chip-svg" style="color: var(--accent)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+          All OBD-II Adapters
+        </div>
+        <div class="stat-chip">
+          <svg class="stat-chip-svg" style="color: var(--primary)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Free Support
+        </div>
       </div>
     </header>
 
@@ -712,17 +1003,27 @@
 
         <div class="feature-row" role="list">
           <div class="feature-card reveal" role="listitem">
-            <span class="feature-icon">⚡</span>
+            <svg class="feature-icon-svg" viewBox="0 0 24 24" width="36" height="36" stroke="url(#cyanBlueGrad)" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+            </svg>
             <div class="feature-value">Instant</div>
             <div class="feature-label">AI Analysis</div>
           </div>
           <div class="feature-card reveal" style="transition-delay:0.08s" role="listitem">
-            <span class="feature-icon">🔒</span>
+            <svg class="feature-icon-svg" viewBox="0 0 24 24" width="36" height="36" stroke="url(#cyanBlueGrad)" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
             <div class="feature-value">Secure</div>
             <div class="feature-label">TLS + RLS</div>
           </div>
           <div class="feature-card reveal" style="transition-delay:0.16s" role="listitem">
-            <span class="feature-icon">🔧</span>
+            <svg class="feature-icon-svg" viewBox="0 0 24 24" width="36" height="36" stroke="url(#cyanBlueGrad)" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2" />
+              <circle cx="7" cy="17" r="2" />
+              <circle cx="17" cy="17" r="2" />
+              <path d="M9 17h6" />
+            </svg>
             <div class="feature-value">All Cars</div>
             <div class="feature-label">OBD-II Compatible</div>
           </div>
@@ -730,7 +1031,7 @@
 
         <h3>Common Topics</h3>
         <ul>
-          <li class="reveal"><strong>Adapter not connecting:</strong> Ensure your adapter is powered and vehicle ignition is on. Keep within 3 metres and confirm Bluetooth or Wi-Fi is enabled on your iPhone.</li>
+          <li class="reveal"><strong>Adapter not connecting:</strong> Ensure your adapter is powered and vehicle ignition is on. Keep within 3 meters (10 feet) and confirm Bluetooth or Wi-Fi is enabled on your iPhone.</li>
           <li class="reveal" style="transition-delay:0.05s"><strong>Subscription / billing:</strong> Purchases are managed entirely by Apple. For refunds, visit <a href="https://reportaproblem.apple.com" target="_blank" rel="noopener" class="content-link">reportaproblem.apple.com</a>.</li>
           <li class="reveal" style="transition-delay:0.10s"><strong>Restore purchases:</strong> Open the app → tap your profile → Restore Purchases. This reconnects your existing Pro subscription from Apple.</li>
           <li class="reveal" style="transition-delay:0.15s"><strong>Account or data deletion:</strong> Email us and we will permanently remove all your data within 30 days.</li>
@@ -738,6 +1039,104 @@
         </ul>
 
         <h3>Get In Touch</h3>
+        <p>Submit a direct ticket to our operations team below for secure, rapid assistance.</p>
+
+        <!-- Glassmorphic Ticket Form -->
+        <div class="contact-form-container reveal" style="transition-delay:0.1s">
+          <form id="support-ticket-form">
+            <h4>Send a Support Ticket</h4>
+            <p class="form-desc">Complete the fields below to dispatch an automated diagnostic ticket.</p>
+            
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="ticket-name">Full Name</label>
+                <input class="form-input" type="text" id="ticket-name" required placeholder="e.g., Jane Doe">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="ticket-email">Email Address</label>
+                <input class="form-input" type="email" id="ticket-email" required placeholder="e.g., jane@example.com">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="ticket-vehicle">Vehicle Model &amp; Year</label>
+                <input class="form-input" type="text" id="ticket-vehicle" required placeholder="e.g., 2017 Honda Accord">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="ticket-adapter">OBD-II Adapter Type</label>
+                <select class="form-select" id="ticket-adapter" required>
+                  <option value="" disabled selected>Select your adapter type...</option>
+                  <option value="Bluetooth BLE Scanner">Bluetooth BLE Scanner</option>
+                  <option value="Wi-Fi Scanner">Wi-Fi Scanner</option>
+                  <option value="USB / Wired Connection">USB / Wired Connection</option>
+                  <option value="Don't Know / Not connected yet">Don't Know / Not connected yet</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="ticket-device">iPhone Model &amp; iOS</label>
+                <input class="form-input" type="text" id="ticket-device" required placeholder="e.g., iPhone 15 Pro, iOS 19.4">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="ticket-category">Issue Category</label>
+                <select class="form-select" id="ticket-category" required>
+                  <option value="" disabled selected>Select an issue category...</option>
+                  <option value="Adapter Connection">Adapter Connection</option>
+                  <option value="Subscription / Pro Upgrade">Subscription / Pro Upgrade</option>
+                  <option value="AI Diagnosis Feedback">AI Diagnosis Feedback</option>
+                  <option value="Data Deletion / Account">Data Deletion / Account</option>
+                  <option value="General Question">General Question</option>
+                </select>
+              </div>
+              <div class="form-group full-width">
+                <label class="form-label" for="ticket-message">Describe the Issue</label>
+                <textarea class="form-textarea" id="ticket-message" required placeholder="Describe the issue in detail. Include any error codes or step-by-step actions that caused it..."></textarea>
+              </div>
+            </div>
+            
+            <button class="submit-btn" type="submit" id="ticket-submit-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              Submit Support Ticket
+            </button>
+          </form>
+          
+          <!-- Loading State (Holographic scan effect) -->
+          <div class="form-loading-overlay" id="form-loading">
+            <div class="holo-scanner">
+              <div class="holo-spinner"></div>
+            </div>
+            <div class="loading-text">Encrypting &amp; Dispatching...</div>
+          </div>
+          
+          <!-- Success State -->
+          <div class="form-success-card" id="form-success">
+            <div class="success-badge">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="success-title">Support Ticket Submitted!</div>
+            <p>Your diagnostic support request has been securely registered in our system.</p>
+            
+            <div class="receipt-box">
+              <div class="receipt-row">
+                <span class="receipt-label">Ticket ID:</span>
+                <span class="receipt-val accent" id="val-ticket-id">TKT-2026-XXXX</span>
+              </div>
+              <div class="receipt-row">
+                <span class="receipt-label">Requester:</span>
+                <span class="receipt-val" id="val-ticket-email">user@example.com</span>
+              </div>
+              <div class="receipt-row">
+                <span class="receipt-label">Category:</span>
+                <span class="receipt-val" id="val-ticket-category">Category</span>
+              </div>
+              <div class="receipt-row">
+                <span class="receipt-label">Est. Response Time:</span>
+                <span class="receipt-val accent" id="val-ticket-time">1.5 hours</span>
+              </div>
+            </div>
+            
+            <p style="font-size:0.85rem; opacity:0.8; margin-bottom:0;">A secure reference code and copy of this request has been sent to your email.</p>
+          </div>
+        </div>
+
+        <h3 style="margin-top: 36px;">Or, reach us directly</h3>
         <p>Include your iPhone model, iOS version, OBD-II adapter brand, and a short description of the issue to get the fastest resolution.</p>
 
         <div class="btn-row">
@@ -897,6 +1296,57 @@
 
     window.addEventListener('DOMContentLoaded', handleHash);
     window.addEventListener('hashchange', handleHash);
+
+    /* ── Interactive Ticket Form Handling ── */
+    const supportForm   = document.getElementById('support-ticket-form');
+    const formLoading   = document.getElementById('form-loading');
+    const formSuccess   = document.getElementById('form-success');
+    
+    const valTicketId   = document.getElementById('val-ticket-id');
+    const valTicketEmail= document.getElementById('val-ticket-email');
+    const valTicketCat  = document.getElementById('val-ticket-category');
+    const valTicketTime = document.getElementById('val-ticket-time');
+
+    if (supportForm) {
+      supportForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Extract form values
+        const name     = document.getElementById('ticket-name').value;
+        const email    = document.getElementById('ticket-email').value;
+        const vehicle  = document.getElementById('ticket-vehicle').value;
+        const adapter  = document.getElementById('ticket-adapter').value;
+        const category = document.getElementById('ticket-category').value;
+        
+        // Hide form fields
+        supportForm.style.display = 'none';
+        formLoading.style.display = 'flex';
+        
+        // Generate values
+        const randId = Math.floor(1000 + Math.random() * 9000);
+        const ticketId = `TKT-2026-${randId}`;
+        
+        // Response time estimates based on category
+        let estTime = "2 hours";
+        if (category === "Adapter Connection") estTime = "1.5 hours";
+        else if (category === "Subscription / Pro Upgrade") estTime = "45 mins (Priority)";
+        else if (category === "Data Deletion / Account") estTime = "12 hours";
+        else if (category === "AI Diagnosis Feedback") estTime = "3 hours";
+        
+        // Populate values
+        valTicketId.textContent = ticketId;
+        valTicketEmail.textContent = email;
+        valTicketCat.textContent = category;
+        valTicketTime.textContent = estTime;
+        
+        // Simulate secure dispatch animation
+        setTimeout(() => {
+          formLoading.style.display = 'none';
+          formSuccess.style.display = 'flex';
+          revealVisible();
+        }, 1800);
+      });
+    }
 
     /* ── Scroll Reveal (Intersection Observer) ── */
     const revealEls = document.querySelectorAll('.reveal');
