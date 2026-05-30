@@ -15,7 +15,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
 
   <style>
     /* ══════════════════════════════
@@ -48,11 +48,12 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: 16px;
-      line-height: 1.7;
+      line-height: 1.72;
       min-height: 100vh;
       overflow-x: hidden;
+      font-feature-settings: 'kern' 1, 'liga' 1;
     }
 
     /* ══════════════════════════════
@@ -137,7 +138,7 @@
     /* ══════════════════════════════
        HEADER
     ══════════════════════════════ */
-    header { text-align: center; margin-bottom: 44px; }
+    header { text-align: center; margin-bottom: 52px; }
 
     /* Logo */
     .logo-wrap {
@@ -187,19 +188,20 @@
 
     /* Animated gradient title */
     h1 {
-      font-family: 'Outfit', sans-serif;
-      font-size: clamp(2.6rem, 7vw, 3.8rem);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.8rem, 8vw, 4.6rem);
       font-weight: 800;
-      letter-spacing: -1.5px;
-      line-height: 1.15;
+      letter-spacing: -2.5px;
+      line-height: 1.12;
       padding-bottom: 0.12em;
-      background: linear-gradient(135deg, #ffffff 0%, #93c5fd 45%, var(--accent) 100%);
+      background: linear-gradient(135deg, #ffffff 20%, #7dd3fc 60%, var(--accent) 100%);
       background-size: 200% 200%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      animation: titlePulse 6s ease-in-out infinite;
-      margin-bottom: 8px;
+      animation: titlePulse 7s ease-in-out infinite;
+      margin-bottom: 10px;
+      font-feature-settings: 'ss01' 1;
     }
 
     @keyframes titlePulse {
@@ -209,7 +211,10 @@
 
     .tagline {
       color: var(--text-muted);
-      font-size: 1.1rem; font-weight: 400; letter-spacing: 0.01em;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      letter-spacing: 0.015em;
     }
 
     /* Animated underline on the highlighted word — from the other design */
@@ -246,7 +251,9 @@
       border: 1px solid var(--border);
       border-radius: var(--radius-pill);
       padding: 8px 18px;
-      font-size: 0.82rem; font-weight: 500;
+      font-size: 0.79rem; font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: 0.03em;
       color: var(--text-muted);
       backdrop-filter: blur(10px);
       transition: border-color 0.3s, background 0.3s, color 0.3s, box-shadow 0.3s;
@@ -287,9 +294,9 @@
     }
 
     .tab-btn {
-      font-family: 'Outfit', sans-serif;
+      font-family: 'Space Grotesk', sans-serif;
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       letter-spacing: 0.01em;
       padding: 11px 26px;
       border-radius: var(--radius-pill);
@@ -410,34 +417,45 @@
        TYPOGRAPHY
     ══════════════════════════════ */
     h2 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 2rem; font-weight: 700;
-      letter-spacing: -0.3px; color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.1rem; font-weight: 700;
+      letter-spacing: -0.5px; color: var(--text);
       margin-bottom: 24px;
       display: flex; align-items: center; gap: 14px;
     }
 
     .h2-bar {
-      display: inline-block; width: 5px; height: 30px; flex-shrink: 0;
+      display: inline-block; width: 4px; height: 28px; flex-shrink: 0;
       background: linear-gradient(180deg, var(--accent), var(--primary));
       border-radius: 3px;
       box-shadow: 0 0 12px var(--accent-glow);
     }
 
-    /* Gradient h3 — from the other design */
+    /* h3 section headings */
     h3 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.15rem; font-weight: 700;
-      background: linear-gradient(135deg, #93c5fd, var(--accent));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin: 34px 0 12px;
-      letter-spacing: 0.01em;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      margin: 38px 0 14px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    h3::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
     }
 
     p {
       color: var(--text-muted); margin-bottom: 18px;
-      font-size: 0.97rem; font-weight: 400; line-height: 1.75;
+      font-size: 0.97rem; font-weight: 400; line-height: 1.78;
+      font-family: 'DM Sans', sans-serif;
     }
 
     p em {
@@ -536,16 +554,16 @@
     }
 
     .feature-label {
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.78rem; font-weight: 600;
-      text-transform: uppercase; letter-spacing: 0.08em;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.75rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.1em;
       color: var(--text-muted);
     }
 
     .feature-value {
-      font-family: 'Outfit', sans-serif;
+      font-family: 'Space Grotesk', sans-serif;
       font-size: 1.05rem; font-weight: 700;
-      color: var(--text); margin-bottom: 2px;
+      color: var(--text); margin-bottom: 3px;
     }
 
     /* ── Info badge ── */
@@ -554,9 +572,11 @@
       background: var(--primary-dim);
       border: 1px solid rgba(59,130,246,0.28);
       border-radius: var(--radius-pill);
-      padding: 6px 14px;
-      font-size: 0.82rem; color: #93c5fd; font-weight: 500;
-      margin-bottom: 18px;
+      padding: 6px 16px;
+      font-size: 0.79rem; color: #93c5fd; font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: 0.03em;
+      margin-bottom: 20px;
     }
 
     /* ── CTA Button with shimmer ── */
@@ -564,12 +584,13 @@
       display: inline-flex; align-items: center; gap: 12px;
       background: linear-gradient(135deg, var(--accent) 0%, #00b88a 100%);
       color: #071510;
-      font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1rem;
-      padding: 17px 36px; border-radius: var(--radius-pill);
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem;
+      padding: 17px 38px; border-radius: var(--radius-pill);
       text-decoration: none; margin-top: 18px;
       position: relative; overflow: hidden;
       transition: transform 0.4s var(--ease-spring), box-shadow 0.4s;
       box-shadow: 0 6px 28px var(--accent-glow), inset 0 -2px 8px rgba(0,0,0,0.1);
+      letter-spacing: 0.01em;
     }
 
     /* Shimmer sweep — from the other design */
@@ -614,11 +635,12 @@
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.12);
       color: var(--text);
-      font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 0.95rem;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 0.92rem;
       padding: 14px 28px; border-radius: 16px;
       text-decoration: none; margin-top: 18px; margin-left: 14px;
       backdrop-filter: blur(10px);
       transition: background 0.3s, border-color 0.3s, transform 0.4s var(--ease-spring), box-shadow 0.3s;
+      letter-spacing: 0.01em;
     }
 
     .appstore-btn:hover {
@@ -635,18 +657,24 @@
 
     /* ── Footer ── */
     footer {
-      text-align: center; margin-top: 48px;
-      color: rgba(139,154,181,0.4); font-size: 0.82rem;
+      text-align: center; margin-top: 56px;
+      color: rgba(139,154,181,0.4); font-size: 0.8rem;
+      font-family: 'DM Sans', sans-serif;
     }
 
     .footer-links {
-      display: flex; justify-content: center; gap: 20px;
-      margin-bottom: 10px; flex-wrap: wrap;
+      display: flex; justify-content: center; gap: 24px;
+      margin-bottom: 12px; flex-wrap: wrap;
     }
 
     .footer-links a {
       color: rgba(139,154,181,0.45);
       text-decoration: none;
+      font-weight: 500;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
       transition: color 0.25s;
     }
 
