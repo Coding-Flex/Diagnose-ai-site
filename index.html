@@ -470,6 +470,8 @@
       position: relative;
       display: grid;
       place-items: center;
+      overflow: hidden; /* Prevent absolute-positioned neon halos from causing mobile overflow */
+      width: 100%;
     }
 
     .halo {
@@ -974,6 +976,13 @@
         0 0 50px rgba(0, 229, 168, 0.16);
     }
 
+    .preview-card-wide {
+      grid-column: span 2;
+      min-height: auto;
+      padding: 28px;
+      background: radial-gradient(circle at 10% 0%, rgba(59,130,246,0.12), transparent 44%), rgba(8,9,15,0.48);
+    }
+
     .preview-card h3 { margin-bottom: 10px; }
     .preview-card p { font-size: 0.92rem; }
 
@@ -1406,6 +1415,10 @@
       .feature-grid, .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .preview-grid, .two-col { grid-template-columns: 1fr; }
       .preview-card.large { min-height: 450px; }
+      .preview-card-wide {
+        grid-column: span 1 !important;
+        padding: 20px !important;
+      }
     }
 
     @media (max-width: 680px) {
@@ -1651,7 +1664,7 @@
             </article>
 
             <!-- Bento Card 4: Garage Scan Ledger (spans 2 columns on desktop) -->
-            <article class="preview-card" style="grid-column: span 2; min-height: auto; padding: 28px; background: radial-gradient(circle at 10% 0%, rgba(59,130,246,0.12), transparent 44%), rgba(8,9,15,0.48);">
+            <article class="preview-card preview-card-wide">
               <div class="report-title">
                 <span class="spark">&#10022;</span>
                 <h3>Digital Fleet Garage scan histories</h3>
