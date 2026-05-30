@@ -1,1264 +1,1958 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Diagnose AI — AI-Powered Vehicle Diagnostics for iOS</title>
-  <meta name="description" content="Diagnose AI uses AI to turn your OBD-II engine fault codes into clear, actionable repair plans. Available on iOS.">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Diagnose AI - AI OBD-II Diagnostics for iPhone</title>
+  <meta name="description" content="Diagnose AI turns OBD-II fault codes into plain-English explanations, urgency guidance, repair steps, and mechanic-ready summaries for iPhone.">
   <link rel="canonical" href="https://diagnoseai.us">
-  <meta property="og:title" content="Diagnose AI — AI-Powered Vehicle Diagnostics">
-  <meta property="og:description" content="Turn engine fault codes into clear, actionable repair plans with AI. Available on iOS.">
+
+  <meta property="og:title" content="Diagnose AI - AI OBD-II Diagnostics for iPhone">
+  <meta property="og:description" content="Decode your check engine light with plain-English AI repair guidance, urgency levels, and cost-aware next steps.">
   <meta property="og:image" content="https://diagnoseai.us/mascot.png">
   <meta property="og:url" content="https://diagnoseai.us">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#08090f">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* ══════════════════════════════
-       TOKENS
-    ══════════════════════════════ */
     :root {
-      --bg:            #08090f;
-      --surface:       #0f1420;
-      --surface-2:     #141c30;
-      --primary:       #3b82f6;
-      --primary-dim:   rgba(59,130,246,0.15);
-      --primary-glow:  rgba(59,130,246,0.4);
-      --accent:        #00e5a8;
-      --accent-dim:    rgba(0,229,168,0.12);
-      --accent-glow:   rgba(0,229,168,0.4);
-      --text:          #f0f4ff;
-      --text-muted:    #8b9ab5;
-      --border:        rgba(255,255,255,0.07);
-      --border-hover:  rgba(59,130,246,0.35);
-      --glass-bg:      rgba(13,18,32,0.72);
-      --radius-lg:     26px;
-      --radius-pill:   999px;
-      --ease-spring:   cubic-bezier(0.34,1.56,0.64,1);
-      --ease-smooth:   cubic-bezier(0.16,1,0.3,1);
+      --bg: #0d0e15;
+      --bg-2: #121422;
+      --surface: rgba(22, 25, 41, 0.76);
+      --surface-strong: rgba(28, 32, 54, 0.94);
+      --surface-soft: rgba(255, 255, 255, 0.05);
+      --text: #fffbf2;
+      --muted: #d5cbb8;
+      --muted-2: #b3a795;
+      --line: rgba(255, 255, 255, 0.09);
+      --line-strong: rgba(255, 255, 255, 0.16);
+      --blue: #3b82f6;
+      --blue-2: #60a5fa;
+      --green: #00e5a8;
+      --green-2: #4dffd1;
+      --red: #fb7185;
+      --amber: #fbbf24;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --pill: 999px;
+      --max: 1200px;
+      --font-heading: 'Outfit', system-ui, sans-serif;
+      --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-
     body {
+      margin: 0;
+      min-height: 100vh;
       background: var(--bg);
       color: var(--text);
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      font-size: 16px;
-      line-height: 1.75;
-      min-height: 100vh;
+      font-family: var(--font-body);
+      line-height: 1.7;
       overflow-x: hidden;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* ══════════════════════════════
-       BACKGROUND LAYERS
-    ══════════════════════════════ */
-    .bg-mesh {
-      position: fixed; inset: 0; z-index: 0; pointer-events: none;
-      background:
-        radial-gradient(ellipse 70% 50% at 15% 10%,  rgba(59,130,246,0.13) 0%, transparent 55%),
-        radial-gradient(ellipse 55% 45% at 85% 90%, rgba(0,229,168,0.10)  0%, transparent 55%);
-      animation: meshShift 18s ease-in-out infinite alternate;
-    }
+    a { color: inherit; }
+    img, svg { display: block; }
+    button, input, textarea, select { font: inherit; }
 
-    @keyframes meshShift {
-      to { transform: scale(1.08) rotate(4deg); opacity: 0.85; }
-    }
-
-    /* Scrolling grid */
-    body::before {
-      content: '';
-      position: fixed; inset: 0; z-index: 0; pointer-events: none;
-      background-image:
-        linear-gradient(rgba(59,130,246,0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(59,130,246,0.035) 1px, transparent 1px);
-      background-size: 50px 50px;
-      animation: gridDrift 28s linear infinite;
-    }
-
-    @keyframes gridDrift {
-      to { background-position: 50px 50px; }
-    }
-
-    /* Orbs — moved by JS parallax */
-    .orb {
-      position: fixed; border-radius: 50%; pointer-events: none;
-      filter: blur(70px); z-index: 0;
-      transition: transform 0.1s linear;
-    }
-    .orb-1 {
-      width: 520px; height: 520px;
-      background: radial-gradient(circle, rgba(59,130,246,0.11) 0%, transparent 70%);
-      top: -80px; left: -120px;
-      animation: orbPulse 9s ease-in-out infinite alternate;
-    }
-    .orb-2 {
-      width: 450px; height: 450px;
-      background: radial-gradient(circle, rgba(0,229,168,0.09) 0%, transparent 70%);
-      bottom: -60px; right: -90px;
-      animation: orbPulse 11s ease-in-out infinite alternate-reverse;
-    }
-
-    @keyframes orbPulse {
-      to { transform: scale(1.15) translate(15px, -20px); }
-    }
-
-    /* Subtle floating particles */
-    .particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
-
-    .particle {
-      position: absolute;
-      border-radius: 50%;
-      opacity: 0;
-      animation: particleDrift linear infinite;
-    }
-
-    @keyframes particleDrift {
-      0%   { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
-      10%  { opacity: 0.5; }
-      90%  { opacity: 0.3; }
-      100% { transform: translateY(-120vh) translateX(40px) scale(0.5); opacity: 0; }
-    }
-
-    /* ══════════════════════════════
-       LAYOUT
-    ══════════════════════════════ */
-    .page {
-      position: relative; z-index: 1;
-      max-width: 820px; margin: 0 auto;
-      padding: 60px 24px 80px;
-    }
-
-    /* ══════════════════════════════
-       HEADER
-    ══════════════════════════════ */
-    header { text-align: center; margin-bottom: 44px; }
-
-    /* Logo */
-    .logo-wrap {
-      display: inline-block; position: relative;
-      width: 148px; height: 148px;
-      margin-bottom: 28px; cursor: pointer;
-    }
-
-    /* Animated gradient glow ring (no spin — avoids cheap look) */
-    .logo-glow {
-      position: absolute; inset: -6px; border-radius: 44px;
-      background: linear-gradient(135deg, var(--primary), var(--accent), var(--primary));
-      background-size: 300% 300%;
-      animation: glowShift 5s ease infinite;
-      opacity: 0.55; filter: blur(14px); z-index: -1;
-    }
-
-    /* Gradient border ring */
-    .logo-border {
-      position: absolute; inset: -2px; border-radius: 40px;
-      background: linear-gradient(135deg, var(--primary), var(--accent), var(--primary));
-      background-size: 300% 300%;
-      animation: glowShift 5s ease infinite;
-      padding: 2px; border-radius: 40px;
-    }
-
-    @keyframes glowShift {
-      0%, 100% { background-position: 0% 50%; }
-      50%       { background-position: 100% 50%; }
-    }
-
-    .logo-inner {
-      width: 148px; height: 148px; border-radius: 36px;
-      background: var(--surface);
-      overflow: hidden; display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.05);
-      transition: transform 0.4s var(--ease-spring);
-    }
-
-    .logo-wrap:hover .logo-inner {
-      transform: scale(1.07) rotate(-3deg);
-    }
-
-    .logo-inner img {
-      width: 100%; height: 100%; object-fit: contain; border-radius: 32px;
-    }
-
-    /* Animated gradient title — from the other design, it looks great */
-    h1 {
-      font-family: 'Outfit', sans-serif;
-      font-size: clamp(2.8rem, 8vw, 4.2rem);
+    .skip-link {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 999;
+      transform: translateY(-160%);
+      background: var(--green);
+      color: #04120e;
+      padding: 10px 14px;
+      border-radius: 12px;
       font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      background: linear-gradient(135deg, #ffffff 10%, #a5d0ff 50%, var(--accent) 100%);
-      background-size: 200% 200%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: titlePulse 6s ease-in-out infinite;
-      margin-bottom: 14px;
-      filter: drop-shadow(0 4px 20px rgba(59, 130, 246, 0.15));
+      text-decoration: none;
+      transition: transform 0.2s ease;
     }
 
-    @keyframes titlePulse {
-      0%, 100% { background-position: 0% 50%; }
-      50%       { background-position: 100% 50%; }
+    .skip-link:focus { transform: translateY(0); }
+
+    .site-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(251, 191, 36, 0.08), transparent 38%),
+        radial-gradient(circle at 78% 22%, rgba(0, 229, 168, 0.07), transparent 32%),
+        radial-gradient(circle at 50% 92%, rgba(59, 130, 246, 0.08), transparent 42%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 52%, var(--bg) 100%);
     }
 
-    .tagline {
-      font-family: 'Outfit', sans-serif;
-      color: var(--text-muted);
-      font-size: 1.25rem; font-weight: 400;
-      letter-spacing: -0.01em;
-      margin-bottom: 24px;
-    }
-
-    /* Animated underline on the highlighted word — from the other design */
-    .tagline-accent {
-      color: var(--accent); font-weight: 600;
-      position: relative; display: inline-block;
-      text-shadow: 0 0 12px var(--accent-glow);
-    }
-
-    .tagline-accent::after {
+    .site-bg::before {
       content: '';
-      position: absolute; bottom: -3px; left: 0;
-      width: 100%; height: 2px;
-      background: linear-gradient(90deg, var(--accent), transparent);
-      animation: underlinePulse 2.5s ease-in-out infinite;
-      transform-origin: left;
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.038) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.038) 1px, transparent 1px);
+      background-size: 58px 58px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent 82%);
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent 82%);
     }
 
-    @keyframes underlinePulse {
-      0%, 100% { transform: scaleX(0.4); opacity: 0.3; }
-      50%       { transform: scaleX(1);   opacity: 1; }
+    .site-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.08), transparent 38%);
+      pointer-events: none;
     }
 
-    /* ══════════════════════════════
-       FEATURE STATS STRIP
-    ══════════════════════════════ */
-    .stats-row {
-      display: flex; gap: 12px; justify-content: center;
-      flex-wrap: wrap; margin: 24px 0 0;
+    .container {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
     }
 
-    .stat-chip {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-pill);
-      padding: 8px 18px;
-      font-size: 0.82rem; font-weight: 500;
-      color: var(--text-muted);
-      backdrop-filter: blur(10px);
-      transition: border-color 0.3s, background 0.3s, color 0.3s, box-shadow 0.3s;
+    .section {
+      padding: 96px 0;
+      position: relative;
     }
 
-    .stat-chip:hover {
-      border-color: var(--border-hover);
-      background: var(--primary-dim);
-      color: #93c5fd;
-      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.15);
+    .section.compact { padding: 70px 0; }
+
+    .section-heading {
+      max-width: 720px;
+      margin: 0 auto 42px;
+      text-align: center;
     }
 
-    .stat-chip-svg {
-      width: 13px; height: 13px;
-      fill: none; stroke: currentColor; stroke-width: 2.2;
-      stroke-linecap: round; stroke-linejoin: round;
-      flex-shrink: 0;
-      filter: drop-shadow(0 0 3px currentColor);
-    }
-
-    /* ══════════════════════════════
-       NAV TABS
-    ══════════════════════════════ */
-    nav {
-      display: flex;
-      justify-content: center;
+    .eyebrow {
+      display: inline-flex;
       align-items: center;
-      width: fit-content;
-      margin: 0 auto 36px;
-      background: rgba(13, 18, 32, 0.5);
-      border: 1px solid var(--border);
-      padding: 6px;
-      border-radius: var(--radius-pill);
-      gap: 6px;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-    }
-
-    .tab-btn {
-      font-family: 'Outfit', sans-serif;
-      font-weight: 600;
-      font-size: 0.95rem;
-      letter-spacing: 0.01em;
-      padding: 11px 26px;
-      border-radius: var(--radius-pill);
-      border: 1px solid transparent;
-      background: transparent;
-      color: var(--text-muted);
-      cursor: pointer;
+      gap: 9px;
+      padding: 7px 13px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--green-2);
+      border-radius: var(--pill);
+      font-family: var(--font-heading);
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
       position: relative;
       overflow: hidden;
-      transition: color 0.3s, background-color 0.3s, box-shadow 0.3s,
-                  transform 0.3s var(--ease-spring);
+      transition: border-color 0.3s ease, background 0.3s ease;
     }
 
-    /* Shimmer sweep */
-    .tab-btn::before {
+    .eyebrow::after {
       content: '';
-      position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
-      transition: left 0.55s ease;
-    }
-
-    .tab-btn:hover::before { left: 100%; }
-
-    .tab-btn:hover {
-      color: var(--text);
-      transform: translateY(-1px);
-    }
-
-    .tab-btn.active {
-      background: linear-gradient(135deg, var(--primary) 0%, #1e4fd8 100%);
-      border-color: rgba(255,255,255,0.08);
-      color: #fff;
-      transform: scale(1.02);
-      box-shadow: 0 8px 24px rgba(59,130,246,0.35), 0 0 30px rgba(59,130,246,0.15);
-    }
-
-    /* SVG icon decorations */
-    .feature-icon-svg {
-      margin: 0 auto 12px;
-      display: block;
-      filter: drop-shadow(0 0 6px var(--accent-glow));
-      transition: transform 0.4s var(--ease-spring), filter 0.4s;
-    }
-    .feature-card:hover .feature-icon-svg {
-      transform: scale(1.18) rotate(4deg);
-      filter: drop-shadow(0 0 12px var(--accent));
-    }
-
-    /* ══════════════════════════════
-       MAIN CARD
-    ══════════════════════════════ */
-    .card {
-      background: var(--glass-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 52px 52px;
-      backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
-      box-shadow: 0 30px 80px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.05);
-      position: relative; overflow: hidden;
-      transition: box-shadow 0.4s;
-    }
-
-    /* Animated gradient top border */
-    .card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent 0%, var(--primary) 30%, var(--accent) 70%, transparent 100%);
-      background-size: 200% 100%;
-      animation: borderSweep 6s ease-in-out infinite;
-    }
-
-    @keyframes borderSweep {
-      0%, 100% { background-position: -100% 0; }
-      50%       { background-position: 200% 0; }
-    }
-
-    /* Glow on hover — from the other design */
-    .card::after {
-      content: '';
-      position: absolute; inset: -2px; border-radius: var(--radius-lg);
-      background: linear-gradient(45deg, var(--primary), var(--accent), var(--primary));
-      background-size: 400% 400%;
-      animation: borderGlow 8s ease infinite;
-      opacity: 0; z-index: -1;
-      transition: opacity 0.4s;
-    }
-
-    .card:hover::after { opacity: 0.12; }
-
-    @keyframes borderGlow {
-      0%, 100% { background-position: 0% 50%; }
-      50%       { background-position: 100% 50%; }
-    }
-
-    /* ══════════════════════════════
-       SECTIONS
-    ══════════════════════════════ */
-    .section { display: none; opacity: 0; }
-
-    .section.active {
-      display: block;
-      animation: sectionIn 0.5s var(--ease-spring) forwards;
-    }
-
-    @keyframes sectionIn {
-      from { opacity: 0; transform: translateY(18px) scale(0.99); }
-      to   { opacity: 1; transform: translateY(0)   scale(1); }
-    }
-
-    /* Scroll-reveal for child elements */
-    .reveal {
-      opacity: 0; transform: translateY(20px);
-      transition: opacity 0.6s var(--ease-smooth), transform 0.6s var(--ease-smooth);
-    }
-    .reveal.in-view { opacity: 1; transform: translateY(0); }
-
-    /* ══════════════════════════════
-       TYPOGRAPHY
-    ══════════════════════════════ */
-    h2 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 2.1rem; font-weight: 700;
-      letter-spacing: -0.02em; color: var(--text);
-      margin-bottom: 24px;
-      display: flex; align-items: center; gap: 14px;
-    }
-
-    .h2-bar {
-      display: inline-block; width: 5px; height: 30px; flex-shrink: 0;
-      background: linear-gradient(180deg, var(--accent), var(--primary));
-      border-radius: 3px;
-      box-shadow: 0 0 12px var(--accent-glow);
-    }
-
-    /* Gradient h3 — from the other design */
-    h3 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.25rem; font-weight: 700;
-      background: linear-gradient(135deg, #a5d0ff, var(--accent));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin: 36px 0 16px;
-      letter-spacing: -0.01em;
-    }
-
-    p {
-      color: var(--text-muted); margin-bottom: 18px;
-      font-size: 0.97rem; font-weight: 400; line-height: 1.75;
-    }
-
-    p em {
-      color: rgba(139,154,181,0.65); font-style: normal; font-size: 0.88rem;
-    }
-
-    /* Content links with underline animation */
-    .content-link {
-      color: var(--accent); text-decoration: none; position: relative;
-      transition: color 0.25s;
-    }
-
-    .content-link::after {
-      content: '';
-      position: absolute; bottom: -1px; left: 0;
-      width: 0; height: 1.5px;
-      background: var(--accent);
-      transition: width 0.3s var(--ease-smooth);
-    }
-
-    .content-link:hover { color: #33ffbf; }
-    .content-link:hover::after { width: 100%; }
-
-    /* ── List items as glass cards ── */
-    ul { list-style: none; margin-bottom: 22px; }
-
-    li {
-      position: relative;
-      padding: 12px 16px 12px 44px;
-      margin-bottom: 9px;
-      color: var(--text-muted);
-      font-size: 0.95rem; line-height: 1.6;
-      background: rgba(255,255,255,0.02);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      transition: background 0.25s, border-color 0.25s, transform 0.3s var(--ease-spring);
-    }
-
-    li:hover {
-      background: rgba(59,130,246,0.05);
-      border-color: rgba(59,130,246,0.22);
-      transform: translateX(5px);
-    }
-
-    /* Diamond bullet — from the other design (nicer than arrow) */
-    li::before {
-      content: '';
-      position: absolute; left: 16px; top: 50%; transform: translateY(-50%) rotate(45deg);
-      width: 9px; height: 9px;
-      background: linear-gradient(135deg, var(--accent), var(--primary));
-      border-radius: 2px;
-      box-shadow: 0 0 8px var(--accent-glow);
-    }
-
-    li strong { color: var(--text); font-weight: 600; }
-
-    /* ── Divider with center dot ── */
-    .divider {
-      border: none; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-      margin: 36px 0; position: relative;
-    }
-
-    .divider::after {
-      content: '';
-      position: absolute; top: 50%; left: 50%;
-      width: 8px; height: 8px; border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 14px var(--accent-glow);
-      transform: translate(-50%, -50%);
-    }
-
-    /* ── Feature mini-cards in support ── */
-    .feature-row {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 14px; margin: 28px 0 34px;
-    }
-
-    .feature-card {
-      background: rgba(255,255,255,0.025);
-      border: 1px solid var(--border);
-      border-radius: 16px; padding: 20px 16px;
-      text-align: center;
-      transition: background 0.3s, border-color 0.3s, transform 0.4s var(--ease-spring);
-    }
-
-    .feature-card:hover {
-      background: var(--primary-dim);
-      border-color: var(--border-hover);
-      transform: translateY(-5px);
-      box-shadow: 0 12px 30px rgba(59,130,246,0.15);
-    }
-
-    .feature-icon {
-      font-size: 1.6rem; margin-bottom: 8px; display: block;
-    }
-
-    .feature-label {
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.78rem; font-weight: 600;
-      text-transform: uppercase; letter-spacing: 0.08em;
-      color: var(--text-muted);
-    }
-
-    .feature-value {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.05rem; font-weight: 700;
-      color: var(--text); margin-bottom: 2px;
-    }
-
-    /* ── Info badge ── */
-    .info-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--primary-dim);
-      border: 1px solid rgba(59,130,246,0.28);
-      border-radius: var(--radius-pill);
-      padding: 6px 14px;
-      font-size: 0.82rem; color: #93c5fd; font-weight: 500;
-      margin-bottom: 18px;
-    }
-
-    /* ── CTA Button with shimmer ── */
-    .cta-btn {
-      display: inline-flex; align-items: center; gap: 12px;
-      background: linear-gradient(135deg, var(--accent) 0%, #00b88a 100%);
-      color: #071510;
-      font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1rem;
-      padding: 17px 36px; border-radius: var(--radius-pill);
-      text-decoration: none;
-      position: relative; overflow: hidden;
-      transition: transform 0.4s var(--ease-spring), box-shadow 0.4s;
-      box-shadow: 0 6px 28px var(--accent-glow), inset 0 -2px 8px rgba(0,0,0,0.1);
-    }
-
-    /* Shimmer sweep — from the other design */
-    .cta-btn::before {
-      content: '';
-      position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-      transition: left 0.65s ease;
-    }
-
-    .cta-btn:hover::before { left: 100%; }
-
-    .cta-btn:hover {
-      color: #071510;
-      transform: translateY(-4px) scale(1.04);
-      box-shadow: 0 14px 44px rgba(0,229,168,0.55), 0 0 60px rgba(0,229,168,0.3);
-    }
-
-    .cta-btn svg { transition: transform 0.3s; flex-shrink: 0; }
-    .cta-btn:hover svg { transform: translateX(3px); }
-
-    /* Subtle pulse ring around CTA */
-    .cta-wrap { display: inline-block; position: relative; }
-
-    .cta-wrap::after {
-      content: '';
-      position: absolute; inset: -6px; border-radius: var(--radius-pill);
-      border: 2px solid var(--accent);
-      opacity: 0;
-      animation: ctaPulse 3s ease-in-out infinite 1.5s;
-    }
-
-    @keyframes ctaPulse {
-      0%   { transform: scale(0.95); opacity: 0.5; }
-      70%  { transform: scale(1.08); opacity: 0; }
-      100% { opacity: 0; }
-    }
-
-    /* ── App Store button ── */
-    .appstore-btn {
-      display: inline-flex; align-items: center; gap: 12px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
-      color: var(--text);
-      font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 0.95rem;
-      padding: 14px 28px; border-radius: 16px;
-      text-decoration: none;
-      backdrop-filter: blur(10px);
-      transition: background 0.3s, border-color 0.3s, transform 0.4s var(--ease-spring), box-shadow 0.3s;
-    }
-
-    .appstore-btn:hover {
-      color: var(--text);
-      background: rgba(255,255,255,0.1);
-      border-color: rgba(255,255,255,0.25);
-      transform: translateY(-4px) scale(1.02);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.4);
-    }
-
-    .btn-row {
-      display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 24px;
-    }
-
-    /* ── Footer ── */
-    footer {
-      text-align: center; margin-top: 48px;
-      color: rgba(139,154,181,0.4); font-size: 0.82rem;
-    }
-
-    .footer-links {
-      display: flex; justify-content: center; gap: 20px;
-      margin-bottom: 10px; flex-wrap: wrap;
-    }
-
-    .footer-links a {
-      color: rgba(139,154,181,0.45);
-      text-decoration: none;
-      transition: color 0.25s;
-    }
-
-    .footer-links a:hover { color: var(--accent); }
-
-    /* ── Interactive Contact Form ── */
-    .contact-form-container {
-      margin-top: 40px;
-      padding: 36px;
-      background: rgba(255, 255, 255, 0.015);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      backdrop-filter: blur(10px);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02), 0 20px 40px rgba(0, 0, 0, 0.2);
-    }
-    
-    .contact-form-container h4 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-    
-    .contact-form-container p.form-desc {
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      margin-bottom: 24px;
-    }
-    
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin-bottom: 20px;
-    }
-    
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      text-align: left;
-    }
-    
-    .form-group.full-width {
-      grid-column: span 2;
-    }
-    
-    .form-label {
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.82rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text);
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.5) 0%, rgba(0, 229, 168, 0.5) 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
       opacity: 0.85;
     }
-    
-    .form-input, .form-select, .form-textarea {
-      background: rgba(13, 18, 32, 0.6);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 16px;
-      color: var(--text);
-      font-family: inherit;
-      font-size: 0.92rem;
-      transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s;
+
+    .eyebrow::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 14px rgba(0, 229, 168, 0.8);
+    }
+
+    h1, h2, h3, h4 {
+      font-family: var(--font-heading);
+      margin: 0;
+      letter-spacing: -0.035em;
+      line-height: 1.12;
     }
     
-    .form-input:focus, .form-select:focus, .form-textarea:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 12px rgba(59, 130, 246, 0.25);
-      background: rgba(13, 18, 32, 0.8);
+    h1 {
+      font-size: clamp(2.1rem, 5.2vw, 3.6rem);
+      max-width: 920px;
+      background: linear-gradient(135deg, #ffffff 8%, #b9d9ff 48%, var(--green-2) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
     
-    .form-select {
-      appearance: none;
-      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b9ab5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-      background-repeat: no-repeat;
-      background-position: right 14px center;
-      background-size: 16px;
-      padding-right: 40px;
+    h2 {
+      font-size: clamp(1.8rem, 4.2vw, 2.5rem);
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      background: linear-gradient(135deg, #ffffff 40%, #dae7ff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-    
-    .form-select option {
-      background: var(--surface-2);
-      color: var(--text);
+    h3 { font-size: 1.35rem; letter-spacing: -0.02em; line-height: 1.2; }
+    p { margin: 0; color: var(--muted); }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #ffffff 0%, #93c5fd 54%, var(--green-2) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-    
-    .form-textarea {
-      resize: vertical;
-      min-height: 120px;
-    }
-    
-    .submit-btn {
-      width: 100%;
+
+    .btn {
+      min-height: 54px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
-      background: linear-gradient(135deg, var(--accent) 0%, #00b88a 100%);
-      color: #071510;
-      font-family: 'Outfit', sans-serif;
-      font-weight: 700;
-      font-size: 0.98rem;
-      padding: 14px;
-      border: none;
-      border-radius: 12px;
+      border-radius: var(--pill);
+      padding: 0 22px;
+      text-decoration: none;
+      border: 1px solid transparent;
+      font-family: var(--font-heading);
+      font-weight: 800;
+      line-height: 1;
+      transition: transform 0.35s var(--spring), box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
       cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 6px 20px var(--accent-glow);
-      transition: transform 0.3s var(--ease-spring), box-shadow 0.3s;
+      white-space: nowrap;
     }
-    
-    .submit-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(0, 229, 168, 0.45);
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--green) 0%, #00ba8d 100%);
+      color: #04120e;
+      box-shadow: 0 14px 36px rgba(0, 229, 168, 0.28);
     }
-    
-    .submit-btn:active {
-      transform: translateY(0);
+
+    .btn-primary:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 22px 50px rgba(0, 229, 168, 0.4);
     }
-    
-    /* Form loading / success states */
-    .form-loading-overlay {
-      display: none;
-      flex-direction: column;
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.055);
+      color: var(--text);
+      border-color: var(--line);
+      backdrop-filter: blur(14px);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-4px);
+      background: rgba(255, 255, 255, 0.09);
+      border-color: var(--line-strong);
+    }
+
+    .app-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255,255,255,0.26), transparent 24%),
+        linear-gradient(135deg, rgba(59,130,246,1), rgba(0,229,168,1));
+      box-shadow: 0 12px 30px rgba(59, 130, 246, 0.3);
+      flex: 0 0 auto;
+      transition: transform 0.4s var(--spring), box-shadow 0.4s ease, background 0.4s ease;
+    }
+
+    .brand:hover .app-icon {
+      transform: scale(1.08) rotate(3deg);
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255,255,255,0.35), transparent 24%),
+        linear-gradient(135deg, #00e5a8, #3b82f6, #fb7185);
+      box-shadow: 
+        0 14px 36px rgba(59, 130, 246, 0.45),
+        0 0 20px rgba(0, 229, 168, 0.35);
+    }
+
+    .app-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: #06130f;
+      stroke-width: 2.5;
+      transition: transform 0.4s var(--spring);
+    }
+
+    .brand:hover .app-icon svg {
+      transform: scale(1.1);
+    }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(13, 14, 21, 0.32);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .header-inner {
+      width: min(1240px, calc(100% - 36px));
+      margin: 0 auto;
+      min-height: 78px;
+      display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 20px;
-      padding: 60px 20px;
+      justify-content: space-between;
+      gap: 18px;
     }
-    
-    .holo-scanner {
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      font-family: var(--font-heading);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .brand small {
+      display: block;
+      color: var(--muted-2);
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-top: -3px;
+    }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      border-radius: var(--pill);
+    }
+
+    .site-nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 9px 13px;
+      border-radius: var(--pill);
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .site-nav a:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .nav-toggle {
+      display: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: currentColor;
+      margin: 4px auto;
+      border-radius: 2px;
+    }
+
+    .nav-cta { min-height: 44px; padding-inline: 17px; }
+
+    /* Hero */
+    .hero {
       position: relative;
-      width: 80px;
-      height: 80px;
-      border: 3px solid rgba(0, 229, 168, 0.15);
-      border-radius: 50%;
       overflow: hidden;
+      background: var(--bg);
+      padding: 78px 0 84px;
+      transition: background 0.3s ease;
     }
-    
-    .holo-scanner::before {
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.03fr) minmax(360px, 0.72fr);
+      align-items: center;
+      gap: 58px;
+    }
+
+    @media (min-width: 981px) {
+      .hero {
+        padding: 136px 0 148px;
+        background: 
+          linear-gradient(90deg, rgba(13, 14, 21, 0.96) 0%, rgba(13, 14, 21, 0.45) 45%, rgba(13, 14, 21, 0) 95%), 
+          url('hero_bg.png') no-repeat center center;
+        background-size: cover;
+      }
+      
+      .hero-grid {
+        grid-template-columns: minmax(0, 1.16fr) minmax(360px, 0.84fr);
+      }
+      
+      .hero-visual {
+        display: none !important;
+      }
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-copy > p {
+      max-width: 720px;
+      color: #a8b5cc;
+      font-size: clamp(1.04rem, 2vw, 1.24rem);
+      margin: 24px 0 0;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin: 34px 0 22px;
+    }
+
+    .hero-note {
+      color: var(--muted-2);
+      font-size: 0.86rem;
+      margin-bottom: 28px;
+    }
+
+    .hero-proof {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 690px;
+    }
+
+    .proof-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.05);
+      border-radius: 16px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .proof-pill svg {
+      width: 18px;
+      height: 18px;
+      color: var(--green);
+      flex: 0 0 auto;
+    }
+
+    .hero-visual {
+      min-height: 600px;
+      position: relative;
+      display: grid;
+      place-items: center;
+    }
+
+    .halo {
+      position: absolute;
+      width: 540px;
+      height: 540px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(59,130,246,0.25), transparent 65%);
+      filter: blur(8px);
+      opacity: 0.9;
+      z-index: 1;
+    }
+
+    .halo-2 {
+      position: absolute;
+      width: 480px;
+      height: 480px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.16) 0%, rgba(0, 229, 168, 0.1) 60%, transparent 100%);
+      filter: blur(24px);
+      opacity: 0.7;
+      z-index: 1;
+      animation: pulse-halo 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulse-halo {
+      0% { transform: scale(1) rotate(0deg); opacity: 0.5; }
+      100% { transform: scale(1.15) rotate(180deg); opacity: 0.85; }
+    }
+
+    .hero-graphic-showcase {
+      width: 100%;
+      max-width: 510px;
+      height: auto;
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(20, 26, 46, 0.48);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 
+        0 24px 80px rgba(0, 0, 0, 0.45), 
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        0 0 50px rgba(59, 130, 246, 0.2);
+      transition: transform 0.45s var(--ease), box-shadow 0.45s ease;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-graphic-showcase:hover {
+      transform: translateY(-8px) scale(1.015);
+      box-shadow: 
+        0 34px 90px rgba(0, 0, 0, 0.65), 
+        0 0 70px rgba(0, 229, 168, 0.22);
+    }
+
+    .phone::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; width: 100%; height: 4px;
-      background: var(--accent);
-      box-shadow: 0 0 15px var(--accent), 0 0 5px var(--accent);
-      animation: scanSweep 2s ease-in-out infinite;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 108px;
+      height: 28px;
+      border-radius: 18px;
+      background: #000;
+      z-index: 3;
     }
-    
-    @keyframes scanSweep {
-      0%, 100% { top: 0%; opacity: 0.3; }
-      50% { top: 95%; opacity: 1; }
-    }
-    
-    .holo-spinner {
-      position: absolute;
-      inset: 4px;
-      border: 3px solid transparent;
-      border-top-color: var(--primary);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-    
-    .loading-text {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      animation: textPulse 1.5s ease-in-out infinite;
-    }
-    
-    .form-success-card {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding: 40px 24px;
-      animation: sectionIn 0.5s var(--ease-spring) forwards;
-    }
-    
-    .success-badge {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      background: var(--accent-dim);
-      border: 2px solid var(--accent);
-      color: var(--accent);
+
+    .phone-screen {
+      height: 100%;
+      padding: 54px 17px 20px;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 24px;
-      box-shadow: 0 0 20px var(--accent-glow);
+      flex-direction: column;
+      gap: 13px;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(59,130,246,0.28), transparent 42%),
+        radial-gradient(circle at 90% 78%, rgba(0,229,168,0.16), transparent 34%),
+        #08090f;
     }
-    
-    .success-title {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.6rem;
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 12px;
-      background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    
-    .receipt-box {
-      width: 100%;
-      max-width: 380px;
-      background: rgba(255, 255, 255, 0.015);
-      border: 1px dashed var(--border);
-      border-radius: 12px;
-      padding: 20px;
-      margin: 24px 0;
-      text-align: left;
-      font-size: 0.9rem;
-    }
-    
-    .receipt-row {
+
+    .phone-header {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 10px;
+      align-items: center;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      font-family: var(--font-heading);
+      font-weight: 800;
     }
-    
-    .receipt-row:last-child {
-      margin-bottom: 0;
-      padding-top: 10px;
-      border-top: 1px solid var(--border);
+
+    .phone-header small {
+      color: var(--green);
+      border: 1px solid rgba(0,229,168,0.22);
+      background: rgba(0,229,168,0.08);
+      border-radius: var(--pill);
+      padding: 4px 9px;
+      font-size: 0.62rem;
+      letter-spacing: 0.04em;
     }
-    
-    .receipt-label {
-      color: var(--text-muted);
+
+    .scan-card {
+      border-radius: 22px;
+      border: 1px solid rgba(251,113,133,0.28);
+      background: rgba(251,113,133,0.08);
+      padding: 16px;
     }
-    
-    .receipt-val {
-      font-family: 'Outfit', sans-serif;
-      font-weight: 600;
+
+    .scan-card span {
+      display: block;
+      color: #fecdd3;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .scan-card strong {
+      display: block;
+      color: var(--red);
+      font-family: var(--font-heading);
+      font-size: 2.35rem;
+      line-height: 1;
+      margin: 5px 0;
+    }
+
+    .scan-card p { color: #fecdd3; font-size: 0.82rem; }
+
+    .report-card-phone {
+      flex: 1;
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.09);
+      background: rgba(255,255,255,0.045);
+      padding: 16px;
+      backdrop-filter: blur(16px);
+    }
+
+    .report-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       color: var(--text);
-    }
-    
-    .receipt-val.accent {
-      color: var(--accent);
-    }
-
-    /* ══════════════════════════════
-       RESPONSIVE
-    ══════════════════════════════ */
-    @media (max-width: 600px) {
-      .page { padding: 36px 16px 60px; }
-      .card { padding: 30px 22px; }
-      .logo-wrap { width: 118px; height: 118px; }
-      .logo-inner { width: 118px; height: 118px; border-radius: 28px; }
-      h1 { font-size: 2.4rem; }
-      nav { padding: 4px; gap: 2px; margin-bottom: 28px; }
-      .tab-btn { padding: 8px 14px; font-size: 0.8rem; }
-      h2 { font-size: 1.7rem; }
-      .feature-row { grid-template-columns: 1fr 1fr; }
-      .feature-row .feature-card:last-child { grid-column: span 2; }
-      .btn-row { flex-direction: column; align-items: flex-start; }
-      .form-grid { grid-template-columns: 1fr; gap: 14px; }
-      .form-group.full-width { grid-column: auto; }
-      .contact-form-container { padding: 24px 16px; }
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 0.9rem;
+      margin-bottom: 13px;
     }
 
-    @media (max-width: 380px) {
-      .feature-row { grid-template-columns: 1fr; }
-      .feature-row .feature-card:last-child { grid-column: auto; }
+    .report-title .spark {
+      color: var(--green);
+      text-shadow: 0 0 12px rgba(0,229,168,0.75);
+    }
+
+    .phone-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 9px;
+    }
+
+    .phone-list li {
+      position: relative;
+      padding: 10px 10px 10px 28px;
+      border-radius: 13px;
+      background: rgba(12, 16, 30, 0.45);
+      border: 1px solid rgba(255,255,255,0.06);
+      color: #bec9dc;
+      font-size: 0.76rem;
+      line-height: 1.45;
+    }
+
+    .phone-list li::before {
+      content: '';
+      position: absolute;
+      left: 12px;
+      top: 16px;
+      width: 7px;
+      height: 7px;
+      border-radius: 2px;
+      background: linear-gradient(135deg, var(--green), var(--blue));
+      transform: rotate(45deg);
+    }
+
+    .phone-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+    }
+
+    .phone-metric {
+      border-radius: 16px;
+      border: 1px solid rgba(59,130,246,0.18);
+      background: rgba(59,130,246,0.07);
+      padding: 11px;
+    }
+
+    .phone-metric small {
+      display: block;
+      color: var(--muted-2);
+      font-size: 0.58rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .phone-metric strong {
+      color: #bfdbfe;
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+    }
+
+    .float-card {
+      position: absolute;
+      z-index: 4;
+      width: max-content;
+      max-width: 245px;
+      padding: 14px 16px;
+      border-radius: 20px;
+      background: rgba(15, 20, 32, 0.82);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 18px 45px rgba(0,0,0,0.3);
+    }
+
+    .float-card b {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      line-height: 1.2;
+    }
+
+    .float-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.78rem;
+      margin-top: 3px;
+      line-height: 1.4;
+    }
+
+    .float-card.one { left: 0; top: 120px; }
+    .float-card.two { right: -8px; bottom: 170px; }
+    .float-card.three { left: 18px; bottom: 80px; }
+
+    /* Logos / trust strip */
+    .trust-strip {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,0.025);
+      padding: 22px 0;
+    }
+
+    .trust-inner {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .trust-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      background: rgba(8,9,15,0.32);
+      border-radius: var(--pill);
+      padding: 9px 14px;
+      font-size: 0.85rem;
+      font-weight: 800;
+    }
+
+    .trust-chip svg {
+      width: 16px;
+      height: 16px;
+      color: var(--green);
+    }
+
+    /* Problem section */
+    .split {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 26px;
+      align-items: stretch;
+    }
+
+    .glass-card {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: var(--radius-xl);
+      padding: 32px;
+      box-shadow: 0 20px 70px rgba(0,0,0,0.24), inset 0 1px 0 rgba(255,255,255,0.04);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.4s var(--spring), border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(59, 130, 246, 0.28);
+      box-shadow: 
+        0 24px 80px rgba(0, 0, 0, 0.35),
+        0 0 40px rgba(59, 130, 246, 0.16);
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 16% 0%, rgba(59,130,246,0.11), transparent 34%);
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .glass-card:hover::before {
+      background: radial-gradient(circle at 16% 0%, rgba(0, 229, 168, 0.18), rgba(251, 113, 133, 0.12), transparent 45%);
+    }
+
+    .glass-card > * { position: relative; z-index: 1; }
+
+    .pain-list {
+      display: grid;
+      gap: 12px;
+      padding: 0;
+      margin: 26px 0 0;
+      list-style: none;
+    }
+
+    .pain-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 15px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
+      color: var(--muted);
+      font-weight: 700;
+      line-height: 1.55;
+    }
+
+    .pain-list svg {
+      width: 18px;
+      height: 18px;
+      color: var(--red);
+      flex: 0 0 auto;
+      margin-top: 3px;
+    }
+
+    .answer-card {
+      background:
+        radial-gradient(circle at 90% 10%, rgba(0,229,168,0.16), transparent 34%),
+        rgba(22, 28, 48, 0.82);
+    }
+
+    .answer-grid {
+      display: grid;
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    .answer-item {
+      display: grid;
+      grid-template-columns: 46px 1fr;
+      gap: 14px;
+      padding: 15px;
+      border-radius: 20px;
+      border: 1px solid rgba(0,229,168,0.18);
+      background: rgba(0,229,168,0.06);
+    }
+
+    .answer-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      background: rgba(0,229,168,0.11);
+      border: 1px solid rgba(0,229,168,0.2);
+      color: var(--green);
+      display: grid;
+      place-items: center;
+    }
+
+    .answer-icon svg { width: 22px; height: 22px; }
+    .answer-item h3 { font-size: 1.05rem; margin-bottom: 4px; }
+    .answer-item p { font-size: 0.9rem; line-height: 1.55; }
+
+    /* Feature grid */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .feature-card {
+      min-height: 280px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: rgba(255,255,255,0.04);
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.38s var(--spring), border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-7px);
+      border-color: rgba(59,130,246,0.36);
+      background: rgba(59,130,246,0.05);
+      box-shadow: 0 20px 48px rgba(59,130,246,0.14);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      color: var(--blue-2);
+      background: rgba(59,130,246,0.12);
+      border: 1px solid rgba(59,130,246,0.2);
+      margin-bottom: 20px;
+    }
+
+    .feature-card:hover .feature-icon {
+      color: var(--green);
+      background: rgba(0,229,168,0.1);
+      border-color: rgba(0,229,168,0.24);
+    }
+
+    .feature-icon svg { width: 23px; height: 23px; }
+    .feature-card h3 { margin-bottom: 10px; }
+    .feature-card p { font-size: 0.94rem; line-height: 1.65; }
+    .feature-card .mini-tag {
+      margin-top: auto;
+      padding-top: 24px;
+      color: var(--green);
+      font-family: var(--font-heading);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* Product preview */
+    .preview-panel {
+      border-radius: 38px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 20% 5%, rgba(59,130,246,0.18), transparent 34%),
+        radial-gradient(circle at 95% 80%, rgba(0,229,168,0.12), transparent 34%),
+        rgba(255,255,255,0.04);
+      padding: 30px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .preview-card {
+      min-height: 280px;
+      border: 1px solid rgba(255,255,255,0.11);
+      border-radius: 28px;
+      background: rgba(22, 28, 48, 0.52);
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.4s var(--spring), border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .preview-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(59, 130, 246, 0.28);
+      background: rgba(24, 32, 58, 0.58);
+      box-shadow: 
+        0 24px 80px rgba(0, 0, 0, 0.35),
+        0 0 40px rgba(59, 130, 246, 0.16);
+    }
+
+    .preview-card.large {
+      grid-row: span 2;
+      min-height: 578px;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(59,130,246,0.22), transparent 44%),
+        rgba(20, 26, 46, 0.62);
+      transition: transform 0.4s var(--spring), border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .preview-card.large:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0, 229, 168, 0.24);
+      background:
+        radial-gradient(circle at 50% 0%, rgba(0, 229, 168, 0.18), transparent 44%),
+        rgba(22, 28, 48, 0.68);
+      box-shadow: 
+        0 24px 80px rgba(0, 0, 0, 0.4),
+        0 0 50px rgba(0, 229, 168, 0.16);
+    }
+
+    .preview-card h3 { margin-bottom: 10px; }
+    .preview-card p { font-size: 0.92rem; }
+
+    .meter {
+      height: 6px;
+      border-radius: var(--pill);
+      background: rgba(255,255,255,0.06);
+      overflow: hidden;
+      margin-top: 24px;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
+    }
+
+    .meter span {
+      display: block;
+      height: 100%;
+      width: 58%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--green), var(--amber));
+      box-shadow: 0 0 15px rgba(0,229,168,0.6);
+    }
+
+    .cost-range {
+      display: grid;
+      gap: 6px;
+      margin-top: 22px;
+    }
+
+    .cost-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 10px 4px;
+      border: none;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      background: transparent;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .cost-row:last-child {
+      border-bottom: none;
+    }
+
+    .cost-row strong {
+      color: var(--text);
+      font-family: var(--font-heading);
+    }
+
+    .timeline {
+      display: grid;
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .timeline-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(0,229,168,0.06);
+      border: 1px solid rgba(0,229,168,0.16);
+      color: var(--green-2);
+      display: grid;
+      place-items: center;
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .timeline-item b {
+      display: block;
+      font-family: var(--font-heading);
+      margin-bottom: 3px;
+    }
+
+    .timeline-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.86rem;
+      line-height: 1.5;
+    }
+
+    .scan-history {
+      display: grid;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .history-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 13px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .history-row strong { color: var(--text); font-family: var(--font-heading); }
+    .history-row .ok { color: var(--green); }
+    .history-row .warn { color: var(--amber); }
+
+    /* Steps */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      counter-reset: steps;
+    }
+
+    .step-card {
+      counter-increment: steps;
+      position: relative;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      padding: 28px;
+      min-height: 250px;
+      overflow: hidden;
+    }
+
+    .step-card::before {
+      content: counter(steps, decimal-leading-zero);
+      position: absolute;
+      right: 18px;
+      top: 8px;
+      color: rgba(255,255,255,0.045);
+      font-family: var(--font-heading);
+      font-size: 5.4rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .step-badge {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: rgba(0,229,168,0.1);
+      border: 1px solid rgba(0,229,168,0.22);
+      color: var(--green);
+      font-family: var(--font-heading);
+      font-weight: 800;
+      margin-bottom: 22px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-card h3, .step-card p { position: relative; z-index: 1; }
+    .step-card h3 { margin-bottom: 10px; }
+
+    /* Compatibility and privacy */
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .info-card {
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      padding: 32px;
+    }
+
+    .badge-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .badge-grid span {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      border-radius: var(--pill);
+      padding: 8px 12px;
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .check-list {
+      display: grid;
+      gap: 13px;
+      padding: 0;
+      margin: 24px 0 0;
+      list-style: none;
+    }
+
+    .check-list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: var(--muted);
+      font-weight: 700;
+      line-height: 1.55;
+    }
+
+    .check-list svg {
+      width: 18px;
+      height: 18px;
+      color: var(--green);
+      flex: 0 0 auto;
+      margin-top: 3px;
+    }
+
+    /* FAQ and support */
+    .faq-list {
+      max-width: 880px;
+      margin: 0 auto;
+      display: grid;
+      gap: 12px;
+    }
+
+    details {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      border-radius: 20px;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    summary {
+      cursor: pointer;
+      padding: 20px 22px;
+      font-family: var(--font-heading);
+      font-weight: 800;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: '+';
+      width: 30px;
+      height: 30px;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      color: var(--green);
+      transition: transform 0.2s ease;
+    }
+
+    details[open] summary::after { transform: rotate(45deg); }
+
+    details p, details ul {
+      padding: 0 22px 20px;
+      margin: 0;
+    }
+
+    details ul {
+      color: var(--muted);
+      padding-left: 42px;
+    }
+
+    .support-card {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 22px;
+      align-items: center;
+      border-radius: 38px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(0,229,168,0.14), transparent 34%),
+        rgba(255,255,255,0.04);
+      padding: 34px;
+    }
+
+    .support-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .support-box {
+      border-radius: 26px;
+      border: 1px dashed rgba(255,255,255,0.2);
+      background: rgba(12, 14, 26, 0.45);
+      padding: 22px;
+    }
+
+    .support-box h3 { margin-bottom: 12px; }
+    .support-box ul {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    /* Legal */
+    .legal-wrap {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .legal-wrap details p,
+    .legal-wrap details ul {
+      font-size: 0.92rem;
+      line-height: 1.75;
+    }
+
+    .legal-wrap h4 {
+      font-size: 1rem;
+      margin: 22px 22px 8px;
+      letter-spacing: -0.01em;
+    }
+
+    .legal-wrap a {
+      color: var(--green);
+      text-decoration: none;
+    }
+
+    .legal-wrap a:hover { text-decoration: underline; }
+
+    /* Final CTA */
+    .final-cta {
+      text-align: center;
+      border-radius: 42px;
+      border: 1px solid rgba(0,229,168,0.22);
+      background:
+        radial-gradient(circle at 50% 0%, rgba(0,229,168,0.2), transparent 42%),
+        linear-gradient(135deg, rgba(22, 28, 48, 0.96), rgba(26, 36, 62, 0.88));
+      padding: 58px 28px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .final-cta::before {
+      content: '';
+      position: absolute;
+      inset: auto 18% -90px;
+      height: 170px;
+      background: rgba(0,229,168,0.12);
+      filter: blur(56px);
+      pointer-events: none;
+    }
+
+    .final-cta > * { position: relative; z-index: 1; }
+    .final-cta p {
+      max-width: 620px;
+      margin: 18px auto 28px;
+      font-size: 1.04rem;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 38px 0;
+      color: var(--muted-2);
+    }
+
+    .footer-inner {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .footer-links a:hover { color: var(--green); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.58s var(--ease), transform 0.58s var(--ease);
+    }
+
+    .reveal.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .nav-toggle { display: block; }
+      .site-nav {
+        position: fixed;
+        top: 78px;
+        left: 18px;
+        right: 18px;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        border-radius: 24px;
+        padding: 12px;
+        background: rgba(12, 16, 30, 0.96);
+        box-shadow: var(--shadow);
+      }
+      .site-nav.is-open { display: flex; }
+      .site-nav a { padding: 13px 14px; }
+      .header-inner .nav-cta { display: none; }
+      .hero-grid, .split, .support-card { grid-template-columns: 1fr; }
+      .hero-visual { min-height: 620px; }
+      .hero-copy { text-align: center; }
+      .hero-copy h1, .hero-copy p { margin-left: auto; margin-right: auto; }
+      .hero-actions, .hero-proof { justify-content: center; margin-left: auto; margin-right: auto; }
+      .feature-grid, .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .preview-grid, .two-col { grid-template-columns: 1fr; }
+      .preview-card.large { min-height: 450px; }
+    }
+
+    @media (max-width: 680px) {
+      .container { width: min(100% - 28px, var(--max)); }
+      .section { padding: 72px 0; }
+      .header-inner { width: calc(100% - 28px); }
+      .brand small { display: none; }
+      .hero { padding-top: 54px; }
+      .hero-grid { gap: 34px; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .btn { width: 100%; }
+      .hero-proof, .feature-grid, .steps { grid-template-columns: 1fr; }
+      .hero-visual { min-height: 560px; }
+      .phone {
+        width: 286px;
+        height: 574px;
+        border-radius: 48px;
+      }
+      .phone-screen { padding-inline: 14px; }
+      .float-card { display: none; }
+      .glass-card, .info-card, .support-card, .preview-panel, .final-cta { padding: 24px; border-radius: 28px; }
+      .preview-card { padding: 20px; }
+      .preview-card.large { min-height: auto; }
+      .phone-metrics { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+      .reveal { opacity: 1; transform: none; }
     }
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="site-bg" aria-hidden="true"></div>
 
-  <!-- Global SVG gradients -->
-  <svg style="width:0; height:0; position:absolute;" aria-hidden="true">
-    <defs>
-      <linearGradient id="cyanBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="var(--accent)" />
-        <stop offset="100%" stop-color="var(--primary)" />
-      </linearGradient>
-    </defs>
-  </svg>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#top" aria-label="Diagnose AI home">
+        <span class="app-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 12h3l3-7 4 14 4-10 3 3h3"></path>
+          </svg>
+        </span>
+        <span>Diagnose AI <small>OBD-II for iPhone</small></span>
+      </a>
 
-  <!-- ── Background ── -->
-  <div class="bg-mesh" aria-hidden="true"></div>
-  <div class="orb orb-1" id="orb1" aria-hidden="true"></div>
-  <div class="orb orb-2" id="orb2" aria-hidden="true"></div>
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-controls="siteNav" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
 
-  <!-- Subtle floating particles (injected by JS) -->
-  <div class="particles" id="particles" aria-hidden="true"></div>
-
-  <div class="page">
-
-    <!-- ── Header ── -->
-    <header>
-      <div class="logo-wrap" aria-label="Diagnose AI logo">
-        <div class="logo-glow" aria-hidden="true"></div>
-        <div class="logo-border" aria-hidden="true">
-          <div class="logo-inner">
-            <svg viewBox="0 0 24 24" width="72" height="72" fill="none" stroke="url(#cyanBlueGrad)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="filter: drop-shadow(0 0 8px var(--accent-glow))">
-              <!-- Engine Block Outer Contour -->
-              <path d="M4 9h3v6H4zm14 0h3v6h-3zM7 12h10M9 6h6v12H9z" />
-              <!-- Glowing diagnostic wave inside -->
-              <path d="M10.5 12h1l1-2.5 1 5 1-2.5h1" stroke-width="1.8" stroke="var(--accent)" />
-            </svg>
-          </div>
-        </div>
-      </div>
-
-      <h1>Diagnose AI</h1>
-      <p class="tagline">AI-Powered <span class="tagline-accent">OBD-II Diagnostics</span> for iOS</p>
-
-      <div class="stats-row" aria-label="Quick stats">
-        <div class="stat-chip">
-          <svg class="stat-chip-svg" style="color: var(--accent)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          AI-Powered Analysis
-        </div>
-        <div class="stat-chip">
-          <svg class="stat-chip-svg" style="color: var(--primary)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          TLS Encrypted
-        </div>
-        <div class="stat-chip">
-          <svg class="stat-chip-svg" style="color: var(--accent)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
-          All OBD-II Adapters
-        </div>
-        <div class="stat-chip">
-          <svg class="stat-chip-svg" style="color: var(--primary)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          Free Support
-        </div>
-      </div>
-    </header>
-
-    <!-- ── Nav ── -->
-    <nav id="tab-nav" role="tablist" aria-label="Page sections">
-      <button class="tab-btn active" data-tab="support" role="tab" aria-selected="true"  id="tab-support">Customer Support</button>
-      <button class="tab-btn"        data-tab="privacy" role="tab" aria-selected="false" id="tab-privacy">Privacy Policy</button>
-      <button class="tab-btn"        data-tab="terms"   role="tab" aria-selected="false" id="tab-terms">Terms of Service</button>
-    </nav>
-
-    <!-- ── Main Card ── -->
-    <main class="card">
-
-      <!-- ════ SUPPORT ════ -->
-      <section id="support" class="section active" role="tabpanel" aria-labelledby="tab-support">
-
-        <h2><span class="h2-bar"></span>Customer Support</h2>
-
-        <div class="info-badge">
-          <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-          Response time: 24–48 hours · No ticket required
-        </div>
-
-        <p>Welcome to Diagnose AI support. Our app connects to your vehicle's OBD-II adapter via Bluetooth or Wi-Fi and uses AI to translate fault codes into clear, step-by-step repair guidance.</p>
-
-        <div class="feature-row" role="list">
-          <div class="feature-card reveal" role="listitem">
-            <svg class="feature-icon-svg" viewBox="0 0 24 24" width="36" height="36" stroke="url(#cyanBlueGrad)" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-            </svg>
-            <div class="feature-value">Instant</div>
-            <div class="feature-label">AI Analysis</div>
-          </div>
-          <div class="feature-card reveal" style="transition-delay:0.08s" role="listitem">
-            <svg class="feature-icon-svg" viewBox="0 0 24 24" width="36" height="36" stroke="url(#cyanBlueGrad)" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-            </svg>
-            <div class="feature-value">Secure</div>
-            <div class="feature-label">TLS + RLS</div>
-          </div>
-          <div class="feature-card reveal" style="transition-delay:0.16s" role="listitem">
-            <svg class="feature-icon-svg" viewBox="0 0 24 24" width="36" height="36" stroke="url(#cyanBlueGrad)" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2" />
-              <circle cx="7" cy="17" r="2" />
-              <circle cx="17" cy="17" r="2" />
-              <path d="M9 17h6" />
-            </svg>
-            <div class="feature-value">All Cars</div>
-            <div class="feature-label">OBD-II Compatible</div>
-          </div>
-        </div>
-
-        <h3>Common Topics</h3>
-        <ul>
-          <li class="reveal"><strong>Adapter not connecting:</strong> Ensure your adapter is powered and vehicle ignition is on. Keep within 3 meters (10 feet) and confirm Bluetooth or Wi-Fi is enabled on your iPhone.</li>
-          <li class="reveal" style="transition-delay:0.05s"><strong>Subscription / billing:</strong> Purchases are managed entirely by Apple. For refunds, visit <a href="https://reportaproblem.apple.com" target="_blank" rel="noopener" class="content-link">reportaproblem.apple.com</a>.</li>
-          <li class="reveal" style="transition-delay:0.10s"><strong>Restore purchases:</strong> Open the app → tap your profile → Restore Purchases. This reconnects your existing Pro subscription from Apple.</li>
-          <li class="reveal" style="transition-delay:0.15s"><strong>Account or data deletion:</strong> Email us and we will permanently remove all your data within 30 days.</li>
-          <li class="reveal" style="transition-delay:0.20s"><strong>AI diagnosis seems wrong:</strong> Results are informational. Always verify with a certified mechanic for safety-critical repairs.</li>
-        </ul>
-
-        <h3>Direct Email Support</h3>
-        <p>Please include your iPhone model, iOS version, OBD-II adapter brand, and a short description of the issue. We usually respond within 24–48 hours.</p>
-
-        <div class="btn-row">
-          <div class="cta-wrap">
-            <a href="mailto:support@diagnoseai.app" class="cta-btn" id="contact-support-btn">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-              Email Support
-            </a>
-          </div>
-          <a href="https://apps.apple.com" target="_blank" rel="noopener" class="appstore-btn" id="appstore-link">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-            Download on App Store
-          </a>
-        </div>
-      </section>
-
-      <!-- ════ PRIVACY ════ -->
-      <section id="privacy" class="section" role="tabpanel" aria-labelledby="tab-privacy">
-        <h2><span class="h2-bar"></span>Privacy Policy</h2>
-        <p><em>Effective Date: May 24, 2026 · Last Updated: May 24, 2026</em></p>
-        <p>Diagnose AI ("we", "our", "us") is committed to protecting your privacy. This policy explains what information we collect, how we use it, and your rights.</p>
-
-        <h3>1. Information We Collect</h3>
-        <ul>
-          <li class="reveal"><strong>Account Data:</strong> Your email address used only for authentication via Supabase Auth. Passwords are never stored in plaintext.</li>
-          <li class="reveal" style="transition-delay:0.06s"><strong>Vehicle Profiles:</strong> Year, make, model, and engine type you provide to improve diagnostic accuracy.</li>
-          <li class="reveal" style="transition-delay:0.12s"><strong>Diagnostic Data (DTCs):</strong> OBD-II fault codes retrieved from your adapter, stored in your private cloud profile.</li>
-          <li class="reveal" style="transition-delay:0.18s"><strong>Usage Analytics:</strong> Basic, anonymised session data used to improve stability. No personally identifiable information is included.</li>
-        </ul>
-
-        <h3>2. How We Use Your Data</h3>
-        <ul>
-          <li class="reveal">To authenticate your account and display your personal scan history.</li>
-          <li class="reveal" style="transition-delay:0.06s">To pass anonymised fault codes to AI APIs for generating repair guidance.</li>
-          <li class="reveal" style="transition-delay:0.12s">To manage your in-app subscription through Apple and RevenueCat.</li>
-        </ul>
-
-        <h3>3. AI Processing</h3>
-        <p>Raw fault codes and anonymised vehicle context are securely sent to Google Gemini AI for analysis. <strong>No personal data — email, name, or user IDs — is ever included in AI requests.</strong> Your data is never used to train AI models or for advertising purposes.</p>
-
-        <h3>4. Data Security</h3>
-        <p>All communication between the app and our servers is encrypted with TLS. Our Supabase database enforces <strong>Row Level Security (RLS)</strong>, ensuring only you can access your own data. We do not sell your data to any third party, ever.</p>
-
-        <hr class="divider">
-
-        <h3>5. Third-Party Services</h3>
-        <ul>
-          <li class="reveal"><strong>Supabase</strong> — Authentication, database, and Row Level Security. <a href="https://supabase.com/privacy" target="_blank" rel="noopener" class="content-link">Privacy Policy ↗</a></li>
-          <li class="reveal" style="transition-delay:0.06s"><strong>Google Gemini AI</strong> — Anonymised diagnostic code analysis. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" class="content-link">Privacy Policy ↗</a></li>
-          <li class="reveal" style="transition-delay:0.12s"><strong>RevenueCat</strong> — Subscription and purchase management. <a href="https://www.revenuecat.com/privacy" target="_blank" rel="noopener" class="content-link">Privacy Policy ↗</a></li>
-          <li class="reveal" style="transition-delay:0.18s"><strong>Apple App Store</strong> — Payment processing for Pro subscriptions.</li>
-        </ul>
-
-        <h3>6. Data Retention &amp; Deletion</h3>
-        <p>You may delete your account and all associated data at any time by emailing us. Upon request, your data will be permanently and irreversibly removed within 30 days.</p>
-
-        <h3>7. Children's Privacy</h3>
-        <p>Diagnose AI is not intended for children under 13 years of age. We do not knowingly collect data from children.</p>
-
-        <h3>8. Contact</h3>
-        <p>For privacy questions or data deletion requests, contact us at <a href="mailto:support@diagnoseai.app" class="content-link">support@diagnoseai.app</a>.</p>
-      </section>
-
-      <!-- ════ TERMS ════ -->
-      <section id="terms" class="section" role="tabpanel" aria-labelledby="tab-terms">
-        <h2><span class="h2-bar"></span>Terms of Service</h2>
-        <p><em>Effective Date: May 24, 2026 · Last Updated: May 24, 2026</em></p>
-        <p>By downloading or using Diagnose AI, you agree to these Terms of Service. If you do not agree, please do not use the app.</p>
-
-        <h3>1. Description of Service</h3>
-        <p>Diagnose AI is a vehicle diagnostic assistance application that reads OBD-II fault codes from a compatible adapter and uses AI to provide informational repair suggestions. <strong>Diagnose AI is not a substitute for a certified mechanic or a professional automotive inspection.</strong></p>
-
-        <h3>2. Disclaimer of Liability</h3>
-        <ul>
-          <li class="reveal">AI-generated repair suggestions are informational only and may not identify all causes of a fault code.</li>
-          <li class="reveal" style="transition-delay:0.06s">Diagnose AI, its developers, and affiliates are not liable for any vehicle damage, personal injury, or financial loss resulting from actions taken based on the app's output.</li>
-          <li class="reveal" style="transition-delay:0.12s">Always consult a qualified mechanic for safety-critical repairs (brakes, steering, airbags, and similar systems).</li>
-        </ul>
-
-        <h3>3. AI-Generated Content</h3>
-        <ul>
-          <li class="reveal">Results are generated by third-party AI models and may occasionally be inaccurate, incomplete, or out of date.</li>
-          <li class="reveal" style="transition-delay:0.06s">You must not rely solely on AI output for any safety-critical vehicle decisions.</li>
-          <li class="reveal" style="transition-delay:0.12s">You agree not to use the app to generate, distribute, or store illegal, harmful, or offensive content.</li>
-        </ul>
-
-        <h3>4. Subscriptions &amp; Payments</h3>
-        <ul>
-          <li class="reveal">Pro features are available through an in-app subscription processed by Apple.</li>
-          <li class="reveal" style="transition-delay:0.06s">Subscriptions renew automatically unless cancelled at least 24 hours before the renewal date via your Apple ID settings.</li>
-          <li class="reveal" style="transition-delay:0.12s">Refund requests must be submitted directly to Apple at <a href="https://reportaproblem.apple.com" target="_blank" rel="noopener" class="content-link">reportaproblem.apple.com ↗</a>.</li>
-        </ul>
-
-        <h3>5. Account Responsibilities</h3>
-        <p>You are responsible for maintaining the confidentiality of your account credentials. You agree not to share your account or use another user's account without permission.</p>
-
-        <h3>6. Termination</h3>
-        <p>We reserve the right to suspend or terminate accounts that violate these terms, abuse the service, or engage in fraudulent activity including attempting to exploit subscription systems.</p>
-
-        <hr class="divider">
-
-        <h3>7. Governing Law</h3>
-        <p>These terms are governed by applicable law. Any disputes will be resolved through binding arbitration or in the jurisdiction where the company operates.</p>
-
-        <h3>8. Changes to Terms</h3>
-        <p>We may update these terms occasionally. Continued use of the app after changes constitutes acceptance of the revised terms.</p>
-
-        <h3>9. Contact</h3>
-        <p>Questions about these terms? Email us at <a href="mailto:support@diagnoseai.app" class="content-link">support@diagnoseai.app</a>.</p>
-      </section>
-
-    </main>
-
-    <!-- ── Footer ── -->
-    <footer>
-      <div class="footer-links">
+      <nav class="site-nav" id="siteNav" aria-label="Primary navigation">
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#compatibility">Compatibility</a>
         <a href="#support">Support</a>
-        <a href="#privacy">Privacy Policy</a>
-        <a href="#terms">Terms of Service</a>
+        <a href="#legal">Legal</a>
+      </nav>
+
+      <!-- Replace this href with your real App Store product URL when live. -->
+      <a class="btn btn-primary nav-cta" href="https://apps.apple.com" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="margin-right: 6px;"><path d="M16.365 1.43c0 1.14-.466 2.194-1.214 2.997-.78.837-2.063 1.48-3.104 1.397-.135-1.096.405-2.257 1.135-3.06C13.986 1.89 15.36 1.24 16.365 1.43zM20.75 17.2c-.57 1.32-.844 1.91-1.58 3.07-1.024 1.61-2.47 3.62-4.26 3.64-1.59.02-2-.99-4.16-.98-2.16.01-2.61 1.01-4.2.99-1.79-.02-3.16-1.83-4.19-3.44C-.46 15.99-.73 10.71 1.2 7.73c1.37-2.12 3.53-3.36 5.56-3.36 2.07 0 3.37 1.02 5.08 1.02 1.66 0 2.67-1.02 5.06-1.02 1.81 0 3.73.98 5.09 2.67-4.47 2.45-3.74 8.83.76 10.16z"></path></svg>
+        Get the iOS app
+      </a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <span class="eyebrow">AI-powered vehicle diagnostics</span>
+          <h1>Decode your check engine light before the repair bill.</h1>
+          <p>Decode your check engine light with plain-English AI repair guidance, urgency levels, and cost-aware next steps. Requires a compatible OBD-II adapter.</p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://apps.apple.com" target="_blank" rel="noopener">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.466 2.194-1.214 2.997-.78.837-2.063 1.48-3.104 1.397-.135-1.096.405-2.257 1.135-3.06C13.986 1.89 15.36 1.24 16.365 1.43zM20.75 17.2c-.57 1.32-.844 1.91-1.58 3.07-1.024 1.61-2.47 3.62-4.26 3.64-1.59.02-2-.99-4.16-.98-2.16.01-2.61 1.01-4.2.99-1.79-.02-3.16-1.83-4.19-3.44C-.46 15.99-.73 10.71 1.2 7.73c1.37-2.12 3.53-3.36 5.56-3.36 2.07 0 3.37 1.02 5.08 1.02 1.66 0 2.67-1.02 5.06-1.02 1.81 0 3.73.98 5.09 2.67-4.47 2.45-3.74 8.83.76 10.16z"></path></svg>
+              Get the iOS app
+            </a>
+            <a class="btn btn-secondary" href="#how-it-works">See how it works</a>
+          </div>
+          <div class="hero-proof" aria-label="Product highlights">
+            <div class="proof-pill">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+              Plain-English DTC reports
+            </div>
+            <div class="proof-pill">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+              Urgency and safety context
+            </div>
+            <div class="proof-pill">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+              DIY diagnostic workflow
+            </div>
+            <div class="proof-pill">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+              Scan history and summaries
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal" aria-label="Diagnose AI app preview">
+          <div class="halo" aria-hidden="true"></div>
+          <div class="halo-2" aria-hidden="true"></div>
+          <img src="hero_showcase.png" class="hero-graphic-showcase" alt="Diagnose AI premium Bluetooth vehicle scan interface showing active fault detection, live RPM gauges, and plain-English mechanic report inside a carbon-fiber cockpit.">
+        </div>
+      </div>
+    </section>
+
+    <div class="trust-strip" aria-label="Trust highlights">
+      <div class="trust-inner">
+        <div class="trust-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+          Built for check-engine-light moments
+        </div>
+        <div class="trust-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+          Secure cloud account support
+        </div>
+        <div class="trust-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+          Compatible adapter guidance
+        </div>
+        <div class="trust-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+          Human-readable repair steps
+        </div>
+      </div>
+    </div>
+
+    <section class="section compact">
+      <div class="container split">
+        <div class="glass-card reveal">
+          <span class="eyebrow">The old way</span>
+          <h2>Most scanners stop at the code.</h2>
+          <p style="margin-top:18px;">A basic OBD-II reader can tell you that a code exists. But drivers still have to search forums, guess what is urgent, and walk into the shop without context.</p>
+          <ul class="pain-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6 6 18M6 6l12 12"></path></svg> You get a cryptic code like P0171 or P0420 with little explanation.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6 6 18M6 6l12 12"></path></svg> You do not know whether the car is safe to drive.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6 6 18M6 6l12 12"></path></svg> You risk paying for parts before the real cause is confirmed.</li>
+          </ul>
+        </div>
+
+        <div class="glass-card answer-card reveal">
+          <span class="eyebrow">The Diagnose AI way</span>
+          <h2 class="gradient-text">Code, context, confidence.</h2>
+          <p style="margin-top:18px;">Diagnose AI turns a scan into a clear plan: what the code means, common causes, how urgent it looks, what to check first, and what to say at the shop.</p>
+
+          <div class="answer-grid">
+            <div class="answer-item">
+              <div class="answer-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div>
+              <div><h3>Plain-English explanation</h3><p>No mechanic dictionary needed. Understand the issue fast.</p></div>
+            </div>
+            <div class="answer-item">
+              <div class="answer-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><path d="M12 9v4M12 17h.01"></path></svg></div>
+              <div><h3>Urgency guidance</h3><p>Learn whether the issue appears minor, soon, or immediate.</p></div>
+            </div>
+            <div class="answer-item">
+              <div class="answer-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.1-3.1a6 6 0 0 1-7.9 7.9l-5.8 5.8a2.1 2.1 0 0 1-3-3l5.8-5.8a6 6 0 0 1 7.9-7.9z"></path></svg></div>
+              <div><h3>Repair workflow</h3><p>Check the likely causes in the right order before replacing parts.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">Product features</span>
+          <h2>Everything you need after the check engine light turns on.</h2>
+          <p style="margin-top:18px;">Diagnose AI turns complex fault codes into highly actionable repair walkthroughs, safety ratings, and budget guidelines in one sleek dashboard.</p>
+        </div>
+
+        <div class="preview-panel reveal">
+          <div class="preview-grid">
+            
+            <!-- Bento Card 1: AI Repair Plan (spans 2 rows) -->
+            <article class="preview-card large">
+              <div class="report-title">
+                <span class="spark">&#10022;</span>
+                <h3>Decode Confusing Fault Codes</h3>
+              </div>
+              <p style="margin-bottom:20px; color: var(--muted);">Translate raw diagnostic trouble codes (DTCs) into complete, plain-English mechanical explanations, likely causes, and next steps.</p>
+              
+              <div class="timeline">
+                <div class="timeline-item">
+                  <div class="timeline-num">1</div>
+                  <div>
+                    <b>Translate DTC</b>
+                    <span>Understand what the code actually means (e.g. system too lean or misfire) in everyday language.</span>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="timeline-num">2</div>
+                  <div>
+                    <b>Inspect likely causes</b>
+                    <span>Systematic diagnostic checks targeting vacuum hoses, MAF sensors, and fuel trim leaks.</span>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="timeline-num">3</div>
+                  <div>
+                    <b>DIY checks &amp; next actions</b>
+                    <span>Clear checklists you can check yourself before paying for a repair shop diagnostic.</span>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="timeline-num">4</div>
+                  <div>
+                    <b>Mechanic-ready summary</b>
+                    <span>Save a clear history of symptoms, past rescans, and inspection paths for the shop.</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Bento Card 2: Urgency meter HUD -->
+            <article class="preview-card">
+              <h3>Know the safety urgency</h3>
+              <p style="color: var(--muted);">Get practical urgency context so you know whether the issue looks minor, needs attention soon, or should be checked immediately.</p>
+              <div class="meter" aria-hidden="true"><span></span></div>
+              <p style="margin-top:16px;color:#fbbf24;font-weight:800;font-size:0.9rem;">Example: Moderate - inspect soon</p>
+            </article>
+
+            <!-- Bento Card 3: Cost Estimates -->
+            <article class="preview-card">
+              <h3>Prepare for shop pricing</h3>
+              <p style="color: var(--muted);">Review estimated parts costs and typical mechanic labor hours to prepare your repair budget and avoid mechanic overcharges.</p>
+              <div class="cost-range">
+                <div class="cost-row"><span>DIY parts</span><strong>$12-$45</strong></div>
+                <div class="cost-row"><span>Shop labor</span><strong>0.5-1.5 hr</strong></div>
+                <div class="cost-row"><span>Complexity</span><strong>Low-Med</strong></div>
+              </div>
+            </article>
+
+            <!-- Bento Card 4: Garage Scan Ledger (spans 2 columns on desktop) -->
+            <article class="preview-card" style="grid-column: span 2; min-height: auto; padding: 28px; background: radial-gradient(circle at 10% 0%, rgba(59,130,246,0.12), transparent 44%), rgba(8,9,15,0.48);">
+              <div class="report-title">
+                <span class="spark">&#10022;</span>
+                <h3>Digital Fleet Garage scan histories</h3>
+              </div>
+              <p style="margin-bottom:20px; color: var(--muted); max-width: 650px;">Track active fault histories, cleared diagnostic alarms, and maintenance sensor logs across all your household vehicles in one organized hub.</p>
+              
+              <div class="scan-history" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 18px;">
+                <div class="history-row" style="margin-top: 0;">
+                  <span>Honda Civic Sport</span>
+                  <strong class="ok">Healthy scan · No codes</strong>
+                </div>
+                <div class="history-row" style="margin-top: 0;">
+                  <span>Toyota Camry XLE</span>
+                  <strong class="warn">P0420 · Catalyst below threshold</strong>
+                </div>
+                <div class="history-row" style="margin-top: 0;">
+                  <span>Ford F-150 Lariat</span>
+                  <strong style="color:var(--red);">P0301 · Cylinder 1 misfire</strong>
+                </div>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="how-it-works">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">How it works</span>
+          <h2>Three steps from warning light to action plan.</h2>
+        </div>
+
+        <div class="steps">
+          <article class="step-card reveal">
+            <div class="step-badge">1</div>
+            <h3>Plug in an adapter</h3>
+            <p>Connect a compatible OBD-II Bluetooth LE adapter to your vehicle's diagnostic port, usually under the dashboard.</p>
+          </article>
+          <article class="step-card reveal">
+            <div class="step-badge">2</div>
+            <h3>Scan from your iPhone</h3>
+            <p>Read fault codes and available live data from your vehicle, then save the scan to your private history.</p>
+          </article>
+          <article class="step-card reveal">
+            <div class="step-badge">3</div>
+            <h3>Get your AI report</h3>
+            <p>Review likely causes, urgency, repair steps, estimate ranges, and a summary you can bring to a mechanic.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section compact" id="compatibility">
+      <div class="container two-col">
+        <article class="info-card reveal">
+          <span class="eyebrow">Compatibility</span>
+          <h2>Designed for supported OBD-II adapters.</h2>
+          <p style="margin-top:18px;">Diagnose AI is built for iPhone and compatible Bluetooth LE OBD-II adapters. Adapter behavior can vary by brand, firmware, vehicle, and available sensor data.</p>
+          <div class="badge-grid" aria-label="Compatibility tags">
+            <span>iOS</span>
+            <span>Bluetooth LE</span>
+            <span>OBD-II DTCs</span>
+            <span>Live data where available</span>
+            <span>Vehicle profiles</span>
+            <span>Scan history</span>
+          </div>
+        </article>
+
+        <article class="info-card reveal">
+          <span class="eyebrow">Privacy</span>
+          <h2>Your data should not feel mysterious either.</h2>
+          <p style="margin-top:18px;">The app is designed to keep your account and diagnostic history private while sending only the vehicle context needed for AI analysis.</p>
+          <ul class="check-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M20 6 9 17l-5-5"></path></svg> Secure account authentication</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M20 6 9 17l-5-5"></path></svg> Private scan history tied to your account</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M20 6 9 17l-5-5"></path></svg> No personal email included in AI prompts</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M20 6 9 17l-5-5"></path></svg> Account deletion available by request</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="support">
+      <div class="container support-card reveal">
+        <div>
+          <span class="eyebrow">Support</span>
+          <h2>Need help connecting, scanning, or restoring Pro?</h2>
+          <p style="margin-top:18px;">Email support with your iPhone model, iOS version, vehicle year/make/model, adapter brand, and a short description of the issue. Most adapter problems are solved by checking ignition state, Bluetooth permissions, and adapter compatibility.</p>
+          <div class="support-actions">
+            <a class="btn btn-primary" href="mailto:support@diagnoseai.app">Email support</a>
+            <a class="btn btn-secondary" href="#faq">Read FAQ</a>
+          </div>
+        </div>
+        <div class="support-box">
+          <h3>Include this for faster help</h3>
+          <ul>
+            <li>iPhone model and iOS version</li>
+            <li>OBD-II adapter brand and model</li>
+            <li>Vehicle year, make, model, and engine</li>
+            <li>Screenshot or fault code if available</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section compact" id="faq">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">FAQ</span>
+          <h2>Questions drivers ask before downloading.</h2>
+        </div>
+
+        <div class="faq-list reveal">
+          <details open>
+            <summary>Do I need an OBD-II adapter?</summary>
+            <p>Yes. Diagnose AI needs a compatible OBD-II adapter to read fault codes and vehicle data from your car. The adapter plugs into the vehicle's diagnostic port.</p>
+          </details>
+          <details>
+            <summary>Is this a replacement for a mechanic?</summary>
+            <p>No. Diagnose AI provides informational guidance to help you understand codes and prepare for repair. Always verify safety-critical issues with a qualified mechanic.</p>
+          </details>
+          <details>
+            <summary>Can the app tell me if it is safe to drive?</summary>
+            <p>The app can provide practical urgency guidance based on the code, common causes, and symptoms. It cannot guarantee safety. If the vehicle feels unsafe, stop driving and get professional help.</p>
+          </details>
+          <details>
+            <summary>Does every vehicle show the same live data?</summary>
+            <p>No. Available data depends on the vehicle, adapter, ECU support, and connection quality. Some vehicles provide more sensor data than others.</p>
+          </details>
+          <details>
+            <summary>How do I restore a Pro subscription?</summary>
+            <p>Open the app, go to your profile or subscription screen, and tap Restore Purchases. App Store purchases are managed by Apple.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section compact" id="legal">
+      <div class="container legal-wrap">
+        <div class="section-heading reveal">
+          <span class="eyebrow">Legal and privacy</span>
+          <h2>Clear policies for App Store review and customer trust.</h2>
+        </div>
+
+        <div class="faq-list reveal">
+          <details>
+            <summary>Privacy Policy</summary>
+            <p><em>Effective Date: May 24, 2026. Last Updated: May 24, 2026.</em></p>
+            <p>Diagnose AI ("we", "our", "us") is committed to protecting your privacy. This policy explains what information we collect, how we use it, and your rights.</p>
+
+            <h4>1. Information We Collect</h4>
+            <ul>
+              <li><strong>Account Data:</strong> Your email address used only for authentication via Supabase Auth. Passwords are never stored in plaintext.</li>
+              <li><strong>Vehicle Profiles:</strong> Year, make, model, and engine type you provide to improve diagnostic accuracy.</li>
+              <li><strong>Diagnostic Data:</strong> OBD-II fault codes retrieved from your adapter, stored in your private cloud profile.</li>
+              <li><strong>Usage Analytics:</strong> Basic, anonymized session data used to improve stability. No personally identifiable information is included.</li>
+            </ul>
+
+            <h4>2. How We Use Your Data</h4>
+            <ul>
+              <li>To authenticate your account and display your personal scan history.</li>
+              <li>To pass anonymized fault codes to AI APIs for generating repair guidance.</li>
+              <li>To manage your in-app subscription through Apple and RevenueCat.</li>
+            </ul>
+
+            <h4>3. AI Processing</h4>
+            <p>Raw fault codes and anonymized vehicle context are securely sent to Google Gemini AI for analysis. No personal data such as email, name, or user IDs is intentionally included in AI requests. Your data is not sold for advertising.</p>
+
+            <h4>4. Data Security</h4>
+            <p>All communication between the app and our servers is encrypted with TLS. Our Supabase database enforces Row Level Security so users can access only their own data.</p>
+
+            <h4>5. Third-Party Services</h4>
+            <ul>
+              <li><strong>Supabase:</strong> Authentication, database, and Row Level Security.</li>
+              <li><strong>Google Gemini AI:</strong> Anonymized diagnostic code analysis.</li>
+              <li><strong>RevenueCat:</strong> Subscription and purchase management.</li>
+              <li><strong>Apple App Store:</strong> Payment processing for in-app purchases.</li>
+            </ul>
+
+            <h4>6. Data Retention and Deletion</h4>
+            <p>You may delete your account and associated data by emailing <a href="mailto:support@diagnoseai.app">support@diagnoseai.app</a>. Upon request, your data will be removed within 30 days unless retention is required by law.</p>
+
+            <h4>7. Children's Privacy</h4>
+            <p>Diagnose AI is not intended for children under 13 years of age. We do not knowingly collect data from children.</p>
+
+            <h4>8. Contact</h4>
+            <p>For privacy questions or data deletion requests, contact <a href="mailto:support@diagnoseai.app">support@diagnoseai.app</a>.</p>
+          </details>
+
+          <details>
+            <summary>Terms of Service</summary>
+            <p><em>Effective Date: May 24, 2026. Last Updated: May 24, 2026.</em></p>
+            <p>By downloading or using Diagnose AI, you agree to these Terms of Service. If you do not agree, do not use the app.</p>
+
+            <h4>1. Description of Service</h4>
+            <p>Diagnose AI is a vehicle diagnostic assistance application that reads OBD-II fault codes from a compatible adapter and uses AI to provide informational repair suggestions.</p>
+
+            <h4>2. Disclaimer of Liability</h4>
+            <ul>
+              <li>AI-generated repair suggestions are informational only and may not identify all causes of a fault code.</li>
+              <li>Diagnose AI, its developers, and affiliates are not liable for vehicle damage, personal injury, or financial loss resulting from actions taken based on the app's output.</li>
+              <li>Always consult a qualified mechanic for safety-critical repairs such as brakes, steering, airbags, and similar systems.</li>
+            </ul>
+
+            <h4>3. AI-Generated Content</h4>
+            <ul>
+              <li>Results are generated by third-party AI models and may occasionally be inaccurate, incomplete, or out of date.</li>
+              <li>You must not rely solely on AI output for any safety-critical vehicle decision.</li>
+              <li>You agree not to use the app to generate, distribute, or store illegal, harmful, or offensive content.</li>
+            </ul>
+
+            <h4>4. Subscriptions and Payments</h4>
+            <ul>
+              <li>Pro features may be available through an in-app subscription processed by Apple.</li>
+              <li>Subscriptions renew automatically unless cancelled at least 24 hours before the renewal date via your Apple ID settings.</li>
+              <li>Refund requests must be submitted directly to Apple at <a href="https://reportaproblem.apple.com" target="_blank" rel="noopener">reportaproblem.apple.com</a>.</li>
+            </ul>
+
+            <h4>5. Account Responsibilities</h4>
+            <p>You are responsible for maintaining the confidentiality of your account credentials. You agree not to share your account or use another user's account without permission.</p>
+
+            <h4>6. Termination</h4>
+            <p>We reserve the right to suspend or terminate accounts that violate these terms, abuse the service, or engage in fraudulent activity including attempts to exploit subscription systems.</p>
+
+            <h4>7. Governing Law</h4>
+            <p>These terms are governed by applicable law. Any disputes will be resolved through binding arbitration or in the jurisdiction where the company operates.</p>
+
+            <h4>8. Changes to Terms</h4>
+            <p>We may update these terms occasionally. Continued use of the app after changes constitutes acceptance of the revised terms.</p>
+
+            <h4>9. Contact</h4>
+            <p>Questions about these terms? Email <a href="mailto:support@diagnoseai.app">support@diagnoseai.app</a>.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section compact">
+      <div class="container final-cta reveal">
+        <span class="eyebrow">Ready before the repair bill?</span>
+        <h2>Turn your next engine code into a clear action plan.</h2>
+        <p>Download Diagnose AI, connect a compatible OBD-II adapter, and get plain-English repair guidance from your iPhone.</p>
+        <a class="btn btn-primary" href="https://apps.apple.com" target="_blank" rel="noopener">Get the iOS app</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="brand" aria-label="Diagnose AI">
+        <span class="app-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 12h3l3-7 4 14 4-10 3 3h3"></path>
+          </svg>
+        </span>
+        <span>Diagnose AI <small>&copy; <span id="year">2026</span></small></span>
+      </div>
+      <div class="footer-links">
+        <a href="#features">Features</a>
+        <a href="#support">Support</a>
+        <a href="#legal">Privacy</a>
+        <a href="#legal">Terms</a>
         <a href="mailto:support@diagnoseai.app">Contact</a>
       </div>
-      <p>&copy; 2026 Diagnose AI. All rights reserved.</p>
-    </footer>
-
-  </div><!-- /page -->
+    </div>
+  </footer>
 
   <script>
-    /* ── Tab Switching ── */
-    const tabBtns   = document.querySelectorAll('.tab-btn');
-    const sections  = document.querySelectorAll('.section');
-    const validTabs = ['support','privacy','terms'];
+    const navToggle = document.getElementById('navToggle');
+    const siteNav = document.getElementById('siteNav');
 
-    function switchTab(id) {
-      if (!validTabs.includes(id)) id = 'support';
-      tabBtns.forEach(btn => {
-        const on = btn.dataset.tab === id;
-        btn.classList.toggle('active', on);
-        btn.setAttribute('aria-selected', on);
-      });
-      sections.forEach(sec => sec.classList.toggle('active', sec.id === id));
-      // trigger reveal for newly shown section
-      setTimeout(revealVisible, 80);
-    }
+    navToggle.addEventListener('click', () => {
+      const isOpen = siteNav.classList.toggle('is-open');
+      navToggle.setAttribute('aria-expanded', String(isOpen));
+    });
 
-    tabBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const id = btn.dataset.tab;
-        history.replaceState(null, '', `#${id}`);
-        switchTab(id);
+    siteNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        siteNav.classList.remove('is-open');
+        navToggle.setAttribute('aria-expanded', 'false');
       });
     });
 
-    function handleHash() {
-      const hash = location.hash.replace('#','');
-      switchTab(hash || 'support');
-    }
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-    window.addEventListener('DOMContentLoaded', handleHash);
-    window.addEventListener('hashchange', handleHash);
-
-    /* ── Scroll Reveal (Intersection Observer) ── */
     const revealEls = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in-view'); observer.unobserve(e.target); } });
-    }, { threshold: 0.12 });
-
-    function revealVisible() {
-      document.querySelectorAll('.section.active .reveal').forEach(el => observer.observe(el));
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      revealEls.forEach(el => observer.observe(el));
+    } else {
+      revealEls.forEach(el => el.classList.add('in-view'));
     }
-
-    revealVisible();
-
-    /* ── Mouse Parallax on Orbs ── */
-    const orb1 = document.getElementById('orb1');
-    const orb2 = document.getElementById('orb2');
-
-    document.addEventListener('mousemove', e => {
-      const x = (e.clientX / window.innerWidth  - 0.5);
-      const y = (e.clientY / window.innerHeight - 0.5);
-      requestAnimationFrame(() => {
-        orb1.style.transform = `translate(${x * 18}px, ${y * 14}px)`;
-        orb2.style.transform = `translate(${x * -22}px, ${y * -18}px)`;
-      });
-    });
-
-    /* ── Floating Particles (subtle) ── */
-    (function spawnParticles() {
-      const container = document.getElementById('particles');
-      const colors = ['rgba(0,229,168,0.5)', 'rgba(59,130,246,0.5)', 'rgba(147,197,253,0.4)'];
-      for (let i = 0; i < 8; i++) {
-        const p = document.createElement('div');
-        p.className = 'particle';
-        const size = Math.random() * 4 + 2;
-        const duration = Math.random() * 18 + 16;
-        const delay = Math.random() * 15;
-        p.style.cssText = `
-          width:${size}px; height:${size}px;
-          left:${Math.random() * 100}%;
-          bottom:${Math.random() * -10}%;
-          background:${colors[Math.floor(Math.random() * colors.length)]};
-          animation-duration:${duration}s;
-          animation-delay:${delay}s;
-          box-shadow: 0 0 ${size * 3}px ${colors[Math.floor(Math.random() * colors.length)]};
-        `;
-        container.appendChild(p);
-      }
-    })();
   </script>
-
 </body>
 </html>
