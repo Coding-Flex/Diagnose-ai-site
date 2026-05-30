@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DiagnoseAI — AI-Powered Vehicle Diagnostics for iOS</title>
-  <meta name="description" content="DiagnoseAI uses AI to turn your OBD-II engine fault codes into clear, actionable repair plans. Available on iOS.">
+  <title>Diagnose AI — AI-Powered Vehicle Diagnostics for iOS</title>
+  <meta name="description" content="Diagnose AI uses AI to turn your OBD-II engine fault codes into clear, actionable repair plans. Available on iOS.">
   <link rel="canonical" href="https://diagnoseai.us">
-  <meta property="og:title" content="DiagnoseAI — AI-Powered Vehicle Diagnostics">
+  <meta property="og:title" content="Diagnose AI — AI-Powered Vehicle Diagnostics">
   <meta property="og:description" content="Turn engine fault codes into clear, actionable repair plans with AI. Available on iOS.">
   <meta property="og:image" content="https://diagnoseai.us/mascot.png">
   <meta property="og:url" content="https://diagnoseai.us">
@@ -947,16 +947,18 @@
 
     <!-- ── Header ── -->
     <header>
-      <div class="logo-wrap" aria-label="DiagnoseAI logo">
+      <div class="logo-wrap" aria-label="Diagnose AI logo">
         <div class="logo-glow" aria-hidden="true"></div>
         <div class="logo-border" aria-hidden="true">
           <div class="logo-inner">
-            <img src="mascot.png" alt="DiagnoseAI mascot" width="148" height="148">
+            <svg viewBox="0 0 24 24" width="64" height="64" stroke="url(#cyanBlueGrad)" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="filter: drop-shadow(0 0 8px var(--accent-glow))">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+            </svg>
           </div>
         </div>
       </div>
 
-      <h1>DiagnoseAI</h1>
+      <h1>Diagnose AI</h1>
       <p class="tagline">AI-Powered <span class="tagline-accent">OBD-II Diagnostics</span> for iOS</p>
 
       <div class="stats-row" aria-label="Quick stats">
@@ -999,7 +1001,7 @@
           Response time: 24–48 hours · No ticket required
         </div>
 
-        <p>Welcome to DiagnoseAI support. Our app connects to your vehicle's OBD-II adapter via Bluetooth or Wi-Fi and uses AI to translate fault codes into clear, step-by-step repair guidance.</p>
+        <p>Welcome to Diagnose AI support. Our app connects to your vehicle's OBD-II adapter via Bluetooth or Wi-Fi and uses AI to translate fault codes into clear, step-by-step repair guidance.</p>
 
         <div class="feature-row" role="list">
           <div class="feature-card reveal" role="listitem">
@@ -1038,106 +1040,8 @@
           <li class="reveal" style="transition-delay:0.20s"><strong>AI diagnosis seems wrong:</strong> Results are informational. Always verify with a certified mechanic for safety-critical repairs.</li>
         </ul>
 
-        <h3>Get In Touch</h3>
-        <p>Submit a direct ticket to our operations team below for secure, rapid assistance.</p>
-
-        <!-- Glassmorphic Ticket Form -->
-        <div class="contact-form-container reveal" style="transition-delay:0.1s">
-          <form id="support-ticket-form">
-            <h4>Send a Support Ticket</h4>
-            <p class="form-desc">Complete the fields below to dispatch an automated diagnostic ticket.</p>
-            
-            <div class="form-grid">
-              <div class="form-group">
-                <label class="form-label" for="ticket-name">Full Name</label>
-                <input class="form-input" type="text" id="ticket-name" required placeholder="e.g., Jane Doe">
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="ticket-email">Email Address</label>
-                <input class="form-input" type="email" id="ticket-email" required placeholder="e.g., jane@example.com">
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="ticket-vehicle">Vehicle Model &amp; Year</label>
-                <input class="form-input" type="text" id="ticket-vehicle" required placeholder="e.g., 2017 Honda Accord">
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="ticket-adapter">OBD-II Adapter Type</label>
-                <select class="form-select" id="ticket-adapter" required>
-                  <option value="" disabled selected>Select your adapter type...</option>
-                  <option value="Bluetooth BLE Scanner">Bluetooth BLE Scanner</option>
-                  <option value="Wi-Fi Scanner">Wi-Fi Scanner</option>
-                  <option value="USB / Wired Connection">USB / Wired Connection</option>
-                  <option value="Don't Know / Not connected yet">Don't Know / Not connected yet</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="ticket-device">iPhone Model &amp; iOS</label>
-                <input class="form-input" type="text" id="ticket-device" required placeholder="e.g., iPhone 15 Pro, iOS 19.4">
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="ticket-category">Issue Category</label>
-                <select class="form-select" id="ticket-category" required>
-                  <option value="" disabled selected>Select an issue category...</option>
-                  <option value="Adapter Connection">Adapter Connection</option>
-                  <option value="Subscription / Pro Upgrade">Subscription / Pro Upgrade</option>
-                  <option value="AI Diagnosis Feedback">AI Diagnosis Feedback</option>
-                  <option value="Data Deletion / Account">Data Deletion / Account</option>
-                  <option value="General Question">General Question</option>
-                </select>
-              </div>
-              <div class="form-group full-width">
-                <label class="form-label" for="ticket-message">Describe the Issue</label>
-                <textarea class="form-textarea" id="ticket-message" required placeholder="Describe the issue in detail. Include any error codes or step-by-step actions that caused it..."></textarea>
-              </div>
-            </div>
-            
-            <button class="submit-btn" type="submit" id="ticket-submit-btn">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-              Submit Support Ticket
-            </button>
-          </form>
-          
-          <!-- Loading State (Holographic scan effect) -->
-          <div class="form-loading-overlay" id="form-loading">
-            <div class="holo-scanner">
-              <div class="holo-spinner"></div>
-            </div>
-            <div class="loading-text">Encrypting &amp; Dispatching...</div>
-          </div>
-          
-          <!-- Success State -->
-          <div class="form-success-card" id="form-success">
-            <div class="success-badge">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-            </div>
-            <div class="success-title">Support Ticket Submitted!</div>
-            <p>Your diagnostic support request has been securely registered in our system.</p>
-            
-            <div class="receipt-box">
-              <div class="receipt-row">
-                <span class="receipt-label">Ticket ID:</span>
-                <span class="receipt-val accent" id="val-ticket-id">TKT-2026-XXXX</span>
-              </div>
-              <div class="receipt-row">
-                <span class="receipt-label">Requester:</span>
-                <span class="receipt-val" id="val-ticket-email">user@example.com</span>
-              </div>
-              <div class="receipt-row">
-                <span class="receipt-label">Category:</span>
-                <span class="receipt-val" id="val-ticket-category">Category</span>
-              </div>
-              <div class="receipt-row">
-                <span class="receipt-label">Est. Response Time:</span>
-                <span class="receipt-val accent" id="val-ticket-time">1.5 hours</span>
-              </div>
-            </div>
-            
-            <p style="font-size:0.85rem; opacity:0.8; margin-bottom:0;">A secure reference code and copy of this request has been sent to your email.</p>
-          </div>
-        </div>
-
-        <h3 style="margin-top: 36px;">Or, reach us directly</h3>
-        <p>Include your iPhone model, iOS version, OBD-II adapter brand, and a short description of the issue to get the fastest resolution.</p>
+        <h3>Direct Email Support</h3>
+        <p>Please include your iPhone model, iOS version, OBD-II adapter brand, and a short description of the issue. We usually respond within 24–48 hours.</p>
 
         <div class="btn-row">
           <div class="cta-wrap">
@@ -1157,7 +1061,7 @@
       <section id="privacy" class="section" role="tabpanel" aria-labelledby="tab-privacy">
         <h2><span class="h2-bar"></span>Privacy Policy</h2>
         <p><em>Effective Date: May 24, 2026 · Last Updated: May 24, 2026</em></p>
-        <p>DiagnoseAI ("we", "our", "us") is committed to protecting your privacy. This policy explains what information we collect, how we use it, and your rights.</p>
+        <p>Diagnose AI ("we", "our", "us") is committed to protecting your privacy. This policy explains what information we collect, how we use it, and your rights.</p>
 
         <h3>1. Information We Collect</h3>
         <ul>
@@ -1194,7 +1098,7 @@
         <p>You may delete your account and all associated data at any time by emailing us. Upon request, your data will be permanently and irreversibly removed within 30 days.</p>
 
         <h3>7. Children's Privacy</h3>
-        <p>DiagnoseAI is not intended for children under 13 years of age. We do not knowingly collect data from children.</p>
+        <p>Diagnose AI is not intended for children under 13 years of age. We do not knowingly collect data from children.</p>
 
         <h3>8. Contact</h3>
         <p>For privacy questions or data deletion requests, contact us at <a href="mailto:support@diagnoseai.app" class="content-link">support@diagnoseai.app</a>.</p>
@@ -1204,15 +1108,15 @@
       <section id="terms" class="section" role="tabpanel" aria-labelledby="tab-terms">
         <h2><span class="h2-bar"></span>Terms of Service</h2>
         <p><em>Effective Date: May 24, 2026 · Last Updated: May 24, 2026</em></p>
-        <p>By downloading or using DiagnoseAI, you agree to these Terms of Service. If you do not agree, please do not use the app.</p>
+        <p>By downloading or using Diagnose AI, you agree to these Terms of Service. If you do not agree, please do not use the app.</p>
 
         <h3>1. Description of Service</h3>
-        <p>DiagnoseAI is a vehicle diagnostic assistance application that reads OBD-II fault codes from a compatible adapter and uses AI to provide informational repair suggestions. <strong>DiagnoseAI is not a substitute for a certified mechanic or a professional automotive inspection.</strong></p>
+        <p>Diagnose AI is a vehicle diagnostic assistance application that reads OBD-II fault codes from a compatible adapter and uses AI to provide informational repair suggestions. <strong>Diagnose AI is not a substitute for a certified mechanic or a professional automotive inspection.</strong></p>
 
         <h3>2. Disclaimer of Liability</h3>
         <ul>
           <li class="reveal">AI-generated repair suggestions are informational only and may not identify all causes of a fault code.</li>
-          <li class="reveal" style="transition-delay:0.06s">DiagnoseAI, its developers, and affiliates are not liable for any vehicle damage, personal injury, or financial loss resulting from actions taken based on the app's output.</li>
+          <li class="reveal" style="transition-delay:0.06s">Diagnose AI, its developers, and affiliates are not liable for any vehicle damage, personal injury, or financial loss resulting from actions taken based on the app's output.</li>
           <li class="reveal" style="transition-delay:0.12s">Always consult a qualified mechanic for safety-critical repairs (brakes, steering, airbags, and similar systems).</li>
         </ul>
 
@@ -1258,7 +1162,7 @@
         <a href="#terms">Terms of Service</a>
         <a href="mailto:support@diagnoseai.app">Contact</a>
       </div>
-      <p>&copy; 2026 DiagnoseAI. All rights reserved.</p>
+      <p>&copy; 2026 Diagnose AI. All rights reserved.</p>
     </footer>
 
   </div><!-- /page -->
@@ -1296,57 +1200,6 @@
 
     window.addEventListener('DOMContentLoaded', handleHash);
     window.addEventListener('hashchange', handleHash);
-
-    /* ── Interactive Ticket Form Handling ── */
-    const supportForm   = document.getElementById('support-ticket-form');
-    const formLoading   = document.getElementById('form-loading');
-    const formSuccess   = document.getElementById('form-success');
-    
-    const valTicketId   = document.getElementById('val-ticket-id');
-    const valTicketEmail= document.getElementById('val-ticket-email');
-    const valTicketCat  = document.getElementById('val-ticket-category');
-    const valTicketTime = document.getElementById('val-ticket-time');
-
-    if (supportForm) {
-      supportForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Extract form values
-        const name     = document.getElementById('ticket-name').value;
-        const email    = document.getElementById('ticket-email').value;
-        const vehicle  = document.getElementById('ticket-vehicle').value;
-        const adapter  = document.getElementById('ticket-adapter').value;
-        const category = document.getElementById('ticket-category').value;
-        
-        // Hide form fields
-        supportForm.style.display = 'none';
-        formLoading.style.display = 'flex';
-        
-        // Generate values
-        const randId = Math.floor(1000 + Math.random() * 9000);
-        const ticketId = `TKT-2026-${randId}`;
-        
-        // Response time estimates based on category
-        let estTime = "2 hours";
-        if (category === "Adapter Connection") estTime = "1.5 hours";
-        else if (category === "Subscription / Pro Upgrade") estTime = "45 mins (Priority)";
-        else if (category === "Data Deletion / Account") estTime = "12 hours";
-        else if (category === "AI Diagnosis Feedback") estTime = "3 hours";
-        
-        // Populate values
-        valTicketId.textContent = ticketId;
-        valTicketEmail.textContent = email;
-        valTicketCat.textContent = category;
-        valTicketTime.textContent = estTime;
-        
-        // Simulate secure dispatch animation
-        setTimeout(() => {
-          formLoading.style.display = 'none';
-          formSuccess.style.display = 'flex';
-          revealVisible();
-        }, 1800);
-      });
-    }
 
     /* ── Scroll Reveal (Intersection Observer) ── */
     const revealEls = document.querySelectorAll('.reveal');
