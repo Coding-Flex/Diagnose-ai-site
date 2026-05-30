@@ -186,6 +186,34 @@
       width: 100%; height: 100%; object-fit: contain; border-radius: 32px;
     }
 
+    /* Eyebrow badge */
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(0,229,168,0.07);
+      border: 1px solid rgba(0,229,168,0.22);
+      border-radius: var(--radius-pill);
+      padding: 6px 16px;
+      font-size: 0.72rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .eyebrow-dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+      animation: dotPulse 2.2s ease-in-out infinite;
+    }
+
+    @keyframes dotPulse {
+      0%, 100% { opacity: 1;   box-shadow: 0 0 0 0 rgba(0,229,168,0.6); }
+      50%       { opacity: 0.7; box-shadow: 0 0 0 5px rgba(0,229,168,0); }
+    }
+
     /* Animated gradient title */
     h1 {
       font-family: 'Space Grotesk', sans-serif;
@@ -212,9 +240,10 @@
     .tagline {
       color: var(--text-muted);
       font-family: 'DM Sans', sans-serif;
-      font-size: 1.2rem;
+      font-size: 1.18rem;
       font-weight: 400;
-      letter-spacing: 0.015em;
+      letter-spacing: 0.01em;
+      line-height: 1.5;
     }
 
     /* Animated underline on the highlighted word — from the other design */
@@ -434,22 +463,13 @@
     /* h3 section headings */
     h3 {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.7rem; font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--text-muted);
-      margin: 38px 0 14px;
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    h3::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
+      font-size: 0.98rem; font-weight: 700;
+      background: linear-gradient(135deg, #93c5fd 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 34px 0 10px;
+      letter-spacing: -0.01em;
     }
 
     p {
@@ -999,8 +1019,9 @@
         </div>
       </div>
 
+      <p class="hero-eyebrow" aria-label="App availability"><span class="eyebrow-dot"></span>Free on the App Store</p>
       <h1>Diagnose AI</h1>
-      <p class="tagline">AI-Powered <span class="tagline-accent">OBD-II Diagnostics</span> for iOS</p>
+      <p class="tagline">Every engine code, <span class="tagline-accent">explained by AI</span>.<br>Built for iOS. Works with any OBD-II adapter.</p>
 
       <div class="stats-row" aria-label="Quick stats">
         <div class="stat-chip">
