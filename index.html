@@ -1401,6 +1401,16 @@
 
     .footer-links a:hover { color: var(--green); }
 
+    .footer-bottom {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 28px auto 0;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted-2);
+    }
+
     .reveal {
       opacity: 0;
       transform: translateY(12px);
@@ -1549,12 +1559,6 @@
               Scan history and summaries
             </div>
           </div>
-        </div>
-
-        <div class="hero-visual reveal" aria-label="Diagnose AI app preview">
-          <div class="halo" aria-hidden="true"></div>
-          <div class="halo-2" aria-hidden="true"></div>
-          <img src="hero_showcase.png" class="hero-graphic-showcase" alt="Diagnose AI premium Bluetooth vehicle scan interface showing active fault detection, live RPM gauges, and plain-English mechanic report inside a carbon-fiber cockpit.">
         </div>
       </div>
     </section>
@@ -1945,7 +1949,7 @@
             <path d="M2 12h3l3-7 4 14 4-10 3 3h3"></path>
           </svg>
         </span>
-        <span>Diagnose AI <small>&copy; <span id="year">2026</span></small></span>
+        <span>Diagnose AI</span>
       </div>
       <div class="footer-links">
         <a href="#features">Features</a>
@@ -1954,6 +1958,9 @@
         <a href="#legal">Terms</a>
         <a href="mailto:support@diagnoseai.app">Contact</a>
       </div>
+    </div>
+    <div class="footer-bottom">
+      <p style="margin: 0;">&copy; <span id="year">2026</span> Diagnose AI. All rights reserved.</p>
     </div>
   </footer>
 
