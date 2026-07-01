@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Diagnose AI - AI OBD-II Diagnostics for iPhone</title>
-  <meta name="description" content="Diagnose AI turns OBD-II fault codes into plain-English explanations, urgency guidance, repair steps, and mechanic-ready summaries for iPhone.">
+  <title>Diagnose AI - AI OBD-II Diagnostics for iOS & Android</title>
+  <meta name="description" content="Diagnose AI turns OBD-II fault codes into plain-English explanations, urgency guidance, repair steps, and mechanic-ready summaries for iOS and Android.">
   <link rel="canonical" href="https://diagnoseai.us">
 
-  <meta property="og:title" content="Diagnose AI - AI OBD-II Diagnostics for iPhone">
+  <meta property="og:title" content="Diagnose AI - AI OBD-II Diagnostics for iOS & Android">
   <meta property="og:description" content="Decode your check engine light with plain-English AI repair guidance, urgency levels, and cost-aware next steps.">
   <meta property="og:image" content="https://diagnoseai.us/mascot.png">
   <meta property="og:url" content="https://diagnoseai.us">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#08090f">
+  <meta name="theme-color" content="#08090f" id="themeColor">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,6 +47,518 @@
       --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --ease: cubic-bezier(0.16, 1, 0.3, 1);
       --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* ── Light Theme ── */
+    [data-theme="light"] {
+      --bg: #f0f4fa;
+      --bg-2: #e8edf6;
+      --surface: rgba(255, 255, 255, 0.88);
+      --surface-strong: rgba(255, 255, 255, 0.96);
+      --surface-soft: rgba(15, 23, 42, 0.04);
+      --text: #0c1222;
+      --muted: #3e4c63;
+      --muted-2: #4a5568;
+      --line: rgba(15, 23, 42, 0.12);
+      --line-strong: rgba(15, 23, 42, 0.22);
+      --blue: #2563eb;
+      --blue-2: #0284c7;
+      --green: #059669;
+      --green-2: #10b981;
+      --red: #dc2626;
+      --amber: #d97706;
+      --shadow: 0 8px 32px rgba(15, 23, 42, 0.08), 0 2px 8px rgba(15, 23, 42, 0.04);
+    }
+
+    /* ── Theme Toggle Button ── */
+    .theme-toggle {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.05);
+      color: var(--muted);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      flex-shrink: 0;
+      transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.3s var(--spring);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .theme-toggle:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: var(--line-strong);
+      color: var(--text);
+      transform: scale(1.08);
+    }
+
+    .theme-toggle svg {
+      width: 20px;
+      height: 20px;
+      transition: transform 0.4s var(--spring), opacity 0.3s ease;
+      position: absolute;
+    }
+
+    .theme-toggle .icon-sun { opacity: 0; transform: rotate(-90deg) scale(0.5); }
+    .theme-toggle .icon-moon { opacity: 1; transform: rotate(0deg) scale(1); }
+
+    [data-theme="light"] .theme-toggle {
+      background: rgba(0,0,0,0.04);
+      border-color: rgba(15,23,42,0.12);
+    }
+    [data-theme="light"] .theme-toggle:hover {
+      background: rgba(0,0,0,0.08);
+    }
+    [data-theme="light"] .theme-toggle .icon-sun { opacity: 1; transform: rotate(0deg) scale(1); }
+    [data-theme="light"] .theme-toggle .icon-moon { opacity: 0; transform: rotate(90deg) scale(0.5); }
+
+
+
+    /* ── Light Theme: Background ── */
+    [data-theme="light"] .site-bg {
+      background:
+        radial-gradient(circle at 18% 12%, rgba(139, 92, 246, 0.12), transparent 42%),
+        radial-gradient(circle at 78% 22%, rgba(37, 99, 235, 0.14), transparent 36%),
+        radial-gradient(circle at 50% 92%, rgba(16, 185, 129, 0.10), transparent 46%),
+        radial-gradient(circle at 90% 60%, rgba(244, 114, 182, 0.06), transparent 30%),
+        linear-gradient(180deg, #f0f4fa 0%, #e8edf6 40%, #f0f4fa 100%);
+    }
+
+    [data-theme="light"] .site-bg::before {
+      background-image:
+        linear-gradient(rgba(15, 23, 42, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 23, 42, 0.08) 1px, transparent 1px);
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.85), transparent 65%);
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.85), transparent 65%);
+    }
+
+    [data-theme="light"] .site-bg::after {
+      background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.08), transparent 42%);
+    }
+
+    /* ── Silk-Smooth Theme Transitions ── */
+    body,
+    .site-header,
+    .site-bg,
+    .glass-card,
+    .feature-card,
+    .preview-card,
+    .preview-panel,
+    .info-card,
+    .step-card,
+    .final-cta,
+    .trust-strip,
+    .trust-chip,
+    .eyebrow,
+    .proof-pill,
+    .pain-list li,
+    .answer-item,
+    .answer-icon,
+    .phone-metric,
+    .scan-card,
+    .history-row,
+    details,
+    .support-card,
+    .support-box,
+    footer,
+    .btn,
+    h1, h2, h3, h4, p, span, strong, a, svg, b, li {
+      transition: background-color 0.4s ease, background-image 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, opacity 0.4s ease;
+    }
+
+    /* ── Light Theme: Header ── */
+    [data-theme="light"] .site-header {
+      background: rgba(255, 255, 255, 0.95);
+      border-bottom-color: rgba(15,23,42,0.06);
+      box-shadow: 0 1px 2px rgba(15,23,42,0.05);
+    }
+
+    [data-theme="light"] .site-nav {
+      background: rgba(15,23,42,0.04);
+      border-color: rgba(15,23,42,0.08);
+    }
+
+    [data-theme="light"] .site-nav a {
+      color: #475569;
+    }
+
+    [data-theme="light"] .site-nav a:hover {
+      color: #0c1222;
+      background: rgba(15,23,42,0.06);
+      text-shadow: none;
+      box-shadow: none;
+    }
+
+    [data-theme="light"] .nav-toggle {
+      border-color: rgba(15,23,42,0.1);
+      background: rgba(15,23,42,0.04);
+      color: #334155;
+    }
+
+    @media (max-width: 980px) {
+      [data-theme="light"] .site-nav {
+        background: rgba(255, 255, 255, 0.98);
+        box-shadow: 0 20px 60px rgba(15, 23, 42, 0.1);
+      }
+    }
+
+    /* ── Light Theme: Gradient Text ── */
+    [data-theme="light"] h1 {
+      background: linear-gradient(135deg, #0f172a 8%, #1e40af 48%, #059669 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    [data-theme="light"] h2 {
+      background: linear-gradient(135deg, #0f172a 40%, #1e3a5f 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    [data-theme="light"] .gradient-text {
+      background: linear-gradient(135deg, #0f172a 0%, #1e40af 54%, #059669 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    /* ── Light Theme: Hero ── */
+    [data-theme="light"] .hero {
+      background: var(--bg);
+    }
+
+    @media (min-width: 981px) {
+      [data-theme="light"] .hero {
+        background:
+          linear-gradient(90deg, rgba(245, 247, 251, 0.97) 0%, rgba(245, 247, 251, 0.6) 45%, rgba(245, 247, 251, 0) 95%),
+          url('hero_bg1.png') no-repeat center center;
+        background-size: cover;
+      }
+    }
+
+    [data-theme="light"] .hero-copy > p {
+      color: #475569;
+    }
+
+    [data-theme="light"] .halo {
+      background: radial-gradient(circle, rgba(59,130,246,0.1), transparent 65%);
+    }
+
+    [data-theme="light"] .halo-2 {
+      background: radial-gradient(circle, rgba(30, 96, 255, 0.08) 0%, rgba(16, 185, 129, 0.06) 60%, transparent 100%);
+    }
+
+    /* ── Light Theme: Eyebrow ── */
+    [data-theme="light"] .eyebrow {
+      background: rgba(16, 185, 129, 0.08);
+      border-color: rgba(16, 185, 129, 0.2);
+      color: #059669;
+    }
+
+    [data-theme="light"] .eyebrow::before {
+      background: #059669;
+      box-shadow: 0 0 14px rgba(5, 150, 105, 0.6);
+    }
+
+    [data-theme="light"] .eyebrow::after {
+      background: linear-gradient(135deg, #10b981 0%, #3b82f6 40%, #8b5cf6 75%, #ec4899 100%);
+      opacity: 0.5;
+    }
+
+    /* ── Light Theme: Trust Strip ── */
+    [data-theme="light"] .trust-strip {
+      background: rgba(255,255,255,0.5);
+      border-color: rgba(15,23,42,0.07);
+    }
+
+    [data-theme="light"] .trust-chip {
+      background: #ffffff;
+      border-color: rgba(15,23,42,0.1);
+      color: #334155;
+      box-shadow: 0 2px 8px rgba(15,23,42,0.04);
+    }
+
+    /* ── Light Theme: Cards ── */
+    [data-theme="light"] .glass-card {
+      background: rgba(255, 255, 255, 0.92);
+      border-color: rgba(15,23,42,0.08);
+      box-shadow: 0 4px 16px rgba(15,23,42,0.06), 0 16px 48px rgba(15,23,42,0.05), inset 0 1px 0 rgba(255,255,255,0.9);
+    }
+
+    [data-theme="light"] .glass-card:hover {
+      border-color: rgba(37, 99, 235, 0.22);
+      box-shadow: 0 8px 32px rgba(15,23,42,0.1), 0 20px 64px rgba(37, 99, 235, 0.08);
+    }
+
+    [data-theme="light"] .glass-card::before {
+      background: radial-gradient(circle at 16% 0%, rgba(37,99,235,0.08), transparent 40%);
+    }
+
+    [data-theme="light"] .pain-list li {
+      background: rgba(254, 226, 226, 0.5);
+      border-color: rgba(220, 38, 38, 0.1);
+      color: #334155;
+    }
+
+    [data-theme="light"] .answer-card {
+      background: rgba(255, 255, 255, 0.92);
+    }
+
+    [data-theme="light"] .answer-item {
+      background: rgba(209, 250, 229, 0.5);
+      border-color: rgba(5, 150, 105, 0.15);
+    }
+
+    [data-theme="light"] .answer-icon {
+      background: rgba(209, 250, 229, 0.7);
+      border-color: rgba(5, 150, 105, 0.2);
+    }
+
+    /* ── Light Theme: Feature Cards ── */
+    [data-theme="light"] .feature-card {
+      background: #ffffff;
+      border-color: rgba(15,23,42,0.08);
+      box-shadow: 0 2px 8px rgba(15,23,42,0.04);
+    }
+
+    [data-theme="light"] .feature-card:hover {
+      border-color: rgba(37,99,235,0.22);
+      background: linear-gradient(135deg, rgba(37,99,235,0.02), rgba(16,185,129,0.02));
+      box-shadow: 0 8px 32px rgba(37,99,235,0.1), 0 20px 48px rgba(15,23,42,0.06);
+    }
+
+    [data-theme="light"] .feature-icon {
+      background: rgba(37,99,235,0.08);
+      border-color: rgba(37,99,235,0.14);
+    }
+
+    /* ── Light Theme: Preview Panel ── */
+    [data-theme="light"] .preview-panel {
+      background:
+        radial-gradient(circle at 20% 5%, rgba(37,99,235,0.1), transparent 38%),
+        radial-gradient(circle at 95% 80%, rgba(16, 185, 129, 0.08), transparent 38%),
+        #ffffff;
+      border-color: rgba(15,23,42,0.08);
+      box-shadow: 0 8px 32px rgba(15,23,42,0.06), 0 24px 64px rgba(15,23,42,0.04);
+    }
+
+    [data-theme="light"] .preview-card {
+      background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+      border-color: rgba(15,23,42,0.07);
+      box-shadow: 0 2px 8px rgba(15,23,42,0.04);
+    }
+
+    [data-theme="light"] .preview-card:hover {
+      border-color: rgba(37,99,235,0.2);
+      background: linear-gradient(135deg, #f1f5f9, #eef2f8);
+      box-shadow: 0 8px 32px rgba(15,23,42,0.08), 0 0 30px rgba(37,99,235,0.06);
+    }
+
+    [data-theme="light"] .preview-card.large {
+      background:
+        radial-gradient(circle at 50% 0%, rgba(37,99,235,0.1), transparent 44%),
+        linear-gradient(135deg, #f8fafc, #f1f5f9);
+    }
+
+    [data-theme="light"] .preview-card.large:hover {
+      background:
+        radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.1), transparent 44%),
+        linear-gradient(135deg, #f1f5f9, #eef2f8);
+      border-color: rgba(16, 185, 129, 0.2);
+      box-shadow: 0 8px 32px rgba(15,23,42,0.08), 0 0 40px rgba(16, 185, 129, 0.08);
+    }
+
+    [data-theme="light"] .preview-card-wide {
+      background: radial-gradient(circle at 10% 0%, rgba(37,99,235,0.07), transparent 44%), linear-gradient(135deg, #f8fafc, #f1f5f9);
+    }
+
+    /* ── Light Theme: Scan / Phone Cards ── */
+    [data-theme="light"] .scan-card {
+      background: rgba(239, 68, 68, 0.06);
+      border-color: rgba(239, 68, 68, 0.15);
+    }
+
+    [data-theme="light"] .scan-card span { color: #991b1b; }
+    [data-theme="light"] .scan-card p { color: #991b1b; }
+
+    [data-theme="light"] .phone-metric {
+      background: rgba(59,130,246,0.06);
+      border-color: rgba(59,130,246,0.12);
+    }
+
+    [data-theme="light"] .phone-metric small { color: #64748b; }
+    [data-theme="light"] .phone-metric strong { color: #1e40af; }
+
+    [data-theme="light"] .phone-list li {
+      background: rgba(0,0,0,0.03);
+      border-color: rgba(15,23,42,0.08);
+      color: #334155;
+    }
+
+    [data-theme="light"] .history-row {
+      background: rgba(0,0,0,0.03);
+      border-color: rgba(15,23,42,0.08);
+      color: #334155;
+    }
+
+    /* ── Light Theme: Steps ── */
+    [data-theme="light"] .step-card {
+      background: #ffffff;
+      border-color: rgba(15,23,42,0.08);
+      box-shadow: 0 2px 8px rgba(15,23,42,0.04);
+    }
+
+    [data-theme="light"] .step-card::before {
+      color: rgba(15,23,42,0.05);
+    }
+
+    [data-theme="light"] .step-badge {
+      background: rgba(209, 250, 229, 0.6);
+      border-color: rgba(5, 150, 105, 0.18);
+    }
+
+    /* ── Light Theme: Info Cards ── */
+    [data-theme="light"] .info-card {
+      background: #ffffff;
+      border-color: rgba(15,23,42,0.08);
+      box-shadow: 0 2px 8px rgba(15,23,42,0.04);
+    }
+
+    [data-theme="light"] .badge-grid span {
+      background: linear-gradient(135deg, #f1f5f9, #e8edf6);
+      border-color: rgba(15,23,42,0.08);
+      color: #334155;
+    }
+
+    /* ── Light Theme: Proof Pills ── */
+    [data-theme="light"] .proof-pill {
+      background: #ffffff;
+      border-color: rgba(15,23,42,0.1);
+      color: #334155;
+      box-shadow: 0 2px 6px rgba(15,23,42,0.04);
+    }
+
+    /* ── Light Theme: FAQ ── */
+    [data-theme="light"] details {
+      background: #ffffff;
+      border-color: rgba(15,23,42,0.08);
+      box-shadow: 0 2px 8px rgba(15,23,42,0.03);
+    }
+
+    [data-theme="light"] summary::after {
+      border-color: rgba(15,23,42,0.1);
+    }
+
+    /* ── Light Theme: Support ── */
+    [data-theme="light"] .support-card {
+      background:
+        radial-gradient(circle at 12% 0%, rgba(16, 185, 129, 0.08), transparent 34%),
+        #ffffff;
+      border-color: rgba(15,23,42,0.08);
+    }
+
+    [data-theme="light"] .support-box {
+      background: #f8fafc;
+      border-color: rgba(15,23,42,0.1);
+    }
+
+    /* ── Light Theme: Final CTA ── */
+    [data-theme="light"] .final-cta {
+      background:
+        radial-gradient(circle at 30% 0%, rgba(37, 99, 235, 0.08), transparent 36%),
+        radial-gradient(circle at 70% 100%, rgba(16, 185, 129, 0.12), transparent 42%),
+        linear-gradient(135deg, #ffffff, #f0f4fa);
+      border-color: rgba(16, 185, 129, 0.2);
+      box-shadow: 0 8px 32px rgba(15,23,42,0.06), 0 24px 64px rgba(15,23,42,0.04);
+    }
+
+    [data-theme="light"] .final-cta::before {
+      background: rgba(16, 185, 129, 0.08);
+    }
+
+    /* ── Light Theme: Footer ── */
+    [data-theme="light"] footer {
+      border-top-color: rgba(15,23,42,0.08);
+    }
+
+    [data-theme="light"] .footer-bottom {
+      border-top-color: rgba(15,23,42,0.08);
+    }
+
+    /* ── Light Theme: Buttons ── */
+    [data-theme="light"] .btn-primary {
+      background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25), 0 12px 28px rgba(5, 150, 105, 0.15);
+    }
+
+    [data-theme="light"] .btn-primary:hover {
+      box-shadow: 0 6px 20px rgba(5, 150, 105, 0.35), 0 18px 40px rgba(5, 150, 105, 0.2);
+    }
+
+    [data-theme="light"] .btn-secondary {
+      background: #ffffff;
+      border-color: rgba(15,23,42,0.12);
+      color: #0c1222;
+      box-shadow: 0 2px 6px rgba(15,23,42,0.04);
+    }
+
+    [data-theme="light"] .btn-secondary:hover {
+      background: #f8fafc;
+      border-color: rgba(15,23,42,0.2);
+      box-shadow: 0 4px 12px rgba(15,23,42,0.08);
+    }
+
+    /* ── Light Theme: App Icon / Brand ── */
+    [data-theme="light"] .app-icon svg {
+      stroke: #ffffff;
+    }
+
+    [data-theme="light"] .brand:hover {
+      text-shadow: 0 0 10px rgba(5, 150, 105, 0.2);
+    }
+
+    /* ── Light Theme: Float Cards ── */
+    [data-theme="light"] .float-card {
+      background: rgba(255, 255, 255, 0.92);
+      border-color: rgba(15,23,42,0.1);
+      box-shadow: 0 18px 45px rgba(15,23,42,0.1);
+    }
+
+    /* ── Light Theme: Meter ── */
+    [data-theme="light"] .meter {
+      background: rgba(0,0,0,0.06);
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.08);
+    }
+
+    [data-theme="light"] .meter span {
+      box-shadow: 0 0 15px rgba(5, 150, 105, 0.3);
+    }
+
+    /* ── Light Theme: Cost rows ── */
+    [data-theme="light"] .cost-row {
+      border-bottom-color: rgba(15,23,42,0.06);
+    }
+
+    /* ── Light Theme: Timeline ── */
+    [data-theme="light"] .timeline-num {
+      background: rgba(5, 150, 105, 0.06);
+      border-color: rgba(5, 150, 105, 0.15);
+      color: #059669;
+    }
+
+    /* ── Light Theme: Report card on phone ── */
+    [data-theme="light"] .report-card-phone {
+      background: rgba(0,0,0,0.03);
+      border-color: rgba(15,23,42,0.08);
+    }
+
+    [data-theme="light"] .hero-graphic-showcase {
+      background: rgba(255, 255, 255, 0.6);
+      border-color: rgba(15,23,42,0.12);
+      box-shadow: 0 24px 80px rgba(15,23,42,0.1), inset 0 1px 0 rgba(255,255,255,0.8);
     }
 
     * { box-sizing: border-box; }
@@ -400,6 +912,12 @@
       box-shadow: 
         0 0 20px rgba(0, 240, 255, 0.4),
         0 8px 24px rgba(0, 240, 255, 0.2) !important;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
     /* Hero */
@@ -1490,6 +2008,21 @@
       .reveal { opacity: 1; transform: none; }
     }
   </style>
+  <script>
+    // Prevent flash of wrong theme
+    (function() {
+      var saved = localStorage.getItem('diagnoseai-theme');
+      if (saved === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        var mc = document.querySelector('#themeColor');
+        if (mc) mc.setAttribute('content', '#f0f4fa');
+      } else if (!saved && window.matchMedia('(prefers-color-scheme: light)').matches) {
+        document.documentElement.setAttribute('data-theme', 'light');
+        var mc = document.querySelector('#themeColor');
+        if (mc) mc.setAttribute('content', '#f0f4fa');
+      }
+    })();
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -1503,12 +2036,8 @@
             <path d="M2 12h3l3-7 4 14 4-10 3 3h3"></path>
           </svg>
         </span>
-        <span>Diagnose AI <small>OBD-II for iPhone</small></span>
+        <span>Diagnose AI <small>OBD-II Diagnostics</small></span>
       </a>
-
-      <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-controls="siteNav" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
 
       <nav class="site-nav" id="siteNav" aria-label="Primary navigation">
         <a href="#features">Features</a>
@@ -1518,14 +2047,20 @@
         <a href="#legal">Legal</a>
       </nav>
 
-      <a class="btn btn-primary nav-cta" href="https://apps.apple.com/us/app/diagnose-ai/id6773086171" target="_blank" rel="noopener">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="margin-right: 6px;"><path d="M16.365 1.43c0 1.14-.466 2.194-1.214 2.997-.78.837-2.063 1.48-3.104 1.397-.135-1.096.405-2.257 1.135-3.06C13.986 1.89 15.36 1.24 16.365 1.43zM20.75 17.2c-.57 1.32-.844 1.91-1.58 3.07-1.024 1.61-2.47 3.62-4.26 3.64-1.59.02-2-.99-4.16-.98-2.16.01-2.61 1.01-4.2.99-1.79-.02-3.16-1.83-4.19-3.44C-.46 15.99-.73 10.71 1.2 7.73c1.37-2.12 3.53-3.36 5.56-3.36 2.07 0 3.37 1.02 5.08 1.02 1.66 0 2.67-1.02 5.06-1.02 1.81 0 3.73.98 5.09 2.67-4.47 2.45-3.74 8.83.76 10.16z"></path></svg>
-        Get the iOS app
-      </a>
-      <a class="btn btn-secondary nav-cta" href="https://play.google.com/store/apps/details?id=com.shan.diagnoseai.mobile" target="_blank" rel="noopener">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="margin-right: 6px;"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 0 1 0 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.8 8.99l-2.3 2.3-8.636-8.632z"></path></svg>
-        Get the Android app
-      </a>
+      <div class="header-right">
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light/dark theme">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+
+        <a class="btn btn-primary nav-cta" href="#download">
+          Get the App
+        </a>
+
+        <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-controls="siteNav" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -1683,7 +2218,7 @@
               <h3>Know the safety urgency</h3>
               <p style="color: var(--muted);">Get practical urgency context so you know whether the issue looks minor, needs attention soon, or should be checked immediately.</p>
               <div class="meter" aria-hidden="true"><span></span></div>
-              <p style="margin-top:16px;color:#fbbf24;font-weight:800;font-size:0.9rem;">Example: Moderate - inspect soon</p>
+              <p style="margin-top:16px;color:var(--amber);font-weight:800;font-size:0.9rem;">Example: Moderate - inspect soon</p>
             </article>
 
             <!-- Bento Card 3: Cost Estimates -->
@@ -1741,7 +2276,7 @@
           </article>
           <article class="step-card reveal">
             <div class="step-badge">2</div>
-            <h3>Scan from your iPhone</h3>
+            <h3>Scan from your phone</h3>
             <p>Read fault codes and available live data from your vehicle, then save the scan to your private history.</p>
           </article>
           <article class="step-card reveal">
@@ -1758,9 +2293,10 @@
         <article class="info-card reveal">
           <span class="eyebrow">Compatibility</span>
           <h2>Designed for supported OBD-II adapters.</h2>
-          <p style="margin-top:18px;">Diagnose AI is built for iPhone and compatible Bluetooth LE OBD-II adapters. Adapter behavior can vary by brand, firmware, vehicle, and available sensor data.</p>
+          <p style="margin-top:18px;">Diagnose AI is built for iOS & Android and compatible Bluetooth LE OBD-II adapters. Adapter behavior can vary by brand, firmware, vehicle, and available sensor data.</p>
           <div class="badge-grid" aria-label="Compatibility tags">
             <span>iOS</span>
+            <span>Android</span>
             <span>Bluetooth LE</span>
             <span>OBD-II DTCs</span>
             <span>Live data where available</span>
@@ -1788,7 +2324,7 @@
         <div>
           <span class="eyebrow">Support</span>
           <h2>Need help connecting, scanning, or restoring Pro?</h2>
-          <p style="margin-top:18px;">Email support with your iPhone model, iOS version, vehicle year/make/model, adapter brand, and a short description of the issue. Most adapter problems are solved by checking ignition state, Bluetooth permissions, and adapter compatibility.</p>
+          <p style="margin-top:18px;">Email support with your phone model, OS version, vehicle year/make/model, adapter brand, and a short description of the issue. Most adapter problems are solved by checking ignition state, Bluetooth permissions, and adapter compatibility.</p>
           <div class="support-actions">
             <a class="btn btn-primary" href="mailto:team@diagnoseai.us">Email support</a>
             <a class="btn btn-secondary" href="#faq">Read FAQ</a>
@@ -1797,7 +2333,7 @@
         <div class="support-box">
           <h3>Include this for faster help</h3>
           <ul>
-            <li>iPhone model and iOS version</li>
+            <li>Phone model and OS version</li>
             <li>OBD-II adapter brand and model</li>
             <li>Vehicle year, make, model, and engine</li>
             <li>Screenshot or fault code if available</li>
@@ -1938,11 +2474,11 @@
       </div>
     </section>
 
-    <section class="section compact">
+    <section class="section compact" id="download">
       <div class="container final-cta reveal">
         <span class="eyebrow">Ready before the repair bill?</span>
         <h2>Turn your next engine code into a clear action plan.</h2>
-        <p>Download Diagnose AI, connect a compatible OBD-II adapter, and get plain-English repair guidance from your iPhone.</p>
+        <p>Download Diagnose AI, connect a compatible OBD-II adapter, and get plain-English repair guidance from your phone.</p>
         <a class="btn btn-primary" href="https://apps.apple.com/us/app/diagnose-ai/id6773086171" target="_blank" rel="noopener">Get the iOS app</a>
         <a class="btn btn-secondary" href="https://play.google.com/store/apps/details?id=com.shan.diagnoseai.mobile" target="_blank" rel="noopener">Get the Android app</a>
       </div>
@@ -2004,6 +2540,36 @@
     } else {
       revealEls.forEach(el => el.classList.add('in-view'));
     }
+
+    // ── Theme Toggle ──
+    (function() {
+      const toggle = document.getElementById('themeToggle');
+      const themeColor = document.getElementById('themeColor');
+      const STORAGE_KEY = 'diagnoseai-theme';
+
+      function setTheme(theme) {
+        if (theme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          if (themeColor) themeColor.setAttribute('content', '#f0f4fa');
+          toggle.setAttribute('aria-label', 'Switch to dark theme');
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+          if (themeColor) themeColor.setAttribute('content', '#08090f');
+          toggle.setAttribute('aria-label', 'Switch to light theme');
+        }
+        localStorage.setItem(STORAGE_KEY, theme);
+      }
+
+      // Set initial aria-label based on current state
+      if (document.documentElement.getAttribute('data-theme') === 'light') {
+        toggle.setAttribute('aria-label', 'Switch to dark theme');
+      }
+
+      toggle.addEventListener('click', function() {
+        var current = document.documentElement.getAttribute('data-theme');
+        setTheme(current === 'light' ? 'dark' : 'light');
+      });
+    })();
   </script>
 </body>
 </html>
