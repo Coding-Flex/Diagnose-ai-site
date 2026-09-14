@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Diagnose AI - AI OBD-II Diagnostics for iOS & Android</title>
-  <meta name="description" content="Diagnose AI turns OBD-II fault codes into plain-English explanations, urgency guidance, repair steps, and mechanic-ready summaries for iOS and Android.">
+  <title>Diagnose AI - Buy Used Cars with More Confidence</title>
+  <meta name="description" content="Diagnose AI helps used-car buyers surface trouble codes, reset clues, readiness status, VIN consistency, recalls, and supported live data—then stays with you for everyday check-engine guidance.">
   <link rel="canonical" href="https://diagnoseai.us">
 
-  <meta property="og:title" content="Diagnose AI - AI OBD-II Diagnostics for iOS & Android">
-  <meta property="og:description" content="Decode your check engine light with plain-English AI repair guidance, urgency levels, and cost-aware next steps.">
+  <meta property="og:title" content="Diagnose AI - Know What You're Buying Before You Pay">
+  <meta property="og:description" content="Bring more clarity to a used-car purchase with OBD-II evidence, recall information, and an AI-powered buyer report.">
   <meta property="og:image" content="https://diagnoseai.us/mascot.png">
   <meta property="og:url" content="https://diagnoseai.us">
   <meta property="og:type" content="website">
@@ -17,7 +17,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -37,16 +37,16 @@
       --green-2: #00e5a8;
       --red: #ff4d4f;
       --amber: #ffb020;
-      --shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
-      --radius-xl: 32px;
-      --radius-lg: 24px;
-      --radius-md: 18px;
+      --shadow: 0 20px 56px rgba(0, 0, 0, 0.32);
+      --radius-xl: 26px;
+      --radius-lg: 20px;
+      --radius-md: 16px;
       --pill: 999px;
-      --max: 1200px;
-      --font-heading: 'Outfit', system-ui, sans-serif;
-      --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --max: 1160px;
+      --font-heading: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --ease: cubic-bezier(0.16, 1, 0.3, 1);
-      --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --spring: cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
     /* ── Light Theme ── */
@@ -67,7 +67,7 @@
       --green-2: #10b981;
       --red: #dc2626;
       --amber: #d97706;
-      --shadow: 0 8px 32px rgba(15, 23, 42, 0.08), 0 2px 8px rgba(15, 23, 42, 0.04);
+      --shadow: 0 14px 40px rgba(15, 23, 42, 0.09), 0 2px 8px rgba(15, 23, 42, 0.04);
     }
 
     /* ── Theme Toggle Button ── */
@@ -569,7 +569,7 @@
       background: var(--bg);
       color: var(--text);
       font-family: var(--font-body);
-      line-height: 1.7;
+      line-height: 1.65;
       overflow-x: hidden;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
@@ -633,15 +633,15 @@
     }
 
     .section {
-      padding: 72px 0;
+      padding: 64px 0;
       position: relative;
     }
 
-    .section.compact { padding: 48px 0; }
+    .section.compact { padding: 42px 0; }
 
     .section-heading {
       max-width: 720px;
-      margin: 0 auto 42px;
+      margin: 0 auto 36px;
       text-align: center;
     }
 
@@ -649,15 +649,15 @@
       display: inline-flex;
       align-items: center;
       gap: 9px;
-      padding: 7px 13px;
+      padding: 6px 12px;
       border: 1px solid rgba(255, 255, 255, 0.1);
       background: rgba(255, 255, 255, 0.04);
       color: var(--green-2);
       border-radius: var(--pill);
       font-family: var(--font-heading);
-      font-size: 0.74rem;
-      font-weight: 800;
-      letter-spacing: 0.08em;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
       text-transform: uppercase;
       margin-bottom: 16px;
       position: relative;
@@ -697,13 +697,13 @@
     h1, h2, h3, h4 {
       font-family: var(--font-heading);
       margin: 0;
-      letter-spacing: -0.035em;
-      line-height: 1.12;
+      letter-spacing: -0.03em;
+      line-height: 1.16;
     }
     
     h1 {
-      font-size: clamp(2.1rem, 5.2vw, 3.6rem);
-      max-width: 920px;
+      font-size: clamp(2rem, 4.5vw, 3.25rem);
+      max-width: 780px;
       background: linear-gradient(135deg, #ffffff 8%, #b9d9ff 48%, var(--green-2) 100%);
       -webkit-background-clip: text;
       background-clip: text;
@@ -711,15 +711,15 @@
     }
     
     h2 {
-      font-size: clamp(1.8rem, 4.2vw, 2.5rem);
-      letter-spacing: -0.03em;
-      line-height: 1.15;
+      font-size: clamp(1.55rem, 3.2vw, 2.2rem);
+      letter-spacing: -0.025em;
+      line-height: 1.2;
       background: linear-gradient(135deg, #ffffff 40%, #dae7ff 100%);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    h3 { font-size: 1.35rem; letter-spacing: -0.02em; line-height: 1.2; }
+    h3 { font-size: 1.2rem; letter-spacing: -0.018em; line-height: 1.25; }
     p { margin: 0; color: var(--muted); }
 
     .gradient-text {
@@ -732,17 +732,17 @@
 
 
     .btn {
-      min-height: 54px;
+      min-height: 48px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
       border-radius: var(--pill);
-      padding: 0 22px;
+      padding: 0 19px;
       text-decoration: none;
       border: 1px solid transparent;
       font-family: var(--font-heading);
-      font-weight: 800;
+      font-weight: 700;
       line-height: 1;
       transition: transform 0.35s var(--spring), box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
       cursor: pointer;
@@ -756,8 +756,8 @@
     }
 
     .btn-primary:hover {
-      transform: translateY(-4px) scale(1.02);
-      box-shadow: 0 22px 50px rgba(0, 229, 168, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 18px 42px rgba(0, 229, 168, 0.34);
     }
 
     .btn-secondary {
@@ -768,15 +768,15 @@
     }
 
     .btn-secondary:hover {
-      transform: translateY(-4px);
+      transform: translateY(-2px);
       background: rgba(255, 255, 255, 0.09);
       border-color: var(--line-strong);
     }
 
     .app-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
       display: grid;
       place-items: center;
       background:
@@ -798,8 +798,8 @@
     }
 
     .app-icon svg {
-      width: 24px;
-      height: 24px;
+      width: 21px;
+      height: 21px;
       stroke: #06130f;
       stroke-width: 2.5;
       transition: transform 0.4s var(--spring);
@@ -823,7 +823,7 @@
     .header-inner {
       width: min(1240px, calc(100% - 36px));
       margin: 0 auto;
-      min-height: 78px;
+      min-height: 70px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -836,7 +836,7 @@
       gap: 12px;
       text-decoration: none;
       font-family: var(--font-heading);
-      font-weight: 800;
+      font-weight: 700;
       letter-spacing: -0.02em;
       transition: text-shadow 0.28s ease;
     }
@@ -925,7 +925,7 @@
       position: relative;
       overflow: hidden;
       background: var(--bg);
-      padding: 54px 0 64px;
+      padding: 48px 0 58px;
       transition: background 0.3s ease;
     }
 
@@ -938,7 +938,7 @@
 
     @media (min-width: 981px) {
       .hero {
-        padding: 80px 0 100px;
+        padding: 72px 0 84px;
         background: 
           linear-gradient(90deg, rgba(3, 7, 18, 0.96) 0%, rgba(3, 7, 18, 0.45) 45%, rgba(3, 7, 18, 0) 95%), 
           url('hero_bg1.png') no-repeat center center;
@@ -960,23 +960,76 @@
     }
 
     .hero-copy > p {
-      max-width: 720px;
+      max-width: 660px;
       color: #a8b5cc;
-      font-size: clamp(1.04rem, 2vw, 1.24rem);
-      margin: 24px 0 0;
+      font-size: clamp(1rem, 1.6vw, 1.1rem);
+      margin: 20px 0 0;
     }
 
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 14px;
-      margin: 34px 0 22px;
+      margin: 28px 0 14px;
     }
 
     .hero-note {
       color: var(--muted-2);
-      font-size: 0.86rem;
-      margin-bottom: 28px;
+      font-size: 0.82rem;
+      margin-bottom: 24px;
+    }
+
+    .store-button {
+      min-height: 54px;
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      padding: 8px 17px;
+      border: 1px solid var(--line-strong);
+      border-radius: 15px;
+      background: var(--text);
+      color: var(--bg);
+      text-decoration: none;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+      transition: transform 0.25s var(--ease), box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .store-button:hover {
+      transform: translateY(-2px);
+      border-color: var(--green);
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.24);
+    }
+
+    .store-button svg {
+      width: 23px;
+      height: 23px;
+      flex: 0 0 auto;
+    }
+
+    .store-button span {
+      display: grid;
+      gap: 1px;
+      text-align: left;
+      line-height: 1.05;
+    }
+
+    .store-button small {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.015em;
+    }
+
+    .store-button strong {
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+    }
+
+    .download-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
     }
 
     .hero-proof {
@@ -995,8 +1048,8 @@
       background: rgba(255,255,255,0.05);
       border-radius: 16px;
       color: var(--muted);
-      font-size: 0.9rem;
-      font-weight: 700;
+      font-size: 0.86rem;
+      font-weight: 650;
     }
 
     .proof-pill svg {
@@ -1305,7 +1358,7 @@
       border: 1px solid var(--line);
       background: var(--surface);
       border-radius: var(--radius-xl);
-      padding: 32px;
+      padding: 28px;
       box-shadow: 0 20px 70px rgba(0,0,0,0.24), inset 0 1px 0 rgba(255,255,255,0.04);
       position: relative;
       overflow: hidden;
@@ -1313,7 +1366,7 @@
     }
 
     .glass-card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-2px);
       border-color: rgba(59, 130, 246, 0.28);
       box-shadow: 
         0 24px 80px rgba(0, 0, 0, 0.35),
@@ -1460,13 +1513,13 @@
 
     /* Product preview */
     .preview-panel {
-      border-radius: 38px;
+      border-radius: 28px;
       border: 1px solid var(--line);
       background:
         radial-gradient(circle at 20% 5%, rgba(59,130,246,0.18), transparent 34%),
         radial-gradient(circle at 95% 80%, rgba(0,229,168,0.12), transparent 34%),
         rgba(255,255,255,0.04);
-      padding: 30px;
+      padding: 24px;
       overflow: hidden;
       box-shadow: var(--shadow);
     }
@@ -1478,9 +1531,9 @@
     }
 
     .preview-card {
-      min-height: 280px;
+      min-height: 250px;
       border: 1px solid rgba(255,255,255,0.11);
-      border-radius: 28px;
+      border-radius: 22px;
       background: rgba(22, 28, 48, 0.52);
       padding: 22px;
       position: relative;
@@ -1489,7 +1542,7 @@
     }
 
     .preview-card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-2px);
       border-color: rgba(0, 240, 255, 0.28);
       background: rgba(13, 21, 45, 0.62);
       box-shadow: 
@@ -1498,8 +1551,8 @@
     }
 
     .preview-card.large {
-      grid-row: span 2;
-      min-height: 578px;
+      grid-row: auto;
+      min-height: 420px;
       background:
         radial-gradient(circle at 50% 0%, rgba(59,130,246,0.22), transparent 44%),
         rgba(20, 26, 46, 0.62);
@@ -1651,8 +1704,8 @@
       border-radius: var(--radius-lg);
       border: 1px solid var(--line);
       background: rgba(255,255,255,0.04);
-      padding: 28px;
-      min-height: 250px;
+      padding: 24px;
+      min-height: 220px;
       overflow: hidden;
     }
 
@@ -1698,7 +1751,12 @@
       border-radius: var(--radius-xl);
       border: 1px solid var(--line);
       background: rgba(255,255,255,0.04);
-      padding: 32px;
+      padding: 28px;
+    }
+
+    .compatibility-card {
+      max-width: 860px;
+      margin: 0 auto;
     }
 
     .badge-grid {
@@ -1944,7 +2002,7 @@
       .nav-toggle { display: block; }
       .site-nav {
         position: fixed;
-        top: 78px;
+      top: 70px;
         left: 18px;
         right: 18px;
         display: none;
@@ -1965,7 +2023,7 @@
       .hero-actions, .hero-proof { justify-content: center; margin-left: auto; margin-right: auto; }
       .feature-grid, .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .preview-grid, .two-col { grid-template-columns: 1fr; }
-      .preview-card.large { min-height: 450px; }
+      .preview-card.large { min-height: auto; }
       .preview-card-wide {
         grid-column: span 1 !important;
         padding: 20px !important;
@@ -1974,13 +2032,17 @@
 
     @media (max-width: 680px) {
       .container { width: min(100% - 28px, var(--max)); }
-      .section { padding: 56px 0; }
+      .section { padding: 48px 0; }
       .header-inner { width: calc(100% - 28px); }
       .brand small { display: none; }
-      .hero { padding: 40px 0 48px; }
+      .hero { padding: 32px 0 42px; }
+      h1 { font-size: 1.85rem; }
       .hero-grid { gap: 34px; }
       .hero-actions { flex-direction: column; align-items: stretch; }
       .btn { width: 100%; }
+      .store-button { width: 100%; justify-content: center; }
+      .download-actions { flex-direction: column; }
+      .proof-pill { padding: 11px 13px; }
       .hero-proof, .feature-grid, .steps { grid-template-columns: 1fr; }
       .hero-visual { min-height: 560px; }
       .phone {
@@ -1990,7 +2052,7 @@
       }
       .phone-screen { padding-inline: 14px; }
       .float-card { display: none; }
-      .glass-card, .info-card, .support-card, .preview-panel, .final-cta { padding: 24px; border-radius: 28px; }
+      .glass-card, .info-card, .support-card, .preview-panel, .final-cta { padding: 22px; border-radius: 24px; }
       .preview-card { padding: 20px; }
       .preview-card.large { min-height: auto; }
       .phone-metrics { grid-template-columns: 1fr; }
@@ -2036,15 +2098,15 @@
             <path d="M2 12h3l3-7 4 14 4-10 3 3h3"></path>
           </svg>
         </span>
-        <span>Diagnose AI <small>OBD-II Diagnostics</small></span>
+        <span>Diagnose AI</span>
       </a>
 
       <nav class="site-nav" id="siteNav" aria-label="Primary navigation">
-        <a href="#features">Features</a>
+        <a href="#features">Before you buy</a>
         <a href="#how-it-works">How it works</a>
         <a href="#compatibility">Compatibility</a>
         <a href="#support">Support</a>
-        <a href="#legal">Legal</a>
+        <a href="#download">Download</a>
       </nav>
 
       <div class="header-right">
@@ -2053,9 +2115,7 @@
           <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
         </button>
 
-        <a class="btn btn-primary nav-cta" href="#download">
-          Get the App
-        </a>
+        <a class="btn btn-primary nav-cta" href="#download">Download</a>
 
         <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-controls="siteNav" aria-expanded="false">
           <span></span><span></span><span></span>
@@ -2068,37 +2128,37 @@
     <section class="hero" id="top">
       <div class="container hero-grid">
         <div class="hero-copy reveal">
-          <span class="eyebrow">AI-powered vehicle diagnostics</span>
-          <h1>Decode your check engine light before the repair bill.</h1>
-          <p>Say goodbye to confusing engine warnings and stressful mechanic visits. Diagnose AI turns your phone into a premium automotive health assistant — giving you real answers about your car, instantly. Requires a compatible Bluetooth OBD-II adapter.</p>
+          <span class="eyebrow">AI-powered buyer insights</span>
+          <h1>Know what you're buying before you pay.</h1>
+          <p>Connect a compatible OBD-II adapter to scan for trouble codes, reset clues, readiness status, VIN consistency, recalls, and supported live data—then get a clear buyer report before you make an offer.</p>
 
           <div class="hero-actions">
-            <a class="btn btn-primary" href="https://apps.apple.com/us/app/diagnose-ai/id6773086171" target="_blank" rel="noopener">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.466 2.194-1.214 2.997-.78.837-2.063 1.48-3.104 1.397-.135-1.096.405-2.257 1.135-3.06C13.986 1.89 15.36 1.24 16.365 1.43zM20.75 17.2c-.57 1.32-.844 1.91-1.58 3.07-1.024 1.61-2.47 3.62-4.26 3.64-1.59.02-2-.99-4.16-.98-2.16.01-2.61 1.01-4.2.99-1.79-.02-3.16-1.83-4.19-3.44C-.46 15.99-.73 10.71 1.2 7.73c1.37-2.12 3.53-3.36 5.56-3.36 2.07 0 3.37 1.02 5.08 1.02 1.66 0 2.67-1.02 5.06-1.02 1.81 0 3.73.98 5.09 2.67-4.47 2.45-3.74 8.83.76 10.16z"></path></svg>
-              Get the iOS app
+            <a class="store-button" href="https://apps.apple.com/us/app/diagnose-ai/id6773086171" target="_blank" rel="noopener" aria-label="Download Diagnose AI on the App Store">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.466 2.194-1.214 2.997-.78.837-2.063 1.48-3.104 1.397-.135-1.096.405-2.257 1.135-3.06C13.986 1.89 15.36 1.24 16.365 1.43zM20.75 17.2c-.57 1.32-.844 1.91-1.58 3.07-1.024 1.61-2.47 3.62-4.26 3.64-1.59.02-2-.99-4.16-.98-2.16.01-2.61 1.01-4.2.99-1.79-.02-3.16-1.83-4.19-3.44C-.46 15.99-.73 10.71 1.2 7.73c1.37-2.12 3.53-3.36 5.56-3.36 2.07 0 3.37 1.02 5.08 1.02 1.66 0 2.67-1.02 5.06-1.02 1.81 0 3.73.98 5.09 2.67-4.47 2.45-3.74 8.83.76 10.16z"></path></svg>
+              <span><small>Download on the</small><strong>App Store</strong></span>
             </a>
-            <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.shan.diagnoseai.mobile" target="_blank" rel="noopener">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 0 1 0 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.8 8.99l-2.3 2.3-8.636-8.632z"></path></svg>
-              Get the Android app
+            <a class="store-button" href="https://play.google.com/store/apps/details?id=com.shan.diagnoseai.mobile" target="_blank" rel="noopener" aria-label="Get Diagnose AI on Google Play">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 0 1 0 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.8 8.99l-2.3 2.3-8.636-8.632z"></path></svg>
+              <span><small>Get it on</small><strong>Google Play</strong></span>
             </a>
-            <a class="btn btn-secondary" href="#how-it-works">See how it works</a>
           </div>
+          <p class="hero-note">Available on iOS and Android. Vehicle scans require a compatible Bluetooth OBD-II adapter.</p>
           <div class="hero-proof" aria-label="Product highlights">
             <div class="proof-pill">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
-              Plain-English DTC reports
+              Trouble-code and warning-light scan
             </div>
             <div class="proof-pill">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
-              Urgency and safety context
+              Recent ECU reset clues
             </div>
             <div class="proof-pill">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
-              DIY diagnostic workflow
+              VIN and recall checks
             </div>
             <div class="proof-pill">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
-              Scan history and summaries
+              AI-powered buyer report
             </div>
           </div>
         </div>
@@ -2109,19 +2169,19 @@
       <div class="trust-inner">
         <div class="trust-chip">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
-          Built for check-engine-light moments
+          Designed for pre-purchase checks
         </div>
         <div class="trust-chip">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
-          Secure cloud account support
+          Read-only vehicle scans
         </div>
         <div class="trust-chip">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
-          Compatible adapter guidance
+          Practical questions for the seller
         </div>
         <div class="trust-chip">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
-          Human-readable repair steps
+          Ongoing check-engine guidance
         </div>
       </div>
     </div>
@@ -2129,33 +2189,33 @@
     <section class="section compact">
       <div class="container split">
         <div class="glass-card reveal">
-          <span class="eyebrow">The old way</span>
-          <h2>Most scanners stop at the code.</h2>
-          <p style="margin-top:18px;">A basic OBD-II reader can tell you that a code exists. But drivers still have to search forums, guess what is urgent, and walk into the shop without context.</p>
+          <span class="eyebrow">The information gap</span>
+          <h2>A car can look perfect and still hide expensive problems.</h2>
+          <p style="margin-top:18px;">When you buy used, the seller usually knows the vehicle better than you do. A clean dashboard is helpful—but it is not the whole story.</p>
           <ul class="pain-list">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6 6 18M6 6l12 12"></path></svg> You get a cryptic code like P0171 or P0420 with little explanation.</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6 6 18M6 6l12 12"></path></svg> You do not know whether the car is safe to drive.</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6 6 18M6 6l12 12"></path></svg> You risk paying for parts before the real cause is confirmed.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6 6 18M6 6l12 12"></path></svg> A recently cleared warning light can make a problem harder to spot in a quick test drive.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6 6 18M6 6l12 12"></path></svg> You may not know which signals deserve a mechanic's second opinion before you commit.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6 6 18M6 6l12 12"></path></svg> A basic code reader gives you data but little help deciding what to do next.</li>
           </ul>
         </div>
 
         <div class="glass-card answer-card reveal">
           <span class="eyebrow">The Diagnose AI way</span>
-          <h2 class="gradient-text">Code, context, confidence.</h2>
-          <p style="margin-top:18px;">Diagnose AI turns a scan into a clear plan: what the code means, common causes, how urgent it looks, what to check first, and what to say at the shop.</p>
+          <h2 class="gradient-text">More evidence. Less guessing.</h2>
+          <p style="margin-top:18px;">Diagnose AI organizes the signals available from the vehicle into a buyer-friendly report, so you can understand what deserves a closer look before you negotiate.</p>
 
           <div class="answer-grid">
             <div class="answer-item">
               <div class="answer-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div>
-              <div><h3>Plain-English explanation</h3><p>No mechanic dictionary needed. Understand the issue fast.</p></div>
+              <div><h3>Plain-English signals</h3><p>Understand codes, readiness, and vehicle data without a mechanic dictionary.</p></div>
             </div>
             <div class="answer-item">
               <div class="answer-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><path d="M12 9v4M12 17h.01"></path></svg></div>
-              <div><h3>Urgency guidance</h3><p>Learn whether the issue appears minor, soon, or immediate.</p></div>
+              <div><h3>Clear priorities</h3><p>See what may be routine and what deserves a closer look before you buy.</p></div>
             </div>
             <div class="answer-item">
               <div class="answer-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.1-3.1a6 6 0 0 1-7.9 7.9l-5.8 5.8a2.1 2.1 0 0 1-3-3l5.8-5.8a6 6 0 0 1 7.9-7.9z"></path></svg></div>
-              <div><h3>Repair workflow</h3><p>Check the likely causes in the right order before replacing parts.</p></div>
+              <div><h3>Better seller questions</h3><p>Leave with a practical list of items to discuss, verify, or inspect further.</p></div>
             </div>
           </div>
         </div>
@@ -2165,9 +2225,9 @@
     <section class="section" id="features">
       <div class="container">
         <div class="section-heading reveal">
-          <span class="eyebrow">Product features</span>
-          <h2>Everything you need after the check engine light turns on.</h2>
-          <p style="margin-top:18px;">Diagnose AI turns complex fault codes into highly actionable repair walkthroughs, safety ratings, and budget guidelines in one sleek dashboard.</p>
+          <span class="eyebrow">Buyer confidence in your pocket</span>
+          <h2>Bring clarity to the driveway.</h2>
+          <p style="margin-top:18px;">Diagnose AI brings the most useful supported vehicle signals into one report, so you can make a more informed decision before money changes hands.</p>
         </div>
 
         <div class="preview-panel reveal">
@@ -2177,81 +2237,73 @@
             <article class="preview-card large">
               <div class="report-title">
                 <span class="spark">&#10022;</span>
-                <h3>Decode Confusing Fault Codes</h3>
+                <h3>Your AI Buyer Report</h3>
               </div>
-              <p style="margin-bottom:20px; color: var(--muted);">Translate raw diagnostic trouble codes (DTCs) into complete, plain-English mechanical explanations, likely causes, and next steps.</p>
+              <p style="margin-bottom:20px; color: var(--muted);">Turn supported VIN, OBD-II, readiness, and live-data signals into a clear summary of what to know before making an offer.</p>
               
               <div class="timeline">
                 <div class="timeline-item">
                   <div class="timeline-num">1</div>
                   <div>
-                    <b>Translate DTC</b>
-                    <span>Understand what the code actually means (e.g. system too lean or misfire) in everyday language.</span>
+                    <b>Identify the vehicle</b>
+                    <span>Use the VIN to help identify the vehicle and review applicable open safety recalls.</span>
                   </div>
                 </div>
                 <div class="timeline-item">
                   <div class="timeline-num">2</div>
                   <div>
-                    <b>Inspect likely causes</b>
-                    <span>Systematic diagnostic checks targeting vacuum hoses, MAF sensors, and fuel trim leaks.</span>
+                    <b>Read available evidence</b>
+                    <span>Review trouble codes, readiness monitors, and supported vehicle data from a compatible adapter.</span>
                   </div>
                 </div>
                 <div class="timeline-item">
                   <div class="timeline-num">3</div>
                   <div>
-                    <b>DIY checks &amp; next actions</b>
-                    <span>Clear checklists you can check yourself before paying for a repair shop diagnostic.</span>
+                    <b>Spot consistency clues</b>
+                    <span>See potential reset or VIN mismatch signals that may be worth asking about.</span>
                   </div>
                 </div>
                 <div class="timeline-item">
                   <div class="timeline-num">4</div>
                   <div>
-                    <b>Mechanic-ready summary</b>
-                    <span>Save a clear history of symptoms, past rescans, and inspection paths for the shop.</span>
+                    <b>Know what to ask next</b>
+                    <span>Review priorities and practical questions for the seller or a pre-purchase mechanic.</span>
                   </div>
                 </div>
               </div>
             </article>
 
-            <!-- Bento Card 2: Urgency meter HUD -->
+            <!-- VIN and recall context -->
             <article class="preview-card">
-              <h3>Know the safety urgency</h3>
-              <p style="color: var(--muted);">Get practical urgency context so you know whether the issue looks minor, needs attention soon, or should be checked immediately.</p>
-              <div class="meter" aria-hidden="true"><span></span></div>
-              <p style="margin-top:16px;color:var(--amber);font-weight:800;font-size:0.9rem;">Example: Moderate - inspect soon</p>
-            </article>
-
-            <!-- Bento Card 3: Cost Estimates -->
-            <article class="preview-card">
-              <h3>Prepare for shop pricing</h3>
-              <p style="color: var(--muted);">Review estimated parts costs and typical mechanic labor hours to prepare your repair budget and avoid mechanic overcharges.</p>
+              <h3>VIN and recall context</h3>
+              <p style="color: var(--muted);">Use VIN information to help confirm vehicle identity and check for applicable open safety recalls before purchase.</p>
               <div class="cost-range">
-                <div class="cost-row"><span>DIY parts</span><strong>$12-$45</strong></div>
-                <div class="cost-row"><span>Shop labor</span><strong>0.5-1.5 hr</strong></div>
-                <div class="cost-row"><span>Complexity</span><strong>Low-Med</strong></div>
+                <div class="cost-row"><span>Vehicle identity</span><strong>VIN context</strong></div>
+                <div class="cost-row"><span>Safety recalls</span><strong>Check status</strong></div>
+                <div class="cost-row"><span>Supported data</span><strong>In one report</strong></div>
               </div>
             </article>
 
-            <!-- Bento Card 4: Garage Scan Ledger (spans 2 columns on desktop) -->
+            <!-- Questions for the seller -->
             <article class="preview-card preview-card-wide">
               <div class="report-title">
                 <span class="spark">&#10022;</span>
-                <h3>Multi-Vehicle Fleet Garage</h3>
+                <h3>Questions worth asking before you buy</h3>
               </div>
-              <p style="margin-bottom:20px; color: var(--muted); max-width: 650px;">Add and manage your entire fleet in one place, with nicknames, engine details, and health scores for each car.</p>
+              <p style="margin-bottom:20px; color: var(--muted); max-width: 650px;">Diagnose AI helps turn raw vehicle signals into an informed conversation—not a verdict about the car or seller.</p>
               
               <div class="scan-history" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 18px;">
                 <div class="history-row" style="margin-top: 0;">
-                  <span>Honda Civic Sport</span>
-                  <strong class="ok">Healthy scan · No codes</strong>
+                  <span>“When were the monitors last reset?”</span>
+                  <strong class="warn">Readiness incomplete</strong>
                 </div>
                 <div class="history-row" style="margin-top: 0;">
-                  <span>Toyota Camry XLE</span>
-                  <strong class="warn">P0420 · Catalyst below threshold</strong>
+                  <span>“Can we inspect this code further?”</span>
+                  <strong class="warn">Code requires context</strong>
                 </div>
                 <div class="history-row" style="margin-top: 0;">
-                  <span>Ford F-150 Lariat</span>
-                  <strong style="color:var(--red);">P0301 · Cylinder 1 misfire</strong>
+                  <span>“Can a mechanic look at this before I buy?”</span>
+                  <strong style="color:var(--red);">Priority: investigate</strong>
                 </div>
               </div>
             </article>
@@ -2265,57 +2317,48 @@
       <div class="container">
         <div class="section-heading reveal">
           <span class="eyebrow">How it works</span>
-          <h2>Three steps from warning light to action plan.</h2>
+          <h2>Three steps to a more informed offer.</h2>
         </div>
 
         <div class="steps">
           <article class="step-card reveal">
             <div class="step-badge">1</div>
-            <h3>Plug in an adapter</h3>
-            <p>Connect a compatible OBD-II Bluetooth LE adapter to your vehicle's diagnostic port, usually under the dashboard.</p>
+            <h3>Enter or scan the VIN</h3>
+            <p>Identify the vehicle and check for applicable open safety recalls before you spend time negotiating.</p>
           </article>
           <article class="step-card reveal">
             <div class="step-badge">2</div>
-            <h3>Scan from your phone</h3>
-            <p>Read fault codes and available live data from your vehicle, then save the scan to your private history.</p>
+            <h3>Inspect and connect</h3>
+            <p>Follow the guided inspection and, with a compatible adapter, collect read-only OBD-II evidence from the vehicle.</p>
           </article>
           <article class="step-card reveal">
             <div class="step-badge">3</div>
-            <h3>Get your AI report</h3>
-            <p>Review likely causes, urgency, repair steps, estimate ranges, and a summary you can bring to a mechanic.</p>
+            <h3>Get your buyer report</h3>
+            <p>Review codes, readiness, reset context, VIN consistency, supported live data, priorities, and questions to ask the seller.</p>
           </article>
         </div>
       </div>
     </section>
 
     <section class="section compact" id="compatibility">
-      <div class="container two-col">
-        <article class="info-card reveal">
+      <div class="container">
+        <article class="info-card compatibility-card reveal">
           <span class="eyebrow">Compatibility</span>
           <h2>Designed for supported OBD-II adapters.</h2>
-          <p style="margin-top:18px;">Diagnose AI is built for iOS & Android and compatible Bluetooth LE OBD-II adapters. Adapter behavior can vary by brand, firmware, vehicle, and available sensor data.</p>
+          <p style="margin-top:18px;">Diagnose AI is available for iOS and Android and works with compatible Bluetooth Low Energy OBD-II adapters. Available signals vary by adapter, firmware, vehicle, ECU, and sensor support.</p>
           <div class="badge-grid" aria-label="Compatibility tags">
             <span>iOS</span>
             <span>Android</span>
             <span>Bluetooth LE</span>
             <span>OBD-II DTCs</span>
             <span>Live data where available</span>
+            <span>Readiness status</span>
+            <span>VIN context</span>
             <span>Vehicle profiles</span>
             <span>Scan history</span>
           </div>
         </article>
 
-        <article class="info-card reveal">
-          <span class="eyebrow">Privacy</span>
-          <h2>Your data should not feel mysterious either.</h2>
-          <p style="margin-top:18px;">The app is designed to keep your account and diagnostic history private while sending only the vehicle context needed for AI analysis.</p>
-          <ul class="check-list">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M20 6 9 17l-5-5"></path></svg> Secure account authentication</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M20 6 9 17l-5-5"></path></svg> Private scan history tied to your account</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M20 6 9 17l-5-5"></path></svg> No personal email included in AI prompts</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M20 6 9 17l-5-5"></path></svg> Account deletion available by request</li>
-          </ul>
-        </article>
       </div>
     </section>
 
@@ -2346,13 +2389,25 @@
       <div class="container">
         <div class="section-heading reveal">
           <span class="eyebrow">FAQ</span>
-          <h2>Questions drivers ask before downloading.</h2>
+          <h2>Questions buyers and drivers ask before getting started.</h2>
         </div>
 
         <div class="faq-list reveal">
           <details open>
             <summary>Do I need an OBD-II adapter?</summary>
             <p>Yes. Diagnose AI needs a compatible OBD-II adapter to read fault codes and vehicle data from your car. The adapter plugs into the vehicle's diagnostic port.</p>
+          </details>
+          <details>
+            <summary>Can Diagnose AI tell me whether a used car is safe to buy?</summary>
+            <p>No app can guarantee a vehicle's condition. Diagnose AI helps you identify supported diagnostic signals, organize what they may mean, and decide when to ask more questions or get a qualified pre-purchase inspection.</p>
+          </details>
+          <details>
+            <summary>Does a recent reset clue prove the seller is hiding something?</summary>
+            <p>No. Incomplete readiness monitors or recently cleared information can happen for many reasons. They are useful context to ask about and, if needed, investigate with a mechanic—not proof of dishonesty or mileage fraud.</p>
+          </details>
+          <details>
+            <summary>What does the buyer report include?</summary>
+            <p>Where supported, the report can organize fault codes, readiness status, reset context, VIN consistency, applicable recall information, live data, priorities, and practical questions to ask the seller.</p>
           </details>
           <details>
             <summary>Is this a replacement for a mechanic?</summary>
@@ -2378,7 +2433,7 @@
       <div class="container legal-wrap">
         <div class="section-heading reveal">
           <span class="eyebrow">Legal and privacy</span>
-          <h2>Clear policies for App Store review and customer trust.</h2>
+          <h2>Clear policies. Straight answers.</h2>
         </div>
 
         <div class="faq-list reveal">
@@ -2432,11 +2487,13 @@
             <p>By downloading or using Diagnose AI, you agree to these Terms of Service. If you do not agree, do not use the app.</p>
 
             <h4>1. Description of Service</h4>
-            <p>Diagnose AI is a vehicle diagnostic assistance application that reads OBD-II fault codes from a compatible adapter and uses AI to provide informational repair suggestions.</p>
+            <p>Diagnose AI is a vehicle diagnostic assistance application that can help organize supported VIN, recall, OBD-II, and live-data information into informational buyer and repair guidance.</p>
 
             <h4>2. Disclaimer of Liability</h4>
             <ul>
               <li>AI-generated repair suggestions are informational only and may not identify all causes of a fault code.</li>
+              <li>Buyer reports are informational only. They do not guarantee vehicle condition, detect every issue, establish vehicle history, or prove fraud.</li>
+              <li>Diagnose AI is not a substitute for a qualified pre-purchase inspection, especially for safety-critical or high-cost decisions.</li>
               <li>Diagnose AI, its developers, and affiliates are not liable for vehicle damage, personal injury, or financial loss resulting from actions taken based on the app's output.</li>
               <li>Always consult a qualified mechanic for safety-critical repairs such as brakes, steering, airbags, and similar systems.</li>
             </ul>
@@ -2476,11 +2533,19 @@
 
     <section class="section compact" id="download">
       <div class="container final-cta reveal">
-        <span class="eyebrow">Ready before the repair bill?</span>
-        <h2>Turn your next engine code into a clear action plan.</h2>
-        <p>Download Diagnose AI, connect a compatible OBD-II adapter, and get plain-English repair guidance from your phone.</p>
-        <a class="btn btn-primary" href="https://apps.apple.com/us/app/diagnose-ai/id6773086171" target="_blank" rel="noopener">Get the iOS app</a>
-        <a class="btn btn-secondary" href="https://play.google.com/store/apps/details?id=com.shan.diagnoseai.mobile" target="_blank" rel="noopener">Get the Android app</a>
+        <span class="eyebrow">Buying a used car shouldn't feel like guessing.</span>
+        <h2>Bring more confidence to your next test drive.</h2>
+        <p>Scan before you decide, review the buyer report, and know what to ask before you make an offer.</p>
+        <div class="download-actions">
+          <a class="store-button" href="https://apps.apple.com/us/app/diagnose-ai/id6773086171" target="_blank" rel="noopener" aria-label="Download Diagnose AI on the App Store">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.466 2.194-1.214 2.997-.78.837-2.063 1.48-3.104 1.397-.135-1.096.405-2.257 1.135-3.06C13.986 1.89 15.36 1.24 16.365 1.43zM20.75 17.2c-.57 1.32-.844 1.91-1.58 3.07-1.024 1.61-2.47 3.62-4.26 3.64-1.59.02-2-.99-4.16-.98-2.16.01-2.61 1.01-4.2.99-1.79-.02-3.16-1.83-4.19-3.44C-.46 15.99-.73 10.71 1.2 7.73c1.37-2.12 3.53-3.36 5.56-3.36 2.07 0 3.37 1.02 5.08 1.02 1.66 0 2.67-1.02 5.06-1.02 1.81 0 3.73.98 5.09 2.67-4.47 2.45-3.74 8.83.76 10.16z"></path></svg>
+            <span><small>Download on the</small><strong>App Store</strong></span>
+          </a>
+          <a class="store-button" href="https://play.google.com/store/apps/details?id=com.shan.diagnoseai.mobile" target="_blank" rel="noopener" aria-label="Get Diagnose AI on Google Play">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 0 1 0 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.8 8.99l-2.3 2.3-8.636-8.632z"></path></svg>
+            <span><small>Get it on</small><strong>Google Play</strong></span>
+          </a>
+        </div>
       </div>
     </section>
   </main>
@@ -2498,6 +2563,7 @@
       <div class="footer-links">
         <a href="#features">Features</a>
         <a href="#support">Support</a>
+        <a href="#download">Download</a>
         <a href="#legal">Privacy</a>
         <a href="#legal">Terms</a>
         <a href="mailto:team@diagnoseai.us">Contact</a>
