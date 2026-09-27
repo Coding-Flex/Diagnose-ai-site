@@ -6,8 +6,10 @@
   <title>Cars, Decoded - Diagnose AI</title>
   <meta name="description" content="Diagnose AI helps used-car buyers surface trouble codes, reset clues, readiness status, VIN consistency, recalls, and supported live data—then stays with you for everyday check-engine guidance.">
   <link rel="canonical" href="https://diagnoseai.us">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=3">
-  <link rel="alternate icon" type="image/png" sizes="32x32" href="favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png?v=10">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=10">
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48.png?v=10">
+  <link rel="alternate icon" type="image/x-icon" href="favicon.ico?v=10">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=2">
 
   <meta property="og:title" content="Diagnose AI - Know What You're Buying Before You Pay">
@@ -491,12 +493,8 @@
     }
 
     /* ── Light Theme: App Icon / Brand ── */
-    [data-theme="light"] .app-icon svg {
-      stroke: #ffffff;
-    }
-
-    [data-theme="light"] .brand:hover {
-      text-shadow: 0 0 10px rgba(5, 150, 105, 0.2);
+    [data-theme="light"] .brand {
+      color: #0b1736;
     }
 
     /* ── Light Theme: Meter ── */
@@ -738,39 +736,23 @@
     }
 
     .app-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
+      width: 55px;
+      height: 28px;
       display: grid;
       place-items: center;
-      background:
-        radial-gradient(circle at 30% 20%, rgba(255,255,255,0.26), transparent 24%),
-        linear-gradient(135deg, rgba(59,130,246,1), rgba(0,229,168,1));
-      box-shadow: 0 12px 30px rgba(59, 130, 246, 0.3);
       flex: 0 0 auto;
-      transition: transform 0.4s var(--spring), box-shadow 0.4s ease, background 0.4s ease;
+      transition: transform 0.3s var(--spring);
     }
 
     .brand:hover .app-icon {
-      transform: scale(1.05);
-      background:
-        radial-gradient(circle at 30% 20%, rgba(255,255,255,0.35), transparent 24%),
-        linear-gradient(135deg, #00e5a8, #3b82f6);
-      box-shadow: 
-        0 14px 36px rgba(59, 130, 246, 0.35),
-        0 0 20px rgba(0, 229, 168, 0.25);
+      transform: scale(1.03);
     }
 
-    .app-icon svg {
-      width: 21px;
-      height: 21px;
-      stroke: #06130f;
-      stroke-width: 2.5;
-      transition: transform 0.4s var(--spring);
-    }
-
-    .brand:hover .app-icon svg {
-      transform: scale(1.1);
+    .app-icon img {
+      width: 55px;
+      height: 20px;
+      object-fit: contain;
+      display: block;
     }
 
     /* Header */
@@ -797,11 +779,14 @@
     .brand {
       display: inline-flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+      color: var(--text);
       text-decoration: none;
       font-family: var(--font-heading);
+      font-size: 1.125rem;
       font-weight: 700;
-      letter-spacing: -0.02em;
+      line-height: 1;
+      letter-spacing: -0.025em;
       transition: opacity 0.2s ease;
     }
 
@@ -1795,9 +1780,7 @@
     <div class="header-inner">
       <a class="brand" href="#top" aria-label="Diagnose AI home">
         <span class="app-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M2 12h3l3-7 4 14 4-10 3 3h3"></path>
-          </svg>
+          <img src="web-car-mark.png" alt="">
         </span>
         <span>Diagnose AI</span>
       </a>
@@ -2240,9 +2223,7 @@
     <div class="footer-inner">
       <div class="brand" aria-label="Diagnose AI">
         <span class="app-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M2 12h3l3-7 4 14 4-10 3 3h3"></path>
-          </svg>
+          <img src="web-car-mark.png" alt="">
         </span>
         <span>Diagnose AI</span>
       </div>
