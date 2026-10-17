@@ -1712,6 +1712,15 @@
 
     .legal-wrap a:hover { text-decoration: underline; }
 
+    .sample-note {
+      margin: 16px auto 0;
+      max-width: 760px;
+      text-align: center;
+      color: var(--muted-2);
+      font-size: 0.78rem;
+      line-height: 1.55;
+    }
+
     /* Final CTA */
     .final-cta {
       text-align: center;
@@ -2125,7 +2134,7 @@
         </div>
         <div class="trust-chip">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
-          100% Safe, view-only scanning
+          Read-only OBD-II scanning
         </div>
       </div>
     </div>
@@ -2250,6 +2259,7 @@
 
           </div>
         </div>
+        <p class="sample-note">Illustrative sample. Results and available data vary by vehicle, adapter, and vehicle-system support.</p>
       </div>
     </section>
 
@@ -2407,40 +2417,47 @@
         <div class="faq-list reveal">
           <details>
             <summary>Privacy Policy</summary>
-            <p><em>Effective Date: May 24, 2026. Last Updated: May 24, 2026.</em></p>
-            <p>Diagnose AI ("we", "our", "us") is committed to protecting your privacy. This policy explains what information we collect, how we use it, and your rights.</p>
+            <p><em>Effective Date: May 24, 2026. Last Updated: October 17, 2026.</em></p>
+            <p>Diagnose AI is committed to protecting your privacy. This policy explains what information we collect, how we use it, and your rights.</p>
 
             <h4>1. Information We Collect</h4>
             <ul>
-              <li><strong>Account Data:</strong> Your email address used only for authentication via Supabase Auth. Passwords are never stored in plaintext.</li>
-              <li><strong>Vehicle Profiles:</strong> Year, make, model, and engine type you provide to improve diagnostic accuracy.</li>
-              <li><strong>Diagnostic Data:</strong> OBD-II fault codes retrieved from your adapter, stored in your private cloud profile.</li>
-              <li><strong>Usage Analytics:</strong> Basic, anonymized session data used to improve stability. No personally identifiable information is included.</li>
+              <li><strong>Account Data:</strong> Your email address and account identifier are used for authentication, account management, and access to your saved data and purchases through Supabase Auth. Passwords are not stored in plaintext.</li>
+              <li><strong>Vehicle and VIN Data:</strong> Vehicle year, make, model, engine, mileage, and other details you provide. A VIN entered for Quick Check is sent to our backend and NHTSA to identify the vehicle. The Quick Check record stores a VIN hash and the last six characters, alongside vehicle details and matched recall information.</li>
+              <li><strong>Diagnostic and Buyer Report Data:</strong> Fault codes, available vehicle readings, symptoms, guided-check answers, and generated reports may be stored with your account so you can reopen them. Exported PDFs may contain vehicle details and your findings; you control where you save or share them.</li>
+              <li><strong>AI Chat:</strong> Your messages, relevant conversation history, and vehicle or diagnostic context are processed to answer your questions. Avoid entering personal or sensitive information in symptom descriptions or chat messages.</li>
+              <li><strong>Purchase Data:</strong> Store transaction identifiers, product identifiers, purchase status, and an account identifier are used to verify subscriptions and Buyer Report purchases. Apple or Google processes payment details; we do not receive your full payment-card details.</li>
+              <li><strong>Usage and Diagnostics:</strong> When analytics is enabled, limited app-interaction events and redacted error information help us understand reliability and feature use. Analytics uses pseudonymous identifiers, not your email, VIN, report contents, or chat text. Session replay is disabled.</li>
             </ul>
 
             <h4>2. How We Use Your Data</h4>
             <ul>
-              <li>To authenticate your account and display your personal scan history.</li>
-              <li>To pass anonymized fault codes to AI APIs for generating repair guidance.</li>
-              <li>To manage your in-app subscription through Apple and RevenueCat.</li>
+              <li>To authenticate your account and display your vehicles, scan history, and saved Buyer Reports.</li>
+              <li>To identify vehicles, look up matched recalls, and turn diagnostic data or guided checks into informational guidance.</li>
+              <li>To provide AI diagnostics and chat responses using the vehicle context and messages needed for your request.</li>
+              <li>To verify and manage subscriptions and separate Buyer Report purchases through Apple, Google Play, and RevenueCat.</li>
+              <li>To maintain security, respond to support requests, and improve app reliability.</li>
             </ul>
 
             <h4>3. AI Processing</h4>
-            <p>Raw fault codes and anonymized vehicle context are securely sent to Google Gemini AI for analysis. No personal data such as email, name, or user IDs is intentionally included in AI requests. Your data is not sold for advertising.</p>
+            <p>When you use AI diagnostics or chat, relevant fault codes, vehicle details, readings, symptoms, prior analysis, chat messages, and conversation history are sent to Google Gemini for processing. We do not intentionally add your account email, name, or user ID to AI prompts, but information you type into free-text fields may be included. The app presents an AI-processing disclosure before use. Your data is not sold for advertising.</p>
 
             <h4>4. Data Security</h4>
-            <p>All communication between the app and our servers is encrypted with TLS. Our Supabase database enforces Row Level Security so users can access only their own data.</p>
+            <p>Communication between the app and our servers is encrypted with TLS. Supabase Row Level Security and backend authorization checks restrict access to account-linked data. Our backend is hosted on Amazon Web Services.</p>
 
             <h4>5. Third-Party Services</h4>
             <ul>
               <li><strong>Supabase:</strong> Authentication, database, and Row Level Security.</li>
-              <li><strong>Google Gemini AI:</strong> Anonymized diagnostic code analysis.</li>
+              <li><strong>Amazon Web Services:</strong> Backend hosting and request processing.</li>
+              <li><strong>Google Gemini AI:</strong> Processing of diagnostic context and AI chat messages.</li>
+              <li><strong>NHTSA:</strong> VIN decoding and vehicle recall lookup.</li>
               <li><strong>RevenueCat:</strong> Subscription and purchase management.</li>
-              <li><strong>Apple App Store:</strong> Payment processing for in-app purchases.</li>
+              <li><strong>Apple App Store and Google Play:</strong> Store payments, subscriptions, and purchase records.</li>
+              <li><strong>PostHog, when enabled:</strong> Limited pseudonymous usage events and redacted error diagnostics.</li>
             </ul>
 
             <h4>6. Data Retention and Deletion</h4>
-            <p>You may delete your account and associated data by emailing <a href="mailto:team@diagnoseai.us">team@diagnoseai.us</a>. Upon request, your data will be removed within 30 days unless retention is required by law.</p>
+            <p>Account-linked vehicle, scan, and saved-report data is retained to provide those features until you delete it or your account. You can request account deletion in the app or by emailing <a href="mailto:team@diagnoseai.us">team@diagnoseai.us</a>. Email requests are handled within 30 days unless retention is required by law. Some transaction, fraud-prevention, or service-provider records may be retained where necessary. Account deletion does not cancel an Apple or Google subscription: manage cancellation in the store that processed your purchase. PDFs you have exported to your device or shared elsewhere are not removed by deleting your account.</p>
 
             <h4>7. Children's Privacy</h4>
             <p>Diagnose AI is not intended for children under 13 years of age. We do not knowingly collect data from children.</p>
@@ -2451,26 +2468,25 @@
 
           <details>
             <summary>Terms of Service</summary>
-            <p><em>Effective Date: May 24, 2026. Last Updated: May 24, 2026.</em></p>
+            <p><em>Effective Date: May 24, 2026. Last Updated: October 17, 2026.</em></p>
             <p>By downloading or using Diagnose AI, you agree to these Terms of Service. If you do not agree, do not use the app.</p>
 
             <h4>1. Description of Service</h4>
             <p>Diagnose AI is a vehicle diagnostic assistance application that can help organize supported VIN, recall, OBD-II, and live-data information into informational buyer and repair guidance.</p>
 
             <h4>2. Disclaimer of Liability</h4>
+            <p>Diagnose AI provides informational guidance based on available vehicle data. It does not replace a qualified mechanic or pre-purchase inspection and cannot guarantee vehicle condition or safety.</p>
             <ul>
-              <li>AI-generated repair suggestions are informational only and may not identify all causes of a fault code.</li>
-              <li>Buyer reports are informational only. They do not guarantee vehicle condition, detect every issue, establish vehicle history, or prove fraud.</li>
-              <li>Diagnose AI is not a substitute for a qualified pre-purchase inspection, especially for safety-critical or high-cost decisions.</li>
-              <li>Diagnose AI, its developers, and affiliates are not liable for vehicle damage, personal injury, or financial loss resulting from actions taken based on the app's output.</li>
-              <li>Always consult a qualified mechanic for safety-critical repairs such as brakes, steering, airbags, and similar systems.</li>
+              <li>Vehicle and OBD-II information can vary by vehicle, adapter, system support, and connection quality. Some mechanical, electrical, structural, safety, or vehicle-history issues may not be visible through the available data.</li>
+              <li>Buyer Reports support your decision-making but cannot certify vehicle condition, roadworthiness, history, mileage accuracy, recall completion, or seller intent.</li>
+              <li>Confirm safety-critical concerns and high-cost purchase or repair decisions with a qualified mechanic or professional pre-purchase inspector.</li>
+              <li>To the maximum extent permitted by applicable law, Diagnose AI and its affiliates are not responsible for losses resulting from decisions made solely from app-generated guidance. Nothing in these Terms limits rights or liability that cannot legally be limited.</li>
             </ul>
 
             <h4>3. AI-Generated Content</h4>
             <ul>
-              <li>Results are generated by third-party AI models and may occasionally be inaccurate, incomplete, or out of date.</li>
-              <li>You must not rely solely on AI output for any safety-critical vehicle decision.</li>
-              <li>You agree not to use the app to generate, distribute, or store illegal, harmful, or offensive content.</li>
+              <li>AI-generated explanations may be incomplete or outdated and should be considered alongside available vehicle data and professional judgment.</li>
+              <li>Do not rely solely on AI output for safety-critical vehicle decisions.</li>
             </ul>
 
             <h4>4. Subscriptions and Payments</h4>
@@ -2481,7 +2497,7 @@
             </ul>
 
             <h4>5. Account Responsibilities</h4>
-            <p>You are responsible for maintaining the confidentiality of your account credentials. You agree not to share your account or use another user's account without permission.</p>
+            <p>You are responsible for maintaining the confidentiality of your account credentials. Use the app only while safely parked, and obtain the vehicle owner's permission before connecting an adapter to a vehicle you do not own.</p>
 
             <h4>6. Termination</h4>
             <p>We reserve the right to suspend or terminate accounts that violate these terms, abuse the service, or engage in fraudulent activity including attempts to exploit subscription systems.</p>
