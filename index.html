@@ -919,6 +919,7 @@
 
     .store-button {
       min-height: 54px;
+      min-width: 190px;
       display: inline-flex;
       align-items: center;
       gap: 11px;
@@ -2415,7 +2416,7 @@
         </div>
 
         <div class="faq-list reveal">
-          <details>
+          <details id="privacy">
             <summary>Privacy Policy</summary>
             <p><em>Effective May 24, 2026 · Updated October 17, 2026</em></p>
             <p>Diagnose AI collects only the information needed to provide, protect, and improve the app.</p>
@@ -2453,7 +2454,7 @@
             <p>For privacy questions or data deletion requests, contact <a href="mailto:team@diagnoseai.us">team@diagnoseai.us</a>.</p>
           </details>
 
-          <details>
+          <details id="terms">
             <summary>Terms of Service</summary>
             <p><em>Effective Date: May 24, 2026. Last Updated: October 17, 2026.</em></p>
             <p>By downloading or using Diagnose AI, you agree to these Terms of Service. If you do not agree, do not use the app.</p>
@@ -2504,18 +2505,18 @@
 
     <section class="section compact" id="download">
       <div class="container final-cta reveal">
-        <span class="eyebrow">Buying a used car shouldn't feel like guessing.</span>
-        <h2>Bring more confidence to your next test drive.</h2>
-        <p>Scan before you decide, review the buyer report, and know what to ask before you make an offer.</p>
+        <h2>The car has a story. You make the call.</h2>
+        <p><strong>Buying?</strong> Check the VIN, recalls, and warning signs—then review the findings in a Buyer Report.<br>
+          <strong>Already driving?</strong> Understand fault codes, likely causes, and what to check next.</p>
         <div class="download-actions">
           <a class="store-button" href="https://apps.apple.com/us/app/diagnose-ai/id6773086171" target="_blank" rel="noopener" aria-label="Download Diagnose AI on the App Store">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.466 2.194-1.214 2.997-.78.837-2.063 1.48-3.104 1.397-.135-1.096.405-2.257 1.135-3.06C13.986 1.89 15.36 1.24 16.365 1.43zM20.75 17.2c-.57 1.32-.844 1.91-1.58 3.07-1.024 1.61-2.47 3.62-4.26 3.64-1.59.02-2-.99-4.16-.98-2.16.01-2.61 1.01-4.2.99-1.79-.02-3.16-1.83-4.19-3.44C-.46 15.99-.73 10.71 1.2 7.73c1.37-2.12 3.53-3.36 5.56-3.36 2.07 0 3.37 1.02 5.08 1.02 1.66 0 2.67-1.02 5.06-1.02 1.81 0 3.73.98 5.09 2.67-4.47 2.45-3.74 8.83.76 10.16z"></path></svg>
-            <span><small>iOS app</small><strong>Download now</strong></span>
+            <span><small>Download on the</small><strong>App Store</strong></span>
           </a>
-          <div class="store-button" aria-label="Diagnose AI for Android is coming soon">
+          <a class="store-button" href="https://play.google.com/store/apps/details?id=com.shan.diagnoseai.mobile&amp;hl=en_US" target="_blank" rel="noopener" aria-label="Download Diagnose AI on Google Play">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 0 1 0 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.8 8.99l-2.3 2.3-8.636-8.632z"></path></svg>
-            <span><small>Android app</small><strong>Coming soon</strong></span>
-          </div>
+            <span><small>Get it on</small><strong>Google Play</strong></span>
+          </a>
         </div>
       </div>
     </section>
@@ -2529,15 +2530,15 @@
         </span>
         <span>Diagnose AI</span>
       </div>
-      <div class="footer-links">
-        <a href="#features">Features</a>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="#features">For buyers</a>
         <a href="#owners">For owners</a>
+        <a href="#compatibility">Compatibility</a>
         <a href="#support">Support</a>
-        <a href="#download">Download</a>
-        <a href="#legal">Privacy</a>
-        <a href="#legal">Terms</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#terms">Terms</a>
         <a href="mailto:team@diagnoseai.us">Contact</a>
-      </div>
+      </nav>
     </div>
     <div class="footer-bottom">
       <p style="margin: 0;">&copy; <span id="year">2026</span> Diagnose AI. All rights reserved.</p>
@@ -2559,6 +2560,21 @@
         navToggle.setAttribute('aria-expanded', 'false');
       });
     });
+
+    function openLinkedLegalPanel() {
+      const panel = document.getElementById(window.location.hash.slice(1));
+      if (panel && panel.closest('#legal') && panel.tagName === 'DETAILS') {
+        panel.open = true;
+      }
+    }
+
+    document.querySelectorAll('.footer-links a[href="#privacy"], .footer-links a[href="#terms"]').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById(link.hash.slice(1)).open = true;
+      });
+    });
+    window.addEventListener('hashchange', openLinkedLegalPanel);
+    openLinkedLegalPanel();
 
     document.getElementById('year').textContent = new Date().getFullYear();
 
